@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>417 | Динамический текст</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>417 |</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -16,45 +16,161 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #8B0000 0%, #FF0000 50%, #CC0000 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             font-family: 'Inter', 'Segoe UI', sans-serif;
             position: relative;
             overflow-x: hidden;
+            background: #000;
+        }
+
+        /* === ПЛЫВУЩАЯ КАРТИНКА (mount.png) === */
+        .nature-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .nature-image {
+            width: 110%;
+            height: 110%;
+            object-fit: cover;
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            animation: slowDrift 24s infinite alternate ease-in-out;
+            filter: brightness(0.7) contrast(1.1) saturate(1.1);
+        }
+
+        @keyframes slowDrift {
+            0% {
+                transform: scale(1) translate(0%, 0%);
+            }
+            100% {
+                transform: scale(1.08) translate(-3%, -2%);
+            }
+        }
+
+        /* === МУЗЫКАЛЬНЫЙ ПЛЕЕР (слева сверху) === */
+        .music-player {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 8px 18px 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .track-info {
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .track-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .track-artist {
+            font-size: 10px;
+            opacity: 0.7;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .volume-slider {
+            width: 70px;
+            height: 3px;
+            -webkit-appearance: none;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ffec80;
+            cursor: pointer;
         }
 
         /* --- КНОПКА КУПИТЬ БИЛЕТЫ --- */
         .buy-ticket-btn {
             position: fixed;
-            top: 25px;
-            right: 30px;
+            top: 20px;
+            right: 20px;
             z-index: 200;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             border: none;
-            padding: 14px 32px;
+            padding: 10px 24px;
             border-radius: 50px;
             font-family: 'Inter', sans-serif;
             font-weight: 800;
-            font-size: 18px;
+            font-size: 15px;
             color: #1a1a1a;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .buy-ticket-btn:hover {
             transform: scale(1.05);
             background: linear-gradient(135deg, #FFEA00, #FFB347);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
-        /* Контейнер для цифр (417) */
+        /* Основной контент */
+        .content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Контейнер для цифр 417 */
         .number-container {
             display: flex;
             justify-content: center;
@@ -64,11 +180,8 @@
             flex-wrap: wrap;
             padding: 20px;
             margin-bottom: 60px;
-            position: relative;
-            z-index: 15;
         }
 
-        /* Стиль для каждой цифры */
         .digit {
             font-size: 250px;
             font-weight: 900;
@@ -76,10 +189,9 @@
             text-shadow: 
                 0 0 20px rgba(255, 255, 255, 0.5),
                 0 0 40px rgba(255, 255, 255, 0.3),
-                0 10px 30px rgba(0, 0, 0, 0.3);
+                0 10px 30px rgba(0, 0, 0, 0.5);
             display: inline-block;
             cursor: default;
-            transition: transform 0.2s ease;
             animation: bounce 1.2s ease-in-out infinite;
             transform-origin: center bottom;
         }
@@ -89,28 +201,19 @@
         .digit-7 { animation-delay: 0.4s; }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            30% {
-                transform: translateY(-80px) scale(1.1);
-                text-shadow: 0 0 40px rgba(255, 255, 255, 0.9);
-            }
-            60% {
-                transform: translateY(-40px) scale(1.05);
-            }
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-80px) scale(1.1); text-shadow: 0 0 40px rgba(255, 255, 255, 0.9); }
+            60% { transform: translateY(-40px) scale(1.05); }
         }
 
-        /* Блок для набирающегося текста */
+        /* Блок с текстом */
         .typing-wrapper {
-            position: relative;
-            z-index: 15;
             text-align: center;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
             padding: 30px 50px;
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             margin-top: 20px;
             min-width: 500px;
         }
@@ -145,22 +248,21 @@
             right: 0;
             text-align: center;
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.7);
             font-family: 'Inter', monospace;
-            letter-spacing: 0.5px;
             z-index: 30;
+            background: rgba(0,0,0,0.3);
+            padding: 8px;
+            backdrop-filter: blur(4px);
         }
 
         .footer a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
-            transition: all 0.2s ease;
-            border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
         }
 
         .footer a:hover {
             color: #ffec80;
-            border-bottom-color: #ffec80;
         }
 
         .footer-links {
@@ -171,95 +273,47 @@
             margin-bottom: 8px;
         }
 
-        .footer-separator {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* === ПАДАЮЩИЕ ЗЕЛЕНЫЕ ЦИФРЫ ПО КРАЯМ === */
-        .matrix-left, .matrix-right {
-            position: fixed;
-            top: 0;
-            width: 90px;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-        }
-
-        .matrix-left { left: 10px; }
-        .matrix-right { right: 10px; }
-
-        .digit-fall {
-            position: absolute;
-            color: #0f0;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 0 0 4px #0f0, 0 0 2px #0a0;
-            white-space: nowrap;
-            animation: fallGlitch linear infinite;
-            opacity: 0;
-        }
-
-        @keyframes fallGlitch {
-            0% {
-                transform: translateY(-20vh) translateX(0);
-                opacity: 0.9;
-                text-shadow: 0 0 2px #0f0;
-            }
-            10% {
-                opacity: 1;
-                text-shadow: -1px 0 red, 1px 0 blue, 0 0 5px #0f0;
-            }
-            80% {
-                opacity: 0.8;
-                text-shadow: 1px -1px cyan, -1px 1px magenta;
-            }
-            100% {
-                transform: translateY(110vh) translateX(calc(6px * var(--glitch-shift, 1)));
-                opacity: 0;
-                filter: blur(1px);
-            }
-        }
-
-        /* Адаптация под телефон */
         @media (max-width: 768px) {
             .digit { font-size: 100px; }
             .number-container { gap: 15px; margin-bottom: 30px; }
             .typing-wrapper { min-width: 90%; padding: 20px; }
             .dynamic-text { font-size: 18px; }
             .cursor { height: 24px; }
-            .buy-ticket-btn {
-                top: 15px;
-                right: 15px;
-                padding: 8px 20px;
-                font-size: 14px;
-            }
-            .footer { font-size: 9px; bottom: 12px; }
-            .footer-links { gap: 12px; }
-            .matrix-left, .matrix-right { width: 45px; }
-            .digit-fall { font-size: 18px; }
-        }
-
-        @media (max-width: 480px) {
-            .matrix-left, .matrix-right { width: 30px; }
-            .digit-fall { font-size: 14px; }
+            .buy-ticket-btn { top: 15px; right: 15px; padding: 6px 16px; font-size: 12px; }
+            .music-player { top: 15px; left: 15px; padding: 6px 14px; gap: 10px; }
+            .track-name { font-size: 11px; }
+            .control-btn { width: 26px; height: 26px; font-size: 14px; }
+            .volume-slider { width: 50px; }
+            .footer { font-size: 9px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ПАДАЮЩИЕ ЗЕЛЕНЫЕ ЦИФРЫ СЛЕВА И СПРАВА -->
-    <div class="matrix-left" id="matrixLeft"></div>
-    <div class="matrix-right" id="matrixRight"></div>
+    <!-- ФОН: ВАША КАРТИНКА mount.png -->
+    <div class="nature-background">
+        <img class="nature-image" src="mount.png" alt="Горы">
+    </div>
+
+    <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
+    <div class="music-player" id="musicPlayer">
+        <div class="track-info">
+            <span class="track-name">417 Ambient Flow</span>
+            <span class="track-artist">Nature & Sound</span>
+        </div>
+        <div class="player-controls">
+            <button class="control-btn" id="playPauseBtn">▶</button>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.4">
+        </div>
+    </div>
 
     <!-- КНОПКА КУПИТЬ БИЛЕТЫ -->
     <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">
         🎫 Купить билеты
     </a>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ (как в старых версиях) -->
-    <div style="position: relative; text-align: center; z-index: 20;">
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="content">
         <div class="number-container">
             <span class="digit digit-4">4</span>
             <span class="digit digit-1">1</span>
@@ -276,36 +330,30 @@
     <div class="footer">
         <div class="footer-links">
             <a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a>
-            <span class="footer-separator">|</span>
+            <span style="opacity:0.4;">|</span>
             <a href="https://t.me/RSMU417_bot" target="_blank">📢 @RSMU417_bot</a>
         </div>
         <div>Все права защищены © 2026 — н.в.</div>
     </div>
 
     <script>
-        // ========== АНИМАЦИЯ ТЕКСТА (печать/стирание) ==========
+        // ========== АНИМАЦИЯ ТЕКСТА ==========
         const phrases = [
-            "417 мы знаем философию",
-            "417 продать историю",
-            "417 купить без смс из регистрации",
-            "417 рниму.нет не наш домен"
+            "417 рандомные цифры",
+            "417 powered by Papillon",
+            "417 здесь может быть ваша реклама",
+            "Were made by артем ий"
         ];
         
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 100;
-        let pauseAfterTyping = 2000;
-        
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        let typingSpeed = 100, pauseAfterTyping = 2000;
         const dynamicTextElement = document.querySelector('.dynamic-text');
         
         function typeEffect() {
             const currentPhrase = phrases[phraseIndex];
-            
             if (!isDeleting) {
                 dynamicTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
-                
                 if (charIndex === currentPhrase.length) {
                     isDeleting = true;
                     typingSpeed = pauseAfterTyping;
@@ -315,7 +363,6 @@
             } else {
                 dynamicTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
-                
                 if (charIndex === 0) {
                     isDeleting = false;
                     phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -324,7 +371,6 @@
                     typingSpeed = 50;
                 }
             }
-            
             setTimeout(typeEffect, typingSpeed);
         }
         
@@ -332,65 +378,50 @@
             setTimeout(typeEffect, 500);
         });
 
-        // ========== ПАДАЮЩИЕ ЦИФРЫ 4,1,7 ПО КРАЯМ (ЗЕЛЕНЫЕ С ГЛИТЧЕМ) ==========
-        const digits = ['4', '1', '7'];
+        // ========== МУЗЫКАЛЬНЫЙ ПЛЕЕР ==========
+        // Если ваш файл называется music.mp3 — замените 'track.mp3' на 'music.mp3'
+        // Если другое название — укажите его здесь:
+        const audio = new Audio('music.mp3');  // ← ЗДЕСЬ НАЗВАНИЕ ВАШЕГО ФАЙЛА
         
-        function createFallingDigit(container) {
-            const digitSpan = document.createElement('div');
-            digitSpan.className = 'digit-fall';
-            
-            // Случайная цифра из 4,1,7
-            const randomDigit = digits[Math.floor(Math.random() * digits.length)];
-            digitSpan.textContent = randomDigit;
-            
-            // Случайная длительность падения (от 4 до 11 секунд)
-            const duration = 4 + Math.random() * 7;
-            digitSpan.style.animationDuration = `${duration}s`;
-            
-            // Случайная задержка старта (от -15 до 0 секунд, чтобы не все сразу падали)
-            const startDelay = Math.random() * -15;
-            digitSpan.style.animationDelay = `${startDelay}s`;
-            
-            // Случайное начальное положение по вертикали
-            const topPos = Math.random() * 100;
-            digitSpan.style.top = `${topPos}%`;
-            
-            // Небольшой горизонтальный сдвиг в пределах своей колонки
-            const offsetX = (Math.random() - 0.5) * 16;
-            digitSpan.style.setProperty('--glitch-shift', (offsetX / 8).toFixed(1));
-            digitSpan.style.transform = `translateX(${offsetX}px)`;
-            
-            // Размер шрифта с разбросом (18-38px)
-            const fontSize = 18 + Math.random() * 20;
-            digitSpan.style.fontSize = `${fontSize}px`;
-            
-            // Рандомная прозрачность
-            digitSpan.style.opacity = 0.5 + Math.random() * 0.5;
-            
-            container.appendChild(digitSpan);
-            
-            // Удаляем после окончания анимации
-            digitSpan.addEventListener('animationend', () => {
-                digitSpan.remove();
-            });
-        }
+        audio.loop = true;
+        audio.volume = 0.4;
         
-        function startMatrixRain(container, intervalMs) {
-            setInterval(() => {
-                // Создаём 2-4 цифры за раз для плотного дождя
-                const count = 2 + Math.floor(Math.random() * 3);
-                for (let i = 0; i < count; i++) {
-                    createFallingDigit(container);
-                }
-            }, intervalMs);
-        }
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        let isPlaying = false;
         
-        const leftMatrix = document.getElementById('matrixLeft');
-        const rightMatrix = document.getElementById('matrixRight');
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audio.pause();
+                playPauseBtn.textContent = '▶';
+            } else {
+                audio.play().catch(e => {
+                    console.log('Нажмите Play ещё раз, если музыка не началась');
+                    playPauseBtn.textContent = '▶';
+                });
+                playPauseBtn.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        });
         
-        // Запускаем дождь слева и справа с разной интенсивностью
-        startMatrixRain(leftMatrix, 550);
-        startMatrixRain(rightMatrix, 600);
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+        });
+        
+        audio.addEventListener('ended', () => {
+            isPlaying = false;
+            playPauseBtn.textContent = '▶';
+        });
+        
+        // Чтобы музыка играла даже после ошибки автовоспроизведения
+        document.body.addEventListener('click', function initAudio() {
+            if (!isPlaying && audio.paused) {
+                audio.play().catch(e => {});
+                playPauseBtn.textContent = '⏸';
+                isPlaying = true;
+            }
+            document.body.removeEventListener('click', initAudio);
+        });
     </script>
 </body>
 </html>
