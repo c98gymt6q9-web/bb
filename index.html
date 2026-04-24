@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>417 | Прыгающие цифры и змея</title>
+    <title>417 | Скоро новый сайт</title>
     <style>
         * {
             margin: 0;
@@ -55,15 +55,9 @@
         }
 
         /* Разные задержки для каждой цифры */
-        .digit-4 {
-            animation-delay: 0s;
-        }
-        .digit-1 {
-            animation-delay: 0.2s;
-        }
-        .digit-7 {
-            animation-delay: 0.4s;
-        }
+        .digit-4 { animation-delay: 0s; }
+        .digit-1 { animation-delay: 0.2s; }
+        .digit-7 { animation-delay: 0.4s; }
 
         /* Анимация прыжка */
         @keyframes bounce {
@@ -92,7 +86,7 @@
             transition: all 0.3s ease;
         }
 
-        /* --- Стили для змеи --- */
+        /* --- Стили для змеи (теперь с вашей картинкой) --- */
         .snake-container {
             position: absolute;
             top: 0;
@@ -106,20 +100,18 @@
 
         .snake {
             position: absolute;
-            width: 350px;
-            height: 350px;
+            width: 280px;  /* Размер под вашу картинку, можно подогнать */
+            height: auto;
             filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
             animation: slither 22s ease-in-out infinite;
-            /* Стартуем слева за экраном */
             left: -20%;
             top: 50%;
             margin-top: -100px;
         }
 
-        /* SVG с черной змеей (гладкий векторный контур) */
-        .snake svg {
+        .snake img {
             width: 100%;
-            height: 100%;
+            height: auto;
             display: block;
         }
 
@@ -140,7 +132,7 @@
                 top: 40%;
                 transform: rotate(-8deg) scaleX(1);
             }
-            /* Пролезает между 4 и 1 (условно в районе 45-55% ширины) */
+            /* Пролезает между 4 и 1 */
             45% {
                 left: 48%;
                 top: 55%;
@@ -169,7 +161,7 @@
             }
         }
 
-        /* Эффект появления змеи с небольшой задержкой, чтобы сначала показались цифры */
+        /* Появление змеи */
         .snake {
             opacity: 0;
             animation: slither 22s ease-in-out infinite, fadeSnake 1s ease-out 2s forwards;
@@ -228,28 +220,12 @@
         .telegram-link a:hover {
             text-decoration: underline;
             color: #ffffff;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
 
         .telegram-link:hover {
             background: rgba(0, 0, 0, 0.85);
             transform: scale(1.02);
             border-color: #ffd966;
-            box-shadow: 0 0 12px rgba(0,0,0,0.5);
-        }
-
-        /* Подпись внизу — минималистичная */
-        .subtitle {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.3);
-            font-family: monospace;
-            font-size: 12px;
-            letter-spacing: 1px;
-            z-index: 30;
         }
 
         /* Адаптация для мобильных устройств */
@@ -262,9 +238,7 @@
                 margin-bottom: 20px;
             }
             @keyframes bounce {
-                30% {
-                    transform: translateY(-40px) scale(1.1);
-                }
+                30% { transform: translateY(-40px) scale(1.1); }
             }
             .main-text {
                 font-size: 20px;
@@ -277,14 +251,8 @@
                 bottom: 20%;
             }
             .snake {
-                width: 220px;
-                height: 220px;
+                width: 180px;
                 animation-duration: 18s;
-            }
-            @keyframes slither {
-                /* траектория чуть короче для мобильных — но оставим ту же логику */
-                0% { left: -30%; top: 40%;}
-                100% { left: 115%; top: 50%;}
             }
         }
 
@@ -294,9 +262,7 @@
             animation: bounce 1.2s ease-in-out infinite, fadeIn 0.5s ease-out forwards;
         }
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+            to { opacity: 1; }
         }
         @keyframes fadeInUp {
             from {
@@ -322,45 +288,21 @@
         <span class="digit digit-7">7</span>
     </div>
 
-    <!-- Большая черная змея, которая ползет между цифрами -->
+    <!-- Змея с вашей картинкой -->
     <div class="snake-container">
         <div class="snake">
-            <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Тело змеи: изогнутый длинный контур, черный с легким блеском -->
-                <path d="M30 170 C40 140, 60 130, 80 140 C100 150, 110 120, 130 110 
-                         C150 100, 160 80, 150 60 C140 40, 120 45, 110 65 
-                         C100 85, 115 100, 130 95 C145 90, 155 70, 145 55" 
-                      stroke="#111111" stroke-width="18" stroke-linecap="round" fill="none"/>
-                <!-- Дополнительный объем / блик -->
-                <path d="M30 170 C40 140, 60 130, 80 140 C100 150, 110 120, 130 110 
-                         C150 100, 160 80, 150 60 C140 40, 120 45, 110 65 
-                         C100 85, 115 100, 130 95 C145 90, 155 70, 145 55" 
-                      stroke="#2a2a2a" stroke-width="8" stroke-linecap="round" fill="none"/>
-                <!-- Голова змеи (ромбовидная, в конце хвоста) -->
-                <path d="M145 55 L162 48 L155 62 L145 55Z" fill="#0a0a0a" stroke="#222" stroke-width="2"/>
-                <!-- Глаз -->
-                <circle cx="152" cy="53" r="3" fill="#dd0000"/>
-                <!-- Язычок -->
-                <path d="M158 58 L168 52 L165 62 Z" fill="#aa0000" stroke="#550000" stroke-width="0.5"/>
-                <!-- Тень под змеей для объема -->
-                <path d="M30 175 C40 145, 60 135, 80 145 C100 155, 110 125, 130 115 
-                         C150 105, 160 85, 150 65" 
-                      stroke="rgba(0,0,0,0.3)" stroke-width="20" stroke-linecap="round" fill="none" 
-                      transform="translate(2, 6)" filter="blur(4px)"/>
-            </svg>
+            <img src="zmeya.png" alt="Змея">
         </div>
     </div>
 
     <div class="message">
         <div class="main-text">🌟 Скоро здесь будет новый сайт!</div>
         <div class="telegram-link">
-            <!-- Замененная ссылка на ваш Telegram канал -->
             <a href="https://t.me/saymolchanie" target="_blank" rel="noopener noreferrer">
                 📢 А пока — почитайте Telegram
             </a>
         </div>
     </div>
 
-    <div class="subtitle"></div>
 </body>
 </html>
