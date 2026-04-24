@@ -3,17 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>417 |скачать вирусы без игры</title>
-    
-    <!-- === ИКОНКА САЙТА (FAVICON) === -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+    <title>417 | Динамический текст</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ... весь ваш CSS остаётся без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -22,21 +16,23 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #3a0000 0%, #660000 50%, #4a0000 100%);
+            background: linear-gradient(135deg, #8B0000 0%, #FF0000 50%, #CC0000 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Inter', 'Segoe UI', sans-serif;
             position: relative;
+            overflow-x: hidden;
         }
 
+        /* --- КНОПКА КУПИТЬ БИЛЕТЫ --- */
         .buy-ticket-btn {
             position: fixed;
             top: 25px;
             right: 30px;
-            z-index: 100;
-            background: linear-gradient(135deg, #3a0000 0%, #660000 50%, #4a0000 100%);
+            z-index: 200;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
             border: none;
             padding: 14px 32px;
             border-radius: 50px;
@@ -58,6 +54,7 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
+        /* Контейнер для цифр (417) */
         .number-container {
             display: flex;
             justify-content: center;
@@ -68,9 +65,10 @@
             padding: 20px;
             margin-bottom: 60px;
             position: relative;
-            z-index: 5;
+            z-index: 15;
         }
 
+        /* Стиль для каждой цифры */
         .digit {
             font-size: 250px;
             font-weight: 900;
@@ -91,14 +89,22 @@
         .digit-7 { animation-delay: 0.4s; }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            30% { transform: translateY(-80px) scale(1.1); text-shadow: 0 0 40px rgba(255, 255, 255, 0.9); }
-            60% { transform: translateY(-40px) scale(1.05); }
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            30% {
+                transform: translateY(-80px) scale(1.1);
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.9);
+            }
+            60% {
+                transform: translateY(-40px) scale(1.05);
+            }
         }
 
+        /* Блок для набирающегося текста */
         .typing-wrapper {
             position: relative;
-            z-index: 10;
+            z-index: 15;
             text-align: center;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(10px);
@@ -131,6 +137,7 @@
             50% { opacity: 0; }
         }
 
+        /* Футер */
         .footer {
             position: absolute;
             bottom: 20px;
@@ -168,6 +175,54 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
+        /* === ПАДАЮЩИЕ ЗЕЛЕНЫЕ ЦИФРЫ ПО КРАЯМ === */
+        .matrix-left, .matrix-right {
+            position: fixed;
+            top: 0;
+            width: 90px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+
+        .matrix-left { left: 10px; }
+        .matrix-right { right: 10px; }
+
+        .digit-fall {
+            position: absolute;
+            color: #0f0;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 4px #0f0, 0 0 2px #0a0;
+            white-space: nowrap;
+            animation: fallGlitch linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes fallGlitch {
+            0% {
+                transform: translateY(-20vh) translateX(0);
+                opacity: 0.9;
+                text-shadow: 0 0 2px #0f0;
+            }
+            10% {
+                opacity: 1;
+                text-shadow: -1px 0 red, 1px 0 blue, 0 0 5px #0f0;
+            }
+            80% {
+                opacity: 0.8;
+                text-shadow: 1px -1px cyan, -1px 1px magenta;
+            }
+            100% {
+                transform: translateY(110vh) translateX(calc(6px * var(--glitch-shift, 1)));
+                opacity: 0;
+                filter: blur(1px);
+            }
+        }
+
+        /* Адаптация под телефон */
         @media (max-width: 768px) {
             .digit { font-size: 100px; }
             .number-container { gap: 15px; margin-bottom: 30px; }
@@ -182,16 +237,29 @@
             }
             .footer { font-size: 9px; bottom: 12px; }
             .footer-links { gap: 12px; }
+            .matrix-left, .matrix-right { width: 45px; }
+            .digit-fall { font-size: 18px; }
+        }
+
+        @media (max-width: 480px) {
+            .matrix-left, .matrix-right { width: 30px; }
+            .digit-fall { font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ПАДАЮЩИЕ ЗЕЛЕНЫЕ ЦИФРЫ СЛЕВА И СПРАВА -->
+    <div class="matrix-left" id="matrixLeft"></div>
+    <div class="matrix-right" id="matrixRight"></div>
+
+    <!-- КНОПКА КУПИТЬ БИЛЕТЫ -->
     <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">
         🎫 Купить билеты
     </a>
 
-    <div style="position: relative; text-align: center;">
+    <!-- ОСНОВНОЙ КОНТЕНТ (как в старых версиях) -->
+    <div style="position: relative; text-align: center; z-index: 20;">
         <div class="number-container">
             <span class="digit digit-4">4</span>
             <span class="digit digit-1">1</span>
@@ -204,6 +272,7 @@
         </div>
     </div>
 
+    <!-- ФУТЕР -->
     <div class="footer">
         <div class="footer-links">
             <a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a>
@@ -214,11 +283,12 @@
     </div>
 
     <script>
+        // ========== АНИМАЦИЯ ТЕКСТА (печать/стирание) ==========
         const phrases = [
             "417 мы знаем философию",
-            "417 продать билеты по истории",
+            "417 продать историю",
             "417 купить без смс из регистрации",
-            "кчау"
+            "417 рниму.нет не наш домен"
         ];
         
         let phraseIndex = 0;
@@ -261,6 +331,66 @@
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(typeEffect, 500);
         });
+
+        // ========== ПАДАЮЩИЕ ЦИФРЫ 4,1,7 ПО КРАЯМ (ЗЕЛЕНЫЕ С ГЛИТЧЕМ) ==========
+        const digits = ['4', '1', '7'];
+        
+        function createFallingDigit(container) {
+            const digitSpan = document.createElement('div');
+            digitSpan.className = 'digit-fall';
+            
+            // Случайная цифра из 4,1,7
+            const randomDigit = digits[Math.floor(Math.random() * digits.length)];
+            digitSpan.textContent = randomDigit;
+            
+            // Случайная длительность падения (от 4 до 11 секунд)
+            const duration = 4 + Math.random() * 7;
+            digitSpan.style.animationDuration = `${duration}s`;
+            
+            // Случайная задержка старта (от -15 до 0 секунд, чтобы не все сразу падали)
+            const startDelay = Math.random() * -15;
+            digitSpan.style.animationDelay = `${startDelay}s`;
+            
+            // Случайное начальное положение по вертикали
+            const topPos = Math.random() * 100;
+            digitSpan.style.top = `${topPos}%`;
+            
+            // Небольшой горизонтальный сдвиг в пределах своей колонки
+            const offsetX = (Math.random() - 0.5) * 16;
+            digitSpan.style.setProperty('--glitch-shift', (offsetX / 8).toFixed(1));
+            digitSpan.style.transform = `translateX(${offsetX}px)`;
+            
+            // Размер шрифта с разбросом (18-38px)
+            const fontSize = 18 + Math.random() * 20;
+            digitSpan.style.fontSize = `${fontSize}px`;
+            
+            // Рандомная прозрачность
+            digitSpan.style.opacity = 0.5 + Math.random() * 0.5;
+            
+            container.appendChild(digitSpan);
+            
+            // Удаляем после окончания анимации
+            digitSpan.addEventListener('animationend', () => {
+                digitSpan.remove();
+            });
+        }
+        
+        function startMatrixRain(container, intervalMs) {
+            setInterval(() => {
+                // Создаём 2-4 цифры за раз для плотного дождя
+                const count = 2 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < count; i++) {
+                    createFallingDigit(container);
+                }
+            }, intervalMs);
+        }
+        
+        const leftMatrix = document.getElementById('matrixLeft');
+        const rightMatrix = document.getElementById('matrixRight');
+        
+        // Запускаем дождь слева и справа с разной интенсивностью
+        startMatrixRain(leftMatrix, 550);
+        startMatrixRain(rightMatrix, 600);
     </script>
 </body>
 </html>
