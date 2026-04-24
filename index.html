@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>417 | Динамический текст</title>
+    <title>417 |скачать вирусы без игры</title>
+    
+    <!-- === ИКОНКА САЙТА (FAVICON) === -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
+        /* ... весь ваш CSS остаётся без изменений ... */
         * {
             margin: 0;
             padding: 0;
@@ -16,7 +21,7 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #3a0000 0%, #660000 50%, #4a0000 100%);
+            background: linear-gradient(135deg, #8B0000 0%, #FF0000 50%, #CC0000 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -25,13 +30,12 @@
             position: relative;
         }
 
-        /* --- КНОПКА КУПИТЬ БИЛЕТЫ --- */
         .buy-ticket-btn {
             position: fixed;
             top: 25px;
             right: 30px;
             z-index: 100;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
+            background: linear-gradient(135deg, #3a0000 0%, #660000 50%, #4a0000 100%);
             border: none;
             padding: 14px 32px;
             border-radius: 50px;
@@ -53,7 +57,6 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
-        /* Контейнер для цифр (417) */
         .number-container {
             display: flex;
             justify-content: center;
@@ -67,7 +70,6 @@
             z-index: 5;
         }
 
-        /* Стиль для каждой цифры */
         .digit {
             font-size: 250px;
             font-weight: 900;
@@ -88,19 +90,11 @@
         .digit-7 { animation-delay: 0.4s; }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0) scale(1);
-            }
-            30% {
-                transform: translateY(-80px) scale(1.1);
-                text-shadow: 0 0 40px rgba(255, 255, 255, 0.9);
-            }
-            60% {
-                transform: translateY(-40px) scale(1.05);
-            }
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-80px) scale(1.1); text-shadow: 0 0 40px rgba(255, 255, 255, 0.9); }
+            60% { transform: translateY(-40px) scale(1.05); }
         }
 
-        /* Блок для набирающегося текста */
         .typing-wrapper {
             position: relative;
             z-index: 10;
@@ -136,7 +130,6 @@
             50% { opacity: 0; }
         }
 
-        /* === НОВЫЙ ФУТЕР (внизу) === */
         .footer {
             position: absolute;
             bottom: 20px;
@@ -174,7 +167,6 @@
             color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Адаптация под телефон */
         @media (max-width: 768px) {
             .digit { font-size: 100px; }
             .number-container { gap: 15px; margin-bottom: 30px; }
@@ -187,24 +179,17 @@
                 padding: 8px 20px;
                 font-size: 14px;
             }
-            .footer {
-                font-size: 9px;
-                bottom: 12px;
-            }
-            .footer-links {
-                gap: 12px;
-            }
+            .footer { font-size: 9px; bottom: 12px; }
+            .footer-links { gap: 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- КНОПКА КУПИТЬ БИЛЕТЫ -->
     <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">
         🎫 Купить билеты
     </a>
 
-    <!-- Основной контент -->
     <div style="position: relative; text-align: center;">
         <div class="number-container">
             <span class="digit digit-4">4</span>
@@ -218,7 +203,6 @@
         </div>
     </div>
 
-    <!-- ССЫЛКИ ВНИЗУ (ФУТЕР) -->
     <div class="footer">
         <div class="footer-links">
             <a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a>
@@ -229,7 +213,6 @@
     </div>
 
     <script>
-        // Массив фраз
         const phrases = [
             "417 мы знаем философию",
             "417 продать историю",
