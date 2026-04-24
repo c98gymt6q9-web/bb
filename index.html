@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>417 | Прыгающие цифры</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8B0000 0%, #FF0000 50%, #CC0000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Poppins', 'Impact', system-ui, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Контейнер для цифр */
+        .number-container {
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 30px;
+            perspective: 500px;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        /* Стиль для каждой цифры */
+        .digit {
+            font-size: 250px;
+            font-weight: 900;
+            color: #FFFFFF;
+            text-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.5),
+                0 0 40px rgba(255, 255, 255, 0.3),
+                0 10px 30px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            cursor: default;
+            transition: transform 0.2s ease;
+            animation: bounce 1.2s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        /* Разные задержки для каждой цифры */
+        .digit-4 {
+            animation-delay: 0s;
+        }
+
+        .digit-1 {
+            animation-delay: 0.2s;
+        }
+
+        .digit-7 {
+            animation-delay: 0.4s;
+        }
+
+        /* Ключевые кадры анимации прыжка */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 10px 30px rgba(0,0,0,0.3);
+            }
+            30% {
+                transform: translateY(-80px) scale(1.1);
+                text-shadow: 0 0 40px rgba(255, 255, 255, 0.9), 0 20px 40px rgba(0,0,0,0.4);
+            }
+            60% {
+                transform: translateY(-40px) scale(1.05);
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.7), 0 15px 35px rgba(0,0,0,0.35);
+            }
+            85% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Дополнительный эффект при наведении на цифру */
+        .digit:hover {
+            animation: none;
+            transform: scale(1.3) translateY(-20px);
+            text-shadow: 0 0 50px rgba(255, 255, 255, 1);
+            transition: all 0.3s ease;
+        }
+
+        /* Подпись внизу */
+        .subtitle {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: monospace;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .digit {
+                font-size: 120px;
+            }
+            .number-container {
+                gap: 15px;
+            }
+            @keyframes bounce {
+                30% {
+                    transform: translateY(-40px) scale(1.1);
+                }
+            }
+        }
+
+        /* Эффект появления при загрузке */
+        .digit {
+            opacity: 0;
+            animation: bounce 1.2s ease-in-out infinite, fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .digit-4 { animation-delay: 0s, 0s; }
+        .digit-1 { animation-delay: 0.2s, 0.1s; }
+        .digit-7 { animation-delay: 0.4s, 0.2s; }
+    </style>
+</head>
+<body>
+    <div class="number-container">
+        <span class="digit digit-4">4</span>
+        <span class="digit digit-1">1</span>
+        <span class="digit digit-7">7</span>
+    </div>
+    <div class="subtitle">
+    </div>
+</body>
+</html>
