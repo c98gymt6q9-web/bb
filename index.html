@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>417 | пупупу привет здесь может быть ваша реклама</title>
+    <title>417 | Динамический текст</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -12,8 +12,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* Прячем стандартный курсор везде, где появляется кастомный */
-            cursor: none;
         }
 
         body {
@@ -25,36 +23,6 @@
             font-family: 'Inter', 'Segoe UI', sans-serif;
             overflow: hidden;
             position: relative;
-        }
-
-        /* --- КУРСОР-ЗМЕЯ (кастомный) --- */
-        .custom-cursor {
-            position: fixed;
-            width: 40px;        /* Размер змеи на экране */
-            height: 40px;
-            pointer-events: none;  /* Чтобы змея не мешала кликать по кнопкам */
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.12s ease-out;
-            filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
-        }
-
-        .custom-cursor img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            /* Лёгкое вращение и анимация, чтобы змея "ожила" */
-            animation: snakeWiggle 2s infinite ease-in-out;
-        }
-
-        /* Небольшое покачивание змеи, чтобы она не была статичной */
-        @keyframes snakeWiggle {
-            0%, 100% {
-                transform: rotate(-5deg);
-            }
-            50% {
-                transform: rotate(5deg);
-            }
         }
 
         /* --- КНОПКА КУПИТЬ БИЛЕТЫ --- */
@@ -99,6 +67,7 @@
             z-index: 5;
         }
 
+        /* Стиль для каждой цифры */
         .digit {
             font-size: 250px;
             font-weight: 900;
@@ -195,6 +164,7 @@
             transform: scale(1.02);
         }
 
+        /* Адаптация под телефон */
         @media (max-width: 768px) {
             .digit { font-size: 100px; }
             .number-container { gap: 15px; margin-bottom: 30px; }
@@ -207,20 +177,12 @@
                 padding: 8px 20px;
                 font-size: 14px;
             }
-            .custom-cursor {
-                width: 30px;
-                height: 30px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Кастомный курсор: змея -->
-    <div class="custom-cursor" id="snakeCursor">
-        <img src="zmeya.png" alt="змея-курсор">
-    </div>
-
+    <!-- КНОПКА КУПИТЬ БИЛЕТЫ -->
     <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">
         🎫 Купить билеты
     </a>
@@ -243,7 +205,7 @@
     </div>
 
     <script>
-        // --- АНИМАЦИЯ ТЕКСТА (печать/стирание) ---
+        // Массив фраз
         const phrases = [
             "417 мы знаем философию",
             "417 продать историю",
@@ -290,23 +252,6 @@
         
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(typeEffect, 500);
-        });
-
-        // --- КУРСОР-ЗМЕЯ: следит за мышкой ---
-        const cursor = document.getElementById('snakeCursor');
-        
-        document.addEventListener('mousemove', (e) => {
-            // Позиционируем змею по координатам мыши
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Прячем кастомный курсор, когда мышь уходит за пределы окна (опционально)
-        document.addEventListener('mouseleave', () => {
-            cursor.style.opacity = '0';
-        });
-        document.addEventListener('mouseenter', () => {
-            cursor.style.opacity = '1';
         });
     </script>
 </body>
