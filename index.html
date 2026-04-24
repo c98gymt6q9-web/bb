@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>417 | Динамический текст</title>
+    <title>417 | Динамический текст + змея-курсор</title>
     
-    <!-- Подключаем современный шрифт -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -13,6 +12,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* Прячем стандартный курсор везде, где появляется кастомный */
+            cursor: none;
         }
 
         body {
@@ -24,6 +25,64 @@
             font-family: 'Inter', 'Segoe UI', sans-serif;
             overflow: hidden;
             position: relative;
+        }
+
+        /* --- КУРСОР-ЗМЕЯ (кастомный) --- */
+        .custom-cursor {
+            position: fixed;
+            width: 40px;        /* Размер змеи на экране */
+            height: 40px;
+            pointer-events: none;  /* Чтобы змея не мешала кликать по кнопкам */
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.12s ease-out;
+            filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
+        }
+
+        .custom-cursor img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Лёгкое вращение и анимация, чтобы змея "ожила" */
+            animation: snakeWiggle 2s infinite ease-in-out;
+        }
+
+        /* Небольшое покачивание змеи, чтобы она не была статичной */
+        @keyframes snakeWiggle {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        /* --- КНОПКА КУПИТЬ БИЛЕТЫ --- */
+        .buy-ticket-btn {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            z-index: 100;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            color: #1a1a1a;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 1px;
+        }
+
+        .buy-ticket-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #FFEA00, #FFB347);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
 
         /* Контейнер для цифр (417) */
@@ -40,7 +99,6 @@
             z-index: 5;
         }
 
-        /* Стиль для каждой цифры */
         .digit {
             font-size: 250px;
             font-weight: 900;
@@ -137,19 +195,36 @@
             transform: scale(1.02);
         }
 
-        /* Адаптация под телефон */
         @media (max-width: 768px) {
             .digit { font-size: 100px; }
             .number-container { gap: 15px; margin-bottom: 30px; }
             .typing-wrapper { min-width: 90%; padding: 20px; }
             .dynamic-text { font-size: 18px; }
             .cursor { height: 24px; }
+            .buy-ticket-btn {
+                top: 15px;
+                right: 15px;
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+            .custom-cursor {
+                width: 30px;
+                height: 30px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Цифры 417 -->
+    <!-- Кастомный курсор: змея -->
+    <div class="custom-cursor" id="snakeCursor">
+        <img src="zmeya.png" alt="змея-курсор">
+    </div>
+
+    <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">
+        🎫 Купить билеты
+    </a>
+
     <div style="position: relative; text-align: center;">
         <div class="number-container">
             <span class="digit digit-4">4</span>
@@ -157,77 +232,82 @@
             <span class="digit digit-7">7</span>
         </div>
 
-        <!-- Блок с меняющимся текстом -->
         <div class="typing-wrapper">
             <span class="dynamic-text"></span>
             <span class="cursor"></span>
         </div>
     </div>
 
-    <!-- Ссылка на Telegram -->
     <div class="telegram-link">
         <a href="https://t.me/saymolchanie" target="_blank">📢 Читайте наш Telegram</a>
     </div>
 
     <script>
-        // Массив фраз, которые будут по очереди печататься и стираться
+        // --- АНИМАЦИЯ ТЕКСТА (печать/стирание) ---
         const phrases = [
             "417 мы знаем философию",
-            "417 билеты по истории",
+            "417 продать историю",
             "417 купить без смс из регистрации",
             "417 рниму.нет не наш домен"
         ];
         
-        let phraseIndex = 0;      // Какая фраза сейчас
-        let charIndex = 0;        // Какой символ печатаем
-        let isDeleting = false;    // Режим стирания или печати
-        let typingSpeed = 100;     // Скорость печати (мс)
-        let pauseAfterTyping = 2000; // Пауза после полной фразы (2 секунды)
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 100;
+        let pauseAfterTyping = 2000;
         
         const dynamicTextElement = document.querySelector('.dynamic-text');
         
         function typeEffect() {
             const currentPhrase = phrases[phraseIndex];
             
-            // Если НЕ стираем — значит ПЕЧАТАЕМ
             if (!isDeleting) {
-                // Добавляем следующий символ
                 dynamicTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
                 
-                // Если фраза напечатана полностью
                 if (charIndex === currentPhrase.length) {
-                    isDeleting = true;           // Переключаемся в режим стирания
-                    typingSpeed = pauseAfterTyping; // Делаем паузу перед стиранием
+                    isDeleting = true;
+                    typingSpeed = pauseAfterTyping;
                 } else {
-                    typingSpeed = 100; // Обычная скорость печати
+                    typingSpeed = 100;
                 }
-            } 
-            // Если стираем
-            else {
-                // Удаляем последний символ
+            } else {
                 dynamicTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
                 
-                // Если стерли всё
                 if (charIndex === 0) {
-                    isDeleting = false;          // Переключаемся обратно на печать
-                    phraseIndex = (phraseIndex + 1) % phrases.length; // Следующая фраза по кругу
-                    typingSpeed = 300;            // Небольшая пауза перед следующей фразой
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typingSpeed = 300;
                 } else {
-                    typingSpeed = 50; // Скорость стирания (быстрее, чем печать)
+                    typingSpeed = 50;
                 }
             }
             
-            // Запускаем следующий шаг анимации
             setTimeout(typeEffect, typingSpeed);
         }
         
-        // Запускаем анимацию, когда страница загрузилась
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(typeEffect, 500);
+        });
+
+        // --- КУРСОР-ЗМЕЯ: следит за мышкой ---
+        const cursor = document.getElementById('snakeCursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Позиционируем змею по координатам мыши
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Прячем кастомный курсор, когда мышь уходит за пределы окна (опционально)
+        document.addEventListener('mouseleave', () => {
+            cursor.style.opacity = '0';
+        });
+        document.addEventListener('mouseenter', () => {
+            cursor.style.opacity = '1';
         });
     </script>
 </body>
 </html>
-
