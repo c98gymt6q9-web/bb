@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>417 | Confidental.Safety.Fast</title>
+    <title>417 | Система логинов</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -431,7 +431,6 @@
         .user-list { font-size: 11px; color: #aaa; margin-top: 10px; max-height: 150px; overflow-y: auto; }
         .user-list div { margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         .user-list button { background: #ff6666; border: none; color: white; padding: 2px 8px; border-radius: 10px; cursor: pointer; font-size: 10px; }
-        .user-list button.reset-btn { background: #ff6600; }
 
         .footer {
             position: absolute;
@@ -526,7 +525,7 @@
 
     <div id="libraryPage" class="page">
         <div class="library-container">
-            <h1> Библиотека документов</h1>
+            <h1>📚 Библиотека документов</h1>
             <div id="pdfList" class="pdf-grid"></div>
         </div>
     </div>
@@ -569,7 +568,6 @@
         <h4>👑 Админ-панель</h4>
         <button id="addUserBtn" style="background:#ffec80; width:100%; margin-bottom:10px;">➕ Добавить пользователя</button>
         <div class="user-list" id="userList"></div>
-        <button id="resetAllDevicesBtn" style="background:#ff6600; width:100%; margin-top:10px;">🔄 Сбросить ВСЕ привязки</button>
         <button id="logoutBtn" style="background:#444; width:100%; margin-top:5px;">🚪 Выйти</button>
     </div>
 
@@ -583,61 +581,12 @@
     </div>
 
     <script>
-        // ========== ГЕНЕРАЦИЯ УНИКАЛЬНОГО ID УСТРОЙСТВА (FINGERPRINT) ==========
-        async function generateDeviceId() {
-            const components = [];
-            
-            // Базовые параметры браузера
-            components.push(navigator.userAgent);
-            components.push(screen.width + 'x' + screen.height + 'x' + screen.colorDepth);
-            components.push(navigator.language);
-            components.push(new Date().getTimezoneOffset());
-            components.push(!!navigator.hardwareConcurrency);
-            components.push(!!navigator.deviceMemory);
-            
-            // Canvas Fingerprint
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            ctx.textBaseline = 'top';
-            ctx.font = '14px Arial';
-            ctx.fillStyle = '#f60';
-            ctx.fillRect(0, 0, 100, 50);
-            ctx.fillStyle = '#069';
-            ctx.fillText('417', 10, 20);
-            const canvasData = canvas.toDataURL();
-            components.push(canvasData);
-            
-            // WebGL Fingerprint (если доступно)
-            const gl = document.createElement('canvas').getContext('webgl');
-            if (gl) {
-                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-                if (debugInfo) {
-                    components.push(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
-                    components.push(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL));
-                }
-            }
-            
-            // Хешируем всё это
-            const str = components.join('|||');
-            const hash = await sha256(str);
-            return hash;
-        }
-        
-        async function sha256(message) {
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-        
-        let currentDeviceId = null;
-        
-        // ========== БАЗА ПОЛЬЗОВАТЕЛЕЙ С ПРИВЯЗКОЙ К УСТРОЙСТВУ ==========
+        // ========== БАЗА ПОЛЬЗОВАТЕЛЕЙ (ПРОСТАЯ, БЕЗ ПРИВЯЗКИ) ==========
         let users = [
-            { login: "admin", password: "admin4172026", role: "admin", name: "Администратор", boundDevice: null },
-            { login: "ivan", password: "user2024", role: "user", name: "Иван", boundDevice: null },
-            { login: "maria", password: "friend417", role: "user", name: "Мария", boundDevice: null },
-            { login: "guestVIP", password: "vip777", role: "user", name: "VIP Гость", boundDevice: null }
+            { login: "admin", password: "admin4172026", role: "admin", name: "Администратор" },
+            { login: "ivan", password: "user2024", role: "user", name: "Иван" },
+            { login: "maria", password: "friend417", role: "user", name: "Мария" },
+            { login: "guestVIP", password: "vip777", role: "user", name: "VIP Гость" }
         ];
         
         function saveUsers() { localStorage.setItem("systemUsers", JSON.stringify(users)); }
@@ -646,29 +595,11 @@
         
         let currentUser = null;
         
-        function isDeviceAllowedForUser(user) {
-            if (!user.boundDevice) return true;
-            return user.boundDevice === currentDeviceId;
-        }
-        
-        async function login(login, password) {
-            if (!currentDeviceId) return false;
+        function login(login, password) {
             const user = users.find(u => u.login === login && u.password === password);
             if (!user) return false;
             
-            // Если устройство ещё не привязано к этому аккаунту — привязываем
-            if (!user.boundDevice) {
-                user.boundDevice = currentDeviceId;
-                saveUsers();
-            }
-            
-            // Проверяем, что устройство то же
-            if (!isDeviceAllowedForUser(user)) {
-                document.getElementById('authError').innerText = '❌ Этот аккаунт привязан к другому устройству.';
-                return false;
-            }
-            
-            currentUser = { login: user.login, role: user.role, name: user.name, boundDevice: user.boundDevice };
+            currentUser = { login: user.login, role: user.role, name: user.name };
             localStorage.setItem("currentUser", JSON.stringify(currentUser));
             updateUI();
             return true;
@@ -680,27 +611,9 @@
             updateUI();
         }
         
-        function resetUserDevice(login) {
-            const user = users.find(u => u.login === login);
-            if (user) {
-                user.boundDevice = null;
-                saveUsers();
-                if (currentUser && currentUser.login === login) logout();
-                if (currentUser && currentUser.role === "admin") renderUserList();
-            }
-        }
-        
-        function resetAllDevices() {
-            users.forEach(u => u.boundDevice = null);
-            saveUsers();
-            logout();
-            if (currentUser && currentUser.role === "admin") renderUserList();
-            alert("Все привязки к устройствам сброшены.");
-        }
-        
         function addUser(login, password, role, name) {
             if (users.find(u => u.login === login)) return false;
-            users.push({ login, password, role, name: name || login, boundDevice: null });
+            users.push({ login, password, role, name: name || login });
             saveUsers();
             if (currentUser && currentUser.role === "admin") renderUserList();
             return true;
@@ -721,8 +634,7 @@
             const userNameSpan = document.getElementById("userNameDisplay");
             
             if (currentUser) {
-                const deviceStatus = currentUser.boundDevice ? "🔒 привязано" : "🌐 не привязано";
-                userStatus.innerHTML = currentUser.role === "admin" ? `👑 Администратор (${deviceStatus})` : `✅ ${currentUser.name} (${deviceStatus})`;
+                userStatus.innerHTML = currentUser.role === "admin" ? `👑 Администратор` : `✅ ${currentUser.name}`;
                 premiumBlock.classList.add("visible");
                 if (userNameSpan) userNameSpan.innerText = currentUser.name || currentUser.login;
                 if (currentUser.role === "admin") {
@@ -744,28 +656,22 @@
             if (!container) return;
             container.innerHTML = "<strong>Пользователи:</strong>";
             users.forEach(user => {
-                const deviceStatus = user.boundDevice ? `🔒 ${user.boundDevice.substring(0, 16)}...` : "🌐 не привязано";
                 const div = document.createElement("div");
-                div.innerHTML = `${user.login} (${user.role === "admin" ? "👑" : "👤"})<br><span style="font-size:9px;">${deviceStatus}</span>
-                                <button onclick="deleteUserUI('${user.login}')">❌</button>
-                                <button class="reset-btn" onclick="resetUserDeviceUI('${user.login}')">🔄 сброс</button>`;
+                div.innerHTML = `${user.login} (${user.role === "admin" ? "👑" : "👤"})
+                                <button onclick="deleteUserUI('${user.login}')">❌</button>`;
                 container.appendChild(div);
             });
         }
         
         window.deleteUserUI = function(login) { if (confirm(`Удалить ${login}?`)) deleteUser(login); };
-        window.resetUserDeviceUI = function(login) { if (confirm(`Сбросить привязку устройства для ${login}?`)) resetUserDevice(login); };
         
         function loadStoredUser() {
             const saved = localStorage.getItem("currentUser");
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
-                    const freshUser = users.find(u => u.login === parsed.login);
-                    if (freshUser && isDeviceAllowedForUser(freshUser)) {
-                        currentUser = { login: freshUser.login, role: freshUser.role, name: freshUser.name, boundDevice: freshUser.boundDevice };
-                        updateUI();
-                    } else logout();
+                    currentUser = parsed;
+                    updateUI();
                 } catch(e) { currentUser = null; }
             }
         }
@@ -887,16 +793,16 @@
         document.getElementById('loginBtn').onclick = () => authModal.classList.add('active');
         document.getElementById('closeModal').onclick = () => authModal.classList.remove('active');
         document.getElementById('closeRegisterModal').onclick = () => registerModal.classList.remove('active');
-        document.getElementById('submitLogin').onclick = async () => {
+        document.getElementById('submitLogin').onclick = () => {
             const loginVal = document.getElementById('loginInput').value.trim();
             const passwordVal = document.getElementById('passwordInput').value;
             if (!loginVal || !passwordVal) { document.getElementById('authError').innerText = 'Введите логин и пароль'; return; }
-            if (await login(loginVal, passwordVal)) {
+            if (login(loginVal, passwordVal)) {
                 authModal.classList.remove('active');
                 document.getElementById('loginInput').value = '';
                 document.getElementById('passwordInput').value = '';
                 document.getElementById('authError').innerText = '';
-            } else if (!document.getElementById('authError').innerText) {
+            } else {
                 document.getElementById('authError').innerText = 'Неверный логин или пароль';
             }
         };
@@ -914,7 +820,6 @@
                 renderUserList();
             } else alert("Пользователь уже существует");
         };
-        document.getElementById('resetAllDevicesBtn').onclick = () => { if (currentUser?.role === "admin") resetAllDevices(); };
         document.getElementById('logoutBtn').onclick = () => { if (currentUser) logout(); };
         document.getElementById('navHome').onclick = () => showPage('homePage');
         document.getElementById('navLibrary').onclick = () => showPage('libraryPage');
@@ -922,8 +827,7 @@
         window.addEventListener('click', (e) => { if (e.target === authModal) authModal.classList.remove('active'); if (e.target === registerModal) registerModal.classList.remove('active'); });
         
         // ========== ЗАПУСК ==========
-        window.addEventListener('DOMContentLoaded', async () => {
-            currentDeviceId = await generateDeviceId();
+        window.addEventListener('DOMContentLoaded', () => {
             loadStoredUser();
             setTimeout(typeEffect, 500);
             renderPDFList();
