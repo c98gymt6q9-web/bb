@@ -691,7 +691,7 @@
         
         // Функция получения пути к папке с фото
         function getImagePath(prep, useLabeled) {
-            const baseFolder = "images/";  // папка с фото в репозитории
+           const baseFolder = "";   // теперь ищет фото в корне
             if (useLabeled) {
                 return baseFolder + prep.imgLabeled;
             } else {
