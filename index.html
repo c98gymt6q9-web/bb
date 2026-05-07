@@ -186,7 +186,6 @@
         }
         .page.active { display: block; }
 
-        /* ГЛАВНАЯ СТРАНИЦА */
         .content {
             display: flex;
             flex-direction: column;
@@ -253,7 +252,6 @@
             50%{ opacity: 0; }
         }
 
-        /* СТИЛИ ГИСТОЛОГИИ */
         .hist-header {
             text-align: center;
             margin-bottom: 40px;
@@ -399,7 +397,6 @@
             margin-top: 12px;
         }
 
-        /* Мини-теория */
         .theory-modal {
             position: fixed;
             bottom: 30px;
@@ -445,7 +442,7 @@
             overflow-y: auto;
         }
 
-        /* Лайтбокс для фото */
+        /* Лайтбокс с кнопкой переключения подписей */
         .lightbox {
             position: fixed;
             top: 0;
@@ -466,17 +463,39 @@
         }
         .lightbox-img {
             max-width: 90vw;
-            max-height: 85vh;
+            max-height: 75vh;
             object-fit: contain;
             border-radius: 24px;
             border: 2px solid rgba(255,215,0,0.6);
         }
         .lightbox-caption {
-            margin-top: 20px;
+            margin-top: 15px;
             background: rgba(0,0,0,0.7);
             padding: 10px 24px;
             border-radius: 40px;
             color: #ffec80;
+            text-align: center;
+            max-width: 90%;
+        }
+        .lightbox-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+        }
+        .lightbox-toggle {
+            background: rgba(255,215,0,0.2);
+            border: 1px solid #ffec80;
+            color: #ffec80;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .lightbox-toggle:hover {
+            background: #ffec80;
+            color: #111;
         }
         .close-lightbox {
             position: absolute;
@@ -532,13 +551,14 @@
             .main-nav button { font-size: 12px; }
             .specimen-grid { grid-template-columns: 1fr; padding: 0 12px; }
             .theory-modal { width: 90%; right: 5%; bottom: 20px; }
+            .lightbox-img { max-height: 60vh; }
         }
     </style>
 </head>
 <body>
 
     <div class="nature-background">
-        <img class="nature-image" src="mount.png.png" alt="Фон">
+        <img class="nature-image" src="mount.png.jpg" alt="Фон">
     </div>
 
     <div class="music-player" id="musicPlayer">
@@ -559,7 +579,6 @@
 
     <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">🎫 Купить билеты</a>
 
-    <!-- ГЛАВНАЯ СТРАНИЦА -->
     <div id="homePage" class="page active">
         <div class="content">
             <div class="number-container">
@@ -574,7 +593,6 @@
         </div>
     </div>
 
-    <!-- ГИСТОЛОГИЯ 6 коллоквиум -->
     <div id="histologyPage" class="page">
         <div class="hist-header">
             <h1>🔬 Гистология. 6 коллоквиум</h1>
@@ -583,7 +601,6 @@
         <div class="specimen-grid" id="specimenGrid"></div>
     </div>
 
-    <!-- Мини-теория -->
     <div id="theoryModalWindow" class="theory-modal">
         <div class="theory-header">
             <span>📖 Теория к препарату</span>
@@ -594,11 +611,14 @@
         </div>
     </div>
 
-    <!-- Лайтбокс для увеличения фото -->
+    <!-- Лайтбокс с кнопкой переключения подписей -->
     <div id="lightboxModal" class="lightbox">
         <button class="close-lightbox" id="closeLightboxBtn">✕</button>
         <img id="lightboxImage" class="lightbox-img" alt="">
         <div id="lightboxCaptionText" class="lightbox-caption"></div>
+        <div class="lightbox-controls">
+            <button id="lightboxToggleLabels" class="lightbox-toggle">🏷️ Показать/убрать подписи</button>
+        </div>
     </div>
 
     <div class="footer">
@@ -613,10 +633,10 @@
     <script>
         // ========== АНИМАЦИЯ ТЕКСТА ==========
         const phrases = [
-            "САЙТ НА ТЕХ РАБОТАХ",
-            "САЙТ НА ТЕХ РАБОТАХ",
-            "САЙТ НА ТЕХ РАБОТАХ",
-            "САЙТ НА ТЕХ РАБОТАХ"
+            "ГИСТОЛОГИЯ 6 КОЛЛОКВИУМ",
+            "23 ПРЕПАРАТА",
+            "ВКЛЮЧАЙТЕ ПОДПИСИ",
+            "УЧИТЕ ТЕОРИЮ"
         ];
         let phraseIndex = 0, charIndex = 0, isDeleting = false, typingSpeed = 100, pauseAfterTyping = 2000;
         const dynamicTextElement = document.querySelector('.dynamic-text');
@@ -653,54 +673,55 @@
             document.body.removeEventListener('click', initAudio);
         });
         
-        // ========== БАЗА ПРЕПАРАТОВ (все из списка) ==========
-        // СИСТЕМА ИМЕНОВАНИЯ ФАЙЛОВ:
-        // - Чистое фото (без подписей): номерC.png  (например "120C.png")
-        // - Фото с подписями: номер.png        (например "120.png")
-        // Для номеров с буквой (129a) используйте "129aC.png" и "129a.png"
-        
+        // ========== БАЗА ПРЕПАРАТОВ ==========
         const specimens = [
-            { id: 1, name: "Нитевидные сосочки языка", stain: "Г-Э", number: "120", description: "Кератинизированные нитевидные выросты, придают шероховатость языку.", theory: "Нитевидные сосочки языка покрывают всю переднюю часть его спинки и являются самыми многочисленными. Они имеют коническую заострённую форму, а их высота составляет около 0.3 мм. Строма сосочка представлена выпячиванием собственной пластинки слизистой оболочки, состоящей из рыхлой волокнистой соединительной ткани и образующей первичные и вторичные соединительнотканные сосочки. С поверхности строма покрыта многослойным плоским эпителием, который на верхушках ороговевает, что является ключевой гистологической особенностью этих образований. Вкусовые луковицы в эпителии нитевидных сосочков полностью отсутствуют, поэтому их функция исключительно тактильная, или механорецепторная.
-", imgClean: "120C.png", imgLabeled: "120.png" },
-            { id: 2, name: "Листовидные сосочки", stain: "Г-Э", number: "121", description: "Содержат вкусовые луковицы, расположены по бокам языка.", theory: "Листовидные сосочки хорошо развиты у детей, участвуют в восприятии вкуса. Вкусовые почки заложены в эпителии.", imgClean: "121C.png", imgLabeled: "121.png" },
-            { id: 3, name: "Развитие зуба (эмалевый орган)", stain: "Г-Э", number: "122", description: "Эмалевый орган, звездчатый ретикулум, зубной сосочек.", theory: "Эмалевый орган — производное эктодермы. Внутренние клетки дифференцируются в амелобласты, формирующие эмаль.", imgClean: "122C.png", imgLabeled: "122.png" },
-            { id: 4, name: "Развитие зуба (дентин и эмаль)", stain: "Г-Э", number: "123", description: "Одонтобласты, эмалевые призмы, стадия обызвествления.", theory: "Дентин вырабатывается одонтобластами, эмаль — амелобластами. На этой стадии видна матрица дентина и эмали.", imgClean: "123C.png", imgLabeled: "123.png" },
-            { id: 5, name: "Поперечный разрез пищевода собаки", stain: "Г-Э", number: "126", description: "Многослойный плоский эпителий, мышечная оболочка.", theory: "Пищевод выстлан многослойным плоским неороговевающим эпителием. Собственная пластинка содержит кардиальные железы.", imgClean: "126C.png", imgLabeled: "126.png" },
-            { id: 6, name: "Переход пищевода в желудок собаки", stain: "Г-Э", number: "127", description: "Зигзагообразная граница, кардиальные железы.", theory: "Резкая граница: эпителий пищевода сменяется однослойным призматическим эпителием желудка. Виден переход.", imgClean: "127C.png", imgLabeled: "127.png" },
-            { id: 7, name: "Дно желудка собаки", stain: "Конгорот - железный гематоксилин", number: "128", description: "Главные и париетальные клетки фундальных желёз.", theory: "Фундальные железы содержат париетальные (вырабатывают HCl) и главные (пепсиноген) клетки. Окраска конгорот выявляет кислую среду.", imgClean: "128C.png", imgLabeled: "128.png" },
-            { id: 8, name: "Пилорическая часть желудка собаки", stain: "Г-Э", number: "129", description: "Пилоровые железы, глубокие ямки, мукоциты.", theory: "Пилоровые железы секретируют слизь, клетки преимущественно мукоциты. Ямки глубже, чем в фундальной части.", imgClean: "129C.png", imgLabeled: "129.png" },
-            { id: 9, name: "Переход желудка в 12-ти перстную кишку", stain: "Г-Э", number: "129a", description: "Пилорический сфинктер, бруннеровы железы.", theory: "Дуоденальные железы Бруннера в подслизистой основе, нейтрализуют кислоту. Виден переход пилорического отдела.", imgClean: "129aC.png", imgLabeled: "129a.png" },
-            { id: 10, name: "Двенадцатиперстная кишка", stain: "Г-Э", number: "130", description: "Высокие ворсинки, крипты, бокаловидные клетки.", theory: "Двенадцатиперстная кишка: ворсинки высокие, в подслизистой основе — сложные трубчатые железы (Бруннера).", imgClean: "130C.png", imgLabeled: "130.png" },
-            { id: 11, name: "Тонкая кишка щенка", stain: "Г-Э", number: "131", description: "Высокие ворсинки, активный рост, лимфоидные фолликулы.", theory: "Щенячья тонкая кишка: хорошо развиты ворсинки и крипты, активное пищеварение. Лимфоидные узелки в стадии формирования.", imgClean: "131C.png", imgLabeled: "131.png" },
-            { id: 12, name: "Толстая кишка собаки", stain: "Г-Э", number: "132", description: "Крипты, много бокаловидных клеток, отсутствие ворсинок.", theory: "Толстая кишка: отсутствуют ворсинки, много бокаловидных клеток, крипты глубокие. Мышечный слой хорошо развит.", imgClean: "132C.png", imgLabeled: "132.png" },
-            { id: 13, name: "Аппендикс", stain: "Г-Э", number: "133", description: "Лимфоидная ткань, узкий просвет, складки слизистой.", theory: "Червеобразный отросток: диффузная лимфоидная ткань и лимфоидные узелки. В просвете могут быть остатки содержимого.", imgClean: "133C.png", imgLabeled: "133.png" },
-            { id: 14, name: "Околоушная железа собаки", stain: "Г-Э", number: "135", description: "Серозные ацинусы, жировые клетки.", theory: "Серозный тип секреции, богата ферментами. Протоки выстланы кубическим эпителием, видны вставочные протоки.", imgClean: "135C.png", imgLabeled: "135.png" },
-            { id: 15, name: "Подчелюстная железа человека", stain: "Г-Э", number: "136", description: "Смешанные концевые отделы (серозно-слизистые).", theory: "Серозно-слизистая железа. Серозные полулуния Нуну — характерный признак. Протоки выстланы кубическим эпителием.", imgClean: "136C.png", imgLabeled: "136.png" },
-            { id: 16, name: "Поджелудочная железа собаки", stain: "Г-Э", number: "137", description: "Ацинусы, островки Лангерганса, выводные протоки.", theory: "Экзокринная часть — ацинусы; эндокринная — островки (инсулин, глюкагон). Протоки выстланы кубическим эпителием.", imgClean: "137C.png", imgLabeled: "137.png" },
-            { id: 17, name: "Печень свиньи", stain: "Пирофуксин-железный гематоксилин", number: "138", description: "Печеночные дольки, центральная вена, портальные тракты.", theory: "Печень: дольковое строение, центральная вена, балки гепатоцитов. Пирофуксин окрашивает соединительную ткань.", imgClean: "138C.png", imgLabeled: "138.png" },
-            { id: 18, name: "Печень человека", stain: "Г-Э", number: "139", description: "Гепатоциты, портальные тракты, синусоиды.", theory: "Классическая долька. Портальные тракты содержат междольковые артерию, вену и желчный проток.", imgClean: "139C.png", imgLabeled: "139.png" },
-            { id: 19, name: "Желчный пузырь", stain: "Г-Э", number: "140", description: "Складчатая слизистая, эпителий, гладкие миоциты.", theory: "Эпителий высокий призматический, всасывает воду, концентрирует желчь. Мышечная оболочка развита слабо.", imgClean: "140C.png", imgLabeled: "140.png" },
-            { id: 20, name: "Трахея собаки", stain: "Г-Э", number: "141", description: "Реснитчатый эпителий, гиалиновый хрящ, железы.", theory: "Слизистая оболочка с мерцательным эпителием, подслизистая содержит смешанные железы, адвентиция с гиалиновыми кольцами.", imgClean: "141C.png", imgLabeled: "141.png" },
-            { id: 21, name: "Легкое кошки", stain: "Г-Э", number: "142", description: "Альвеолы, пневмоциты, мелкие бронхи.", theory: "Респираторный отдел: альвеолы с пневмоцитами I и II типов, сурфактант. Бронхиолы выстланы кубическим эпителием.", imgClean: "142C.png", imgLabeled: "142.png" },
-            { id: 22, name: "Кожа пальца человека", stain: "Г-Э", number: "143", description: "Эпидермис, дерма, потовые железы.", theory: "Многослойный плоский ороговевающий эпителий (эпидермис), сосочковый и сетчатый слои дермы, потовые железы.", imgClean: "143C.png", imgLabeled: "143.png" },
-            { id: 23, name: "Кожа с волосом человека (продольный разрез)", stain: "Г-Э", number: "144", description: "Волосяной фолликул, сальные железы, мышца.", theory: "Волос: луковица, корень, сальные железы, мышца-подниматель волоса. Видно продольное сечение волосяного фолликула.", imgClean: "144C.png", imgLabeled: "144.png" }
+            { id: 1, name: "Нитевидные сосочки языка", stain: "Г-Э", number: "120", description: "Кератинизированные нитевидные выросты.", theory: "Нитевидные сосочки — самые многочисленные, покрыты многослойным плоским ороговевающим эпителием.", imgClean: "120C.png", imgLabeled: "120.png" },
+            { id: 2, name: "Листовидные сосочки", stain: "Г-Э", number: "121", description: "Содержат вкусовые луковицы.", theory: "Листовидные сосочки расположены по бокам языка, содержат вкусовые почки.", imgClean: "121C.png", imgLabeled: "121.png" },
+            { id: 3, name: "Развитие зуба (эмалевый орган)", stain: "Г-Э", number: "122", description: "Эмалевый орган, звездчатый ретикулум.", theory: "Эмалевый орган — производное эктодермы, формирует эмаль.", imgClean: "122C.png", imgLabeled: "122.png" },
+            { id: 4, name: "Развитие зуба (дентин и эмаль)", stain: "Г-Э", number: "123", description: "Одонтобласты, эмалевые призмы.", theory: "Дентин вырабатывается одонтобластами, эмаль — амелобластами.", imgClean: "123C.png", imgLabeled: "123.png" },
+            { id: 5, name: "Поперечный разрез пищевода собаки", stain: "Г-Э", number: "126", description: "Многослойный плоский эпителий.", theory: "Пищевод выстлан многослойным плоским неороговевающим эпителием.", imgClean: "126C.png", imgLabeled: "126.png" },
+            { id: 6, name: "Переход пищевода в желудок собаки", stain: "Г-Э", number: "127", description: "Зигзагообразная граница.", theory: "Резкая граница: эпителий пищевода сменяется желудочным.", imgClean: "127C.png", imgLabeled: "127.png" },
+            { id: 7, name: "Дно желудка собаки", stain: "Конгорот - железный гематоксилин", number: "128", description: "Главные и париетальные клетки.", theory: "Фундальные железы содержат париетальные (HCl) и главные (пепсиноген) клетки.", imgClean: "128C.png", imgLabeled: "128.png" },
+            { id: 8, name: "Пилорическая часть желудка собаки", stain: "Г-Э", number: "129", description: "Пилоровые железы.", theory: "Пилоровые железы секретируют слизь, клетки — мукоциты.", imgClean: "129C.png", imgLabeled: "129.png" },
+            { id: 9, name: "Переход желудка в 12-ти перстную кишку", stain: "Г-Э", number: "129a", description: "Пилорический сфинктер.", theory: "Дуоденальные железы Бруннера в подслизистой основе.", imgClean: "129aC.png", imgLabeled: "129a.png" },
+            { id: 10, name: "Двенадцатиперстная кишка", stain: "Г-Э", number: "130", description: "Ворсинки, крипты.", theory: "Высокие ворсинки, бокаловидные клетки, подслизистые железы.", imgClean: "130C.png", imgLabeled: "130.png" },
+            { id: 11, name: "Тонкая кишка щенка", stain: "Г-Э", number: "131", description: "Ворсинки, лимфоидные фолликулы.", theory: "Хорошо развиты ворсинки и крипты, активное пищеварение.", imgClean: "131C.png", imgLabeled: "131.png" },
+            { id: 12, name: "Толстая кишка собаки", stain: "Г-Э", number: "132", description: "Крипты, много бокаловидных клеток.", theory: "Отсутствуют ворсинки, много слизистых клеток.", imgClean: "132C.png", imgLabeled: "132.png" },
+            { id: 13, name: "Аппендикс", stain: "Г-Э", number: "133", description: "Лимфоидная ткань.", theory: "Диффузная лимфоидная ткань и лимфоидные узелки.", imgClean: "133C.png", imgLabeled: "133.png" },
+            { id: 14, name: "Околоушная железа собаки", stain: "Г-Э", number: "135", description: "Серозные ацинусы.", theory: "Серозный тип секреции, богата ферментами.", imgClean: "135C.png", imgLabeled: "135.png" },
+            { id: 15, name: "Подчелюстная железа человека", stain: "Г-Э", number: "136", description: "Смешанные концевые отделы.", theory: "Серозно-слизистая железа.", imgClean: "136C.png", imgLabeled: "136.png" },
+            { id: 16, name: "Поджелудочная железа собаки", stain: "Г-Э", number: "137", description: "Островки Лангерганса.", theory: "Экзокринная часть — ацинусы; эндокринная — островки.", imgClean: "137C.png", imgLabeled: "137.png" },
+            { id: 17, name: "Печень свиньи", stain: "Пирофуксин-железный гематоксилин", number: "138", description: "Печеночные дольки.", theory: "Дольковое строение, центральная вена, балки гепатоцитов.", imgClean: "138C.png", imgLabeled: "138.png" },
+            { id: 18, name: "Печень человека", stain: "Г-Э", number: "139", description: "Гепатоциты, портальные тракты.", theory: "Классическая долька, портальные тракты.", imgClean: "139C.png", imgLabeled: "139.png" },
+            { id: 19, name: "Желчный пузырь", stain: "Г-Э", number: "140", description: "Складчатая слизистая.", theory: "Эпителий высокий призматический, всасывает воду.", imgClean: "140C.png", imgLabeled: "140.png" },
+            { id: 20, name: "Трахея собаки", stain: "Г-Э", number: "141", description: "Реснитчатый эпителий, хрящ.", theory: "Мерцательный эпителий, подслизистые железы, гиалиновые кольца.", imgClean: "141C.png", imgLabeled: "141.png" },
+            { id: 21, name: "Легкое кошки", stain: "Г-Э", number: "142", description: "Альвеолы, пневмоциты.", theory: "Альвеолы с пневмоцитами I и II типов, сурфактант.", imgClean: "142C.png", imgLabeled: "142.png" },
+            { id: 22, name: "Кожа пальца человека", stain: "Г-Э", number: "143", description: "Эпидермис, дерма.", theory: "Многослойный плоский ороговевающий эпителий, сосочковый слой.", imgClean: "143C.png", imgLabeled: "143.png" },
+            { id: 23, name: "Кожа с волосом человека", stain: "Г-Э", number: "144", description: "Волосяной фолликул.", theory: "Волос: луковица, корень, сальные железы, мышца.", imgClean: "144C.png", imgLabeled: "144.png" }
         ];
         
-        // Состояние: по умолчанию показываем ЧИСТЫЕ фото (без подписей) — false
+        // Состояние: по умолчанию чистое фото
         let showLabelsMode = {};
-        specimens.forEach(s => { showLabelsMode[s.id] = false; });  // false = чистое фото (без подписей)
+        specimens.forEach(s => { showLabelsMode[s.id] = false; });
         
-        // Функция получения пути к папке с фото
+        // Текущий активный препарат в лайтбоксе
+        let currentLightboxPrep = null;
+        
         function getImagePath(prep, useLabeled) {
-           const baseFolder = "";   // теперь ищет фото в корне
-            if (useLabeled) {
-                return baseFolder + prep.imgLabeled;
-            } else {
-                return baseFolder + prep.imgClean;
-            }
+            return useLabeled ? prep.imgLabeled : prep.imgClean;
         }
         
-        // Рендер гистологии
+        // Обновление изображения в лайтбоксе
+        function updateLightboxImage() {
+            if (!currentLightboxPrep) return;
+            const useLabeled = showLabelsMode[currentLightboxPrep.id] === true;
+            const currentImg = getImagePath(currentLightboxPrep, useLabeled);
+            const modeText = useLabeled ? 'с подписями' : 'без подписей';
+            
+            document.getElementById('lightboxImage').src = currentImg;
+            document.getElementById('lightboxCaptionText').innerHTML = `${currentLightboxPrep.name} | №${currentLightboxPrep.number} | ${currentLightboxPrep.stain}<br>🔬 ${modeText}`;
+        }
+        
         const gridContainer = document.getElementById('specimenGrid');
         
         function renderHistology() {
@@ -711,7 +732,6 @@
                 const useLabeled = showLabelsMode[prep.id] === true;
                 const currentImg = getImagePath(prep, useLabeled);
                 const buttonText = useLabeled ? '🔍 Убрать подписи' : '🏷️ Показать подписи';
-                const modeText = useLabeled ? 'c подписями' : 'без подписей';
                 
                 const card = document.createElement('div');
                 card.className = 'specimen-card';
@@ -721,7 +741,10 @@
                 imageArea.style.cursor = 'pointer';
                 imageArea.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    openLightbox(currentImg, `${prep.name} | №${prep.number} | ${prep.stain} | ${modeText}`);
+                    currentLightboxPrep = prep;
+                    updateLightboxImage();
+                    document.getElementById('lightboxModal').classList.add('active');
+                    document.body.style.overflow = 'hidden';
                 });
                 
                 const img = document.createElement('img');
@@ -760,55 +783,56 @@
                 gridContainer.appendChild(card);
             });
             
-            // Обработчики кнопок переключения подписей
             document.querySelectorAll('.toggle-labels').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const id = parseInt(btn.getAttribute('data-id'));
                     showLabelsMode[id] = !showLabelsMode[id];
-                    renderHistology();  // Перерисовываем с новыми фото
+                    renderHistology();
+                    if (currentLightboxPrep && currentLightboxPrep.id === id) {
+                        updateLightboxImage();
+                    }
                 });
             });
             
-            // Обработчики кнопок теории
             document.querySelectorAll('.theory-mini-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     const theoryText = btn.getAttribute('data-theory');
                     const name = btn.getAttribute('data-name');
-                    const theoryContainer = document.getElementById('theoryContent');
-                    theoryContainer.innerHTML = `<strong>${name}</strong><br><br>${theoryText}`;
+                    document.getElementById('theoryContent').innerHTML = `<strong>${name}</strong><br><br>${theoryText}`;
                     document.getElementById('theoryModalWindow').classList.add('active');
                 });
             });
         }
         
-        // Лайтбокс для увеличения фото
+        // Лайтбокс с кнопкой переключения
         const lightboxEl = document.getElementById('lightboxModal');
-        const lightboxImg = document.getElementById('lightboxImage');
-        const lightboxCaptionSpan = document.getElementById('lightboxCaptionText');
+        const lightboxToggleBtn = document.getElementById('lightboxToggleLabels');
         
-        function openLightbox(imgSrc, caption) {
-            lightboxImg.src = imgSrc;
-            lightboxCaptionSpan.innerText = caption;
-            lightboxEl.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        lightboxToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentLightboxPrep) {
+                const id = currentLightboxPrep.id;
+                showLabelsMode[id] = !showLabelsMode[id];
+                updateLightboxImage();
+                renderHistology(); // обновляем карточку
+            }
+        });
         
         function closeLightbox() {
             lightboxEl.classList.remove('active');
             document.body.style.overflow = '';
+            currentLightboxPrep = null;
         }
         
         document.getElementById('closeLightboxBtn').addEventListener('click', closeLightbox);
         lightboxEl.addEventListener('click', (e) => { if(e.target === lightboxEl) closeLightbox(); });
         
-        // Закрытие теории
         document.getElementById('closeTheoryBtn').addEventListener('click', () => {
             document.getElementById('theoryModalWindow').classList.remove('active');
         });
         
-        // Навигация между страницами
         const homePage = document.getElementById('homePage');
         const histPage = document.getElementById('histologyPage');
         const navHome = document.getElementById('navHome');
@@ -832,7 +856,6 @@
         navHome.addEventListener('click', () => showPage('home'));
         navHistology.addEventListener('click', () => showPage('hist'));
         
-        // Запуск
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(typeEffect, 500);
             renderHistology();
