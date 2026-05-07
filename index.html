@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>417 | Система логинов</title>
+    <title>417 | Гистология — 6 коллоквиум</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     
@@ -177,30 +177,6 @@
             background: linear-gradient(135deg, #FFEA00, #FFB347);
         }
 
-        .user-status {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 200;
-            background: rgba(0,0,0,0.5);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            color: #ffec80;
-        }
-        .login-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 150px;
-            z-index: 200;
-            background: #333;
-            border: none;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
         .page {
             display: none;
             position: relative;
@@ -210,6 +186,7 @@
         }
         .page.active { display: block; }
 
+        /* ГЛАВНАЯ СТРАНИЦА */
         .content {
             display: flex;
             flex-direction: column;
@@ -276,161 +253,241 @@
             50%{ opacity: 0; }
         }
 
-        .premium-content {
-            display: none;
-            margin-top: 40px;
-            padding: 30px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(12px);
-            border-radius: 30px;
-            max-width: 600px;
+        /* СТИЛИ ГИСТОЛОГИИ */
+        .hist-header {
             text-align: center;
+            margin-bottom: 40px;
         }
-        .premium-content.visible { display: block; }
-
-        .library-container {
-            max-width: 1200px;
+        .hist-header h1 {
+            font-size: 2.4rem;
+            color: #ffec80;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .colloquium-badge {
+            background: rgba(255,236,128,0.15);
+            backdrop-filter: blur(8px);
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 100px;
+            margin-top: 12px;
+            font-weight: 500;
+            border: 1px solid #ffec80;
+            color: #ffec80;
+        }
+        .specimen-grid {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
-        }
-        .library-container h1 { color: #ffec80; text-align: center; margin-bottom: 30px; font-size: 32px; }
-        .pdf-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 28px;
         }
-        .pdf-card {
-            background: rgba(0,0,0,0.6);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255,215,0,0.3);
-            transition: all 0.3s;
+        .specimen-card {
+            background: rgba(18, 22, 40, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.4);
         }
-        .pdf-card:hover { transform: translateY(-5px); border-color: #ffec80; }
-        .pdf-card h3 { color: white; margin-bottom: 10px; }
-        .pdf-card p { color: #aaa; font-size: 13px; margin-bottom: 15px; }
-        .pdf-card button {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
+        .specimen-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffec80;
         }
-        .access-denied { text-align: center; padding: 40px; color: #ff8888; }
-
-        .viewer-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1001;
-            display: none;
-            flex-direction: column;
-        }
-        .viewer-modal.active { display: flex; }
-        .viewer-header {
-            padding: 15px;
-            background: #111;
+        .image-area {
+            position: relative;
+            background: #03050a;
+            min-height: 220px;
             display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+        }
+        .prep-img {
+            width: 100%;
+            height: auto;
+            max-height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+        .badge-number {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: monospace;
+            color: #ffec80;
+            border: 1px solid rgba(255,215,0,0.6);
+            z-index: 5;
+        }
+        .badge-stain {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 500;
+            font-family: monospace;
+            color: #ffdd99;
+            border: 1px solid rgba(255,215,0,0.6);
+            z-index: 5;
+        }
+        .card-info {
+            padding: 18px 16px 20px;
+        }
+        .prep-title {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 6px;
+        }
+        .prep-desc {
+            font-size: 0.75rem;
+            color: #b4c0da;
+            margin-bottom: 14px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
         }
-        .viewer-header button { background: #ff4444; border: none; color: white; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
-        .viewer-iframe { flex: 1; width: 100%; border: none; }
-        .watermark {
+        .toggle-labels {
+            background: rgba(255,215,0,0.2);
+            border: 1px solid #ffec80;
+            color: #ffec80;
+            padding: 7px 16px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .toggle-labels:hover {
+            background: #ffec80;
+            color: #111;
+        }
+        .theory-mini-btn {
+            background: #2c3a5e;
+            border: none;
+            color: white;
+            padding: 7px 18px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .theory-mini-btn:hover {
+            background: #1f2a46;
+        }
+        .click-hint {
+            font-size: 10px;
+            color: #9aa3bf;
+            text-align: right;
+            margin-top: 12px;
+        }
+
+        /* Мини-теория */
+        .theory-modal {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            z-index: 1002;
-            color: rgba(255,255,255,0.15);
+            width: 360px;
+            background: rgba(10, 12, 22, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            border: 1px solid #ffec80;
+            z-index: 300;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.6);
+        }
+        .theory-modal.active {
+            display: flex;
+        }
+        .theory-header {
+            padding: 14px 18px;
+            background: rgba(0,0,0,0.6);
+            border-bottom: 1px solid #ffec80;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 28px 28px 0 0;
+            color: #ffec80;
+            font-weight: 700;
+        }
+        .theory-header button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .theory-body {
+            padding: 20px;
+            color: #eef2ff;
             font-size: 14px;
-            pointer-events: none;
-            font-family: monospace;
-            transform: rotate(-15deg);
+            line-height: 1.5;
+            max-height: 320px;
+            overflow-y: auto;
         }
 
-        .modal {
+        /* Лайтбокс для фото */
+        .lightbox {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(16px);
             z-index: 1000;
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: all 0.3s;
-        }
-        .modal.active { visibility: visible; opacity: 1; }
-        .modal-content {
-            background: rgba(20,20,20,0.95);
-            border-radius: 30px;
-            padding: 40px;
-            text-align: center;
-            border: 1px solid rgba(255,215,0,0.5);
-            min-width: 320px;
-        }
-        .modal-content input {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,215,0,0.5);
-            padding: 12px 20px;
-            border-radius: 40px;
-            color: white;
-            width: 100%;
-            margin: 10px 0;
-        }
-        .modal-content button {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border: none;
-            padding: 10px 30px;
-            border-radius: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 30px;
-            color: white;
+            flex-direction: column;
             cursor: pointer;
         }
-        select {
-            background: #333;
-            color: white;
-            padding: 10px;
-            border-radius: 20px;
-            margin: 10px 0;
-            width: 100%;
-            border: 1px solid rgba(255,215,0,0.5);
+        .lightbox.active {
+            display: flex;
         }
-
-        .admin-panel {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            z-index: 200;
+        .lightbox-img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 24px;
+            border: 2px solid rgba(255,215,0,0.6);
+        }
+        .lightbox-caption {
+            margin-top: 20px;
             background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            padding: 15px;
-            border-radius: 20px;
-            border: 1px solid #ffec80;
-            min-width: 250px;
-            display: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            color: #ffec80;
         }
-        .admin-panel.visible { display: block; }
-        .user-list { font-size: 11px; color: #aaa; margin-top: 10px; max-height: 150px; overflow-y: auto; }
-        .user-list div { margin: 5px 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
-        .user-list button { background: #ff6666; border: none; color: white; padding: 2px 8px; border-radius: 10px; cursor: pointer; font-size: 10px; }
+        .close-lightbox {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 40px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
 
         .footer {
             position: absolute;
@@ -473,7 +530,8 @@
             .footer { font-size: 9px; }
             .main-nav { top: 70px; gap: 15px; padding: 6px 16px; }
             .main-nav button { font-size: 12px; }
-            .login-btn { left: 130px; }
+            .specimen-grid { grid-template-columns: 1fr; padding: 0 12px; }
+            .theory-modal { width: 90%; right: 5%; bottom: 20px; }
         }
     </style>
 </head>
@@ -496,14 +554,12 @@
 
     <div class="main-nav">
         <button id="navHome" class="active">Главная</button>
-        <button id="navLibrary">Библиотека</button>
+        <button id="navHistology">🔬 Гистология</button>
     </div>
 
     <a href="https://t.me/History_417_bot" target="_blank" class="buy-ticket-btn">🎫 Купить билеты</a>
 
-    <div class="user-status" id="userStatusDisplay">👤 Гость</div>
-    <button id="loginBtn" class="login-btn">Вход</button>
-
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
     <div id="homePage" class="page active">
         <div class="content">
             <div class="number-container">
@@ -515,60 +571,34 @@
                 <span class="dynamic-text"></span>
                 <span class="cursor"></span>
             </div>
-            <div class="premium-content" id="premiumContent">
-                <h2 style="color:#ffec80;">🔥 Эксклюзивный контент</h2>
-                <p style="margin: 20px 0;">Добро пожаловать, <span id="userNameDisplay"></span>! Вам открыт доступ к закрытой библиотеке.</p>
-                <button id="goToLibraryBtn" style="background:#ffec80; border:none; padding:10px 20px; border-radius:30px; font-weight:bold; cursor:pointer;">📚 Перейти в библиотеку</button>
-            </div>
         </div>
     </div>
 
-    <div id="libraryPage" class="page">
-        <div class="library-container">
-            <h1>📚 Библиотека документов</h1>
-            <div id="pdfList" class="pdf-grid"></div>
+    <!-- ГИСТОЛОГИЯ 6 коллоквиум -->
+    <div id="histologyPage" class="page">
+        <div class="hist-header">
+            <h1>🔬 Гистология. 6 коллоквиум</h1>
+            <div class="colloquium-badge">📌 Пищеварительная, дыхательная система, кожа</div>
+        </div>
+        <div class="specimen-grid" id="specimenGrid"></div>
+    </div>
+
+    <!-- Мини-теория -->
+    <div id="theoryModalWindow" class="theory-modal">
+        <div class="theory-header">
+            <span>📖 Теория к препарату</span>
+            <button id="closeTheoryBtn">✕</button>
+        </div>
+        <div class="theory-body" id="theoryContent">
+            Нажмите «Теория» на карточке препарата
         </div>
     </div>
 
-    <div id="pdfViewerModal" class="viewer-modal">
-        <div class="viewer-header">
-            <span style="color:white;" id="pdfTitle">Документ</span>
-            <button id="closeViewer">✕ Закрыть</button>
-        </div>
-        <iframe id="pdfIframe" class="viewer-iframe" src=""></iframe>
-        <div class="watermark">417 • CONFIDENTIAL • 417</div>
-    </div>
-
-    <div id="authModal" class="modal">
-        <div class="close-modal" id="closeModal">&times;</div>
-        <div class="modal-content">
-            <h3 style="color:white;">🔐 Вход в систему</h3>
-            <input type="text" id="loginInput" placeholder="Логин">
-            <input type="password" id="passwordInput" placeholder="Пароль">
-            <button id="submitLogin">Войти</button>
-            <p id="authError" style="color:#ff6666; font-size:12px; margin-top:15px;"></p>
-        </div>
-    </div>
-
-    <div id="registerModal" class="modal">
-        <div class="close-modal" id="closeRegisterModal">&times;</div>
-        <div class="modal-content">
-            <h3 style="color:white;">➕ Добавить пользователя</h3>
-            <input type="text" id="newLogin" placeholder="Логин">
-            <input type="password" id="newPassword" placeholder="Пароль">
-            <select id="newRole">
-                <option value="user">Пользователь</option>
-                <option value="admin">Администратор</option>
-            </select>
-            <button id="confirmAddUser">➕ Добавить</button>
-        </div>
-    </div>
-
-    <div id="adminPanel" class="admin-panel">
-        <h4>👑 Админ-панель</h4>
-        <button id="addUserBtn" style="background:#ffec80; width:100%; margin-bottom:10px;">➕ Добавить пользователя</button>
-        <div class="user-list" id="userList"></div>
-        <button id="logoutBtn" style="background:#444; width:100%; margin-top:5px;">🚪 Выйти</button>
+    <!-- Лайтбокс для увеличения фото -->
+    <div id="lightboxModal" class="lightbox">
+        <button class="close-lightbox" id="closeLightboxBtn">✕</button>
+        <img id="lightboxImage" class="lightbox-img" alt="">
+        <div id="lightboxCaptionText" class="lightbox-caption"></div>
     </div>
 
     <div class="footer">
@@ -581,135 +611,17 @@
     </div>
 
     <script>
-        // ========== БАЗА ПОЛЬЗОВАТЕЛЕЙ (ПРОСТАЯ, БЕЗ ПРИВЯЗКИ) ==========
-        let users = [
-            { login: "admin", password: "admin4172026", role: "admin", name: "Администратор" },
-            { login: "ivan", password: "user2024", role: "user", name: "Иван" },
-            { login: "maria", password: "friend417", role: "user", name: "Мария" },
-            { login: "guestVIP", password: "vip777", role: "user", name: "VIP Гость" }
-        ];
-        
-        function saveUsers() { localStorage.setItem("systemUsers", JSON.stringify(users)); }
-        function loadUsers() { const saved = localStorage.getItem("systemUsers"); if (saved) users = JSON.parse(saved); }
-        loadUsers();
-        
-        let currentUser = null;
-        
-        function login(login, password) {
-            const user = users.find(u => u.login === login && u.password === password);
-            if (!user) return false;
-            
-            currentUser = { login: user.login, role: user.role, name: user.name };
-            localStorage.setItem("currentUser", JSON.stringify(currentUser));
-            updateUI();
-            return true;
-        }
-        
-        function logout() {
-            currentUser = null;
-            localStorage.removeItem("currentUser");
-            updateUI();
-        }
-        
-        function addUser(login, password, role, name) {
-            if (users.find(u => u.login === login)) return false;
-            users.push({ login, password, role, name: name || login });
-            saveUsers();
-            if (currentUser && currentUser.role === "admin") renderUserList();
-            return true;
-        }
-        
-        function deleteUser(login) {
-            if (currentUser && currentUser.login === login) return false;
-            users = users.filter(u => u.login !== login);
-            saveUsers();
-            if (currentUser && currentUser.role === "admin") renderUserList();
-            return true;
-        }
-        
-        function updateUI() {
-            const userStatus = document.getElementById("userStatusDisplay");
-            const premiumBlock = document.getElementById("premiumContent");
-            const adminPanel = document.getElementById("adminPanel");
-            const userNameSpan = document.getElementById("userNameDisplay");
-            
-            if (currentUser) {
-                userStatus.innerHTML = currentUser.role === "admin" ? `👑 Администратор` : `✅ ${currentUser.name}`;
-                premiumBlock.classList.add("visible");
-                if (userNameSpan) userNameSpan.innerText = currentUser.name || currentUser.login;
-                if (currentUser.role === "admin") {
-                    adminPanel.classList.add("visible");
-                    renderUserList();
-                } else {
-                    adminPanel.classList.remove("visible");
-                }
-            } else {
-                userStatus.innerHTML = "👤 Гость";
-                premiumBlock.classList.remove("visible");
-                adminPanel.classList.remove("visible");
-            }
-            renderPDFList();
-        }
-        
-        function renderUserList() {
-            const container = document.getElementById("userList");
-            if (!container) return;
-            container.innerHTML = "<strong>Пользователи:</strong>";
-            users.forEach(user => {
-                const div = document.createElement("div");
-                div.innerHTML = `${user.login} (${user.role === "admin" ? "👑" : "👤"})
-                                <button onclick="deleteUserUI('${user.login}')">❌</button>`;
-                container.appendChild(div);
-            });
-        }
-        
-        window.deleteUserUI = function(login) { if (confirm(`Удалить ${login}?`)) deleteUser(login); };
-        
-        function loadStoredUser() {
-            const saved = localStorage.getItem("currentUser");
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    currentUser = parsed;
-                    updateUI();
-                } catch(e) { currentUser = null; }
-            }
-        }
-        
-        // ========== ЗАЩИТА ОТ СКАЧИВАНИЯ ==========
-        function blockShortcuts(e) {
-            if (e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'c' || e.key === 'u')) {
-                e.preventDefault();
-                return false;
-            }
-            if (e.key === 'F12') { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.shiftKey && e.key === 'I') { e.preventDefault(); return false; }
-        }
-        document.addEventListener('keydown', blockShortcuts);
-        document.addEventListener('contextmenu', (e) => { if (!e.target.closest('.viewer-modal')) e.preventDefault(); });
-        
-        // ========== УПРАВЛЕНИЕ СТРАНИЦАМИ ==========
-        function showPage(pageId) {
-            document.getElementById('homePage').classList.remove('active');
-            document.getElementById('libraryPage').classList.remove('active');
-            document.getElementById(pageId).classList.add('active');
-            const isHome = pageId === 'homePage';
-            document.getElementById('navHome').classList.toggle('active', isHome);
-            document.getElementById('navLibrary').classList.toggle('active', !isHome);
-            if (!isHome) renderPDFList();
-        }
-        
         // ========== АНИМАЦИЯ ТЕКСТА ==========
         const phrases = [
-            "417 рандомные цифры",
-            "417 powered by Papillon",
-            "417 здесь может быть ваша реклама",
-            "Were made by артем ий",
-            "люблю иру"
+            "САЙТ НА ТЕХ РАБОТАХ",
+            "САЙТ НА ТЕХ РАБОТАХ",
+            "САЙТ НА ТЕХ РАБОТАХ",
+            "САЙТ НА ТЕХ РАБОТАХ"
         ];
         let phraseIndex = 0, charIndex = 0, isDeleting = false, typingSpeed = 100, pauseAfterTyping = 2000;
         const dynamicTextElement = document.querySelector('.dynamic-text');
         function typeEffect() {
+            if (!dynamicTextElement) return;
             const currentPhrase = phrases[phraseIndex];
             if (!isDeleting) {
                 dynamicTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
@@ -741,96 +653,195 @@
             document.body.removeEventListener('click', initAudio);
         });
         
-        // ========== PDF БИБЛИОТЕКА ==========
-        const pdfFiles = [
-            { id: 1, title: "Руководство 417", description: "Основная информация о проекте", filename: "guide.pdf", access: "user" },
-            { id: 2, title: "Секретный документ", description: "Только для администратора", filename: "secret.pdf", access: "admin" }
+        // ========== БАЗА ПРЕПАРАТОВ (все из списка) ==========
+        // СИСТЕМА ИМЕНОВАНИЯ ФАЙЛОВ:
+        // - Чистое фото (без подписей): номерC.jpg  (например "120C.jpg")
+        // - Фото с подписями: номер.jpg        (например "120.jpg")
+        // Для номеров с буквой (129a) используйте "129aC.jpg" и "129a.jpg"
+        
+        const specimens = [
+            { id: 1, name: "Нитевидные сосочки языка", stain: "Г-Э", number: "120", description: "Кератинизированные нитевидные выросты, придают шероховатость языку.", theory: "Нитевидные сосочки — самые многочисленные, покрыты многослойным плоским ороговевающим эпителием. Выполняют механическую функцию.", imgClean: "120C.jpg", imgLabeled: "120.jpg" },
+            { id: 2, name: "Листовидные сосочки", stain: "Г-Э", number: "121", description: "Содержат вкусовые луковицы, расположены по бокам языка.", theory: "Листовидные сосочки хорошо развиты у детей, участвуют в восприятии вкуса. Вкусовые почки заложены в эпителии.", imgClean: "121C.jpg", imgLabeled: "121.jpg" },
+            { id: 3, name: "Развитие зуба (эмалевый орган)", stain: "Г-Э", number: "122", description: "Эмалевый орган, звездчатый ретикулум, зубной сосочек.", theory: "Эмалевый орган — производное эктодермы. Внутренние клетки дифференцируются в амелобласты, формирующие эмаль.", imgClean: "122C.jpg", imgLabeled: "122.jpg" },
+            { id: 4, name: "Развитие зуба (дентин и эмаль)", stain: "Г-Э", number: "123", description: "Одонтобласты, эмалевые призмы, стадия обызвествления.", theory: "Дентин вырабатывается одонтобластами, эмаль — амелобластами. На этой стадии видна матрица дентина и эмали.", imgClean: "123C.jpg", imgLabeled: "123.jpg" },
+            { id: 5, name: "Поперечный разрез пищевода собаки", stain: "Г-Э", number: "126", description: "Многослойный плоский эпителий, мышечная оболочка.", theory: "Пищевод выстлан многослойным плоским неороговевающим эпителием. Собственная пластинка содержит кардиальные железы.", imgClean: "126C.jpg", imgLabeled: "126.jpg" },
+            { id: 6, name: "Переход пищевода в желудок собаки", stain: "Г-Э", number: "127", description: "Зигзагообразная граница, кардиальные железы.", theory: "Резкая граница: эпителий пищевода сменяется однослойным призматическим эпителием желудка. Виден переход.", imgClean: "127C.jpg", imgLabeled: "127.jpg" },
+            { id: 7, name: "Дно желудка собаки", stain: "Конгорот - железный гематоксилин", number: "128", description: "Главные и париетальные клетки фундальных желёз.", theory: "Фундальные железы содержат париетальные (вырабатывают HCl) и главные (пепсиноген) клетки. Окраска конгорот выявляет кислую среду.", imgClean: "128C.jpg", imgLabeled: "128.jpg" },
+            { id: 8, name: "Пилорическая часть желудка собаки", stain: "Г-Э", number: "129", description: "Пилоровые железы, глубокие ямки, мукоциты.", theory: "Пилоровые железы секретируют слизь, клетки преимущественно мукоциты. Ямки глубже, чем в фундальной части.", imgClean: "129C.jpg", imgLabeled: "129.jpg" },
+            { id: 9, name: "Переход желудка в 12-ти перстную кишку", stain: "Г-Э", number: "129a", description: "Пилорический сфинктер, бруннеровы железы.", theory: "Дуоденальные железы Бруннера в подслизистой основе, нейтрализуют кислоту. Виден переход пилорического отдела.", imgClean: "129aC.jpg", imgLabeled: "129a.jpg" },
+            { id: 10, name: "Двенадцатиперстная кишка", stain: "Г-Э", number: "130", description: "Высокие ворсинки, крипты, бокаловидные клетки.", theory: "Двенадцатиперстная кишка: ворсинки высокие, в подслизистой основе — сложные трубчатые железы (Бруннера).", imgClean: "130C.jpg", imgLabeled: "130.jpg" },
+            { id: 11, name: "Тонкая кишка щенка", stain: "Г-Э", number: "131", description: "Высокие ворсинки, активный рост, лимфоидные фолликулы.", theory: "Щенячья тонкая кишка: хорошо развиты ворсинки и крипты, активное пищеварение. Лимфоидные узелки в стадии формирования.", imgClean: "131C.jpg", imgLabeled: "131.jpg" },
+            { id: 12, name: "Толстая кишка собаки", stain: "Г-Э", number: "132", description: "Крипты, много бокаловидных клеток, отсутствие ворсинок.", theory: "Толстая кишка: отсутствуют ворсинки, много бокаловидных клеток, крипты глубокие. Мышечный слой хорошо развит.", imgClean: "132C.jpg", imgLabeled: "132.jpg" },
+            { id: 13, name: "Аппендикс", stain: "Г-Э", number: "133", description: "Лимфоидная ткань, узкий просвет, складки слизистой.", theory: "Червеобразный отросток: диффузная лимфоидная ткань и лимфоидные узелки. В просвете могут быть остатки содержимого.", imgClean: "133C.jpg", imgLabeled: "133.jpg" },
+            { id: 14, name: "Околоушная железа собаки", stain: "Г-Э", number: "135", description: "Серозные ацинусы, жировые клетки.", theory: "Серозный тип секреции, богата ферментами. Протоки выстланы кубическим эпителием, видны вставочные протоки.", imgClean: "135C.jpg", imgLabeled: "135.jpg" },
+            { id: 15, name: "Подчелюстная железа человека", stain: "Г-Э", number: "136", description: "Смешанные концевые отделы (серозно-слизистые).", theory: "Серозно-слизистая железа. Серозные полулуния Нуну — характерный признак. Протоки выстланы кубическим эпителием.", imgClean: "136C.jpg", imgLabeled: "136.jpg" },
+            { id: 16, name: "Поджелудочная железа собаки", stain: "Г-Э", number: "137", description: "Ацинусы, островки Лангерганса, выводные протоки.", theory: "Экзокринная часть — ацинусы; эндокринная — островки (инсулин, глюкагон). Протоки выстланы кубическим эпителием.", imgClean: "137C.jpg", imgLabeled: "137.jpg" },
+            { id: 17, name: "Печень свиньи", stain: "Пирофуксин-железный гематоксилин", number: "138", description: "Печеночные дольки, центральная вена, портальные тракты.", theory: "Печень: дольковое строение, центральная вена, балки гепатоцитов. Пирофуксин окрашивает соединительную ткань.", imgClean: "138C.jpg", imgLabeled: "138.jpg" },
+            { id: 18, name: "Печень человека", stain: "Г-Э", number: "139", description: "Гепатоциты, портальные тракты, синусоиды.", theory: "Классическая долька. Портальные тракты содержат междольковые артерию, вену и желчный проток.", imgClean: "139C.jpg", imgLabeled: "139.jpg" },
+            { id: 19, name: "Желчный пузырь", stain: "Г-Э", number: "140", description: "Складчатая слизистая, эпителий, гладкие миоциты.", theory: "Эпителий высокий призматический, всасывает воду, концентрирует желчь. Мышечная оболочка развита слабо.", imgClean: "140C.jpg", imgLabeled: "140.jpg" },
+            { id: 20, name: "Трахея собаки", stain: "Г-Э", number: "141", description: "Реснитчатый эпителий, гиалиновый хрящ, железы.", theory: "Слизистая оболочка с мерцательным эпителием, подслизистая содержит смешанные железы, адвентиция с гиалиновыми кольцами.", imgClean: "141C.jpg", imgLabeled: "141.jpg" },
+            { id: 21, name: "Легкое кошки", stain: "Г-Э", number: "142", description: "Альвеолы, пневмоциты, мелкие бронхи.", theory: "Респираторный отдел: альвеолы с пневмоцитами I и II типов, сурфактант. Бронхиолы выстланы кубическим эпителием.", imgClean: "142C.jpg", imgLabeled: "142.jpg" },
+            { id: 22, name: "Кожа пальца человека", stain: "Г-Э", number: "143", description: "Эпидермис, дерма, потовые железы.", theory: "Многослойный плоский ороговевающий эпителий (эпидермис), сосочковый и сетчатый слои дермы, потовые железы.", imgClean: "143C.jpg", imgLabeled: "143.jpg" },
+            { id: 23, name: "Кожа с волосом человека (продольный разрез)", stain: "Г-Э", number: "144", description: "Волосяной фолликул, сальные железы, мышца.", theory: "Волос: луковица, корень, сальные железы, мышца-подниматель волоса. Видно продольное сечение волосяного фолликула.", imgClean: "144C.jpg", imgLabeled: "144.jpg" }
         ];
         
-        function renderPDFList() {
-            const container = document.getElementById('pdfList');
-            if (!container) return;
-            const isLoggedIn = !!currentUser;
-            const isAdmin = currentUser?.role === "admin";
-            const accessibleFiles = pdfFiles.filter(pdf => {
-                if (pdf.access === "admin") return isAdmin;
-                if (pdf.access === "user") return isLoggedIn;
-                return true;
-            });
-            if (accessibleFiles.length === 0) {
-                container.innerHTML = `<div class="access-denied">🔒 Авторизуйтесь, чтобы увидеть документы</div>`;
-                return;
+        // Состояние: по умолчанию показываем ЧИСТЫЕ фото (без подписей) — false
+        let showLabelsMode = {};
+        specimens.forEach(s => { showLabelsMode[s.id] = false; });  // false = чистое фото (без подписей)
+        
+        // Функция получения пути к папке с фото
+        function getImagePath(prep, useLabeled) {
+            const baseFolder = "images/";  // папка с фото в репозитории
+            if (useLabeled) {
+                return baseFolder + prep.imgLabeled;
+            } else {
+                return baseFolder + prep.imgClean;
             }
-            container.innerHTML = accessibleFiles.map(pdf => `
-                <div class="pdf-card">
-                    <h3>📄 ${pdf.title}</h3>
-                    <p>${pdf.description}</p>
-                    <button onclick="openPDF('${pdf.filename}', '${pdf.title}')">📖 Читать</button>
-                </div>
-            `).join('');
         }
         
-        window.openPDF = function(filename, title) {
-            const modal = document.getElementById('pdfViewerModal');
-            const iframe = document.getElementById('pdfIframe');
-            const titleSpan = document.getElementById('pdfTitle');
-            const pdfUrl = `${window.location.origin}/${filename}`;
-            const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`;
-            iframe.src = viewerUrl;
-            titleSpan.innerText = title;
-            modal.classList.add('active');
-        };
-        document.getElementById('closeViewer').onclick = () => {
-            const modal = document.getElementById('pdfViewerModal');
-            const iframe = document.getElementById('pdfIframe');
-            modal.classList.remove('active');
-            iframe.src = '';
-        };
+        // Рендер гистологии
+        const gridContainer = document.getElementById('specimenGrid');
         
-        // ========== МОДАЛЬНЫЕ ОКНА ==========
-        const authModal = document.getElementById('authModal');
-        const registerModal = document.getElementById('registerModal');
-        document.getElementById('loginBtn').onclick = () => authModal.classList.add('active');
-        document.getElementById('closeModal').onclick = () => authModal.classList.remove('active');
-        document.getElementById('closeRegisterModal').onclick = () => registerModal.classList.remove('active');
-        document.getElementById('submitLogin').onclick = () => {
-            const loginVal = document.getElementById('loginInput').value.trim();
-            const passwordVal = document.getElementById('passwordInput').value;
-            if (!loginVal || !passwordVal) { document.getElementById('authError').innerText = 'Введите логин и пароль'; return; }
-            if (login(loginVal, passwordVal)) {
-                authModal.classList.remove('active');
-                document.getElementById('loginInput').value = '';
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('authError').innerText = '';
+        function renderHistology() {
+            if (!gridContainer) return;
+            gridContainer.innerHTML = '';
+            
+            specimens.forEach(prep => {
+                const useLabeled = showLabelsMode[prep.id] === true;
+                const currentImg = getImagePath(prep, useLabeled);
+                const buttonText = useLabeled ? '🔍 Убрать подписи' : '🏷️ Показать подписи';
+                const modeText = useLabeled ? 'c подписями' : 'без подписей';
+                
+                const card = document.createElement('div');
+                card.className = 'specimen-card';
+                
+                const imageArea = document.createElement('div');
+                imageArea.className = 'image-area';
+                imageArea.style.cursor = 'pointer';
+                imageArea.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openLightbox(currentImg, `${prep.name} | №${prep.number} | ${prep.stain} | ${modeText}`);
+                });
+                
+                const img = document.createElement('img');
+                img.src = currentImg;
+                img.alt = prep.name;
+                img.className = 'prep-img';
+                img.onerror = () => { 
+                    img.src = 'https://placehold.co/600x400/1a1f2e/ffec80?text=Загрузите+фото+'+prep.number;
+                };
+                
+                const badgeNumber = document.createElement('div');
+                badgeNumber.className = 'badge-number';
+                badgeNumber.innerText = `№ ${prep.number}`;
+                
+                const badgeStain = document.createElement('div');
+                badgeStain.className = 'badge-stain';
+                badgeStain.innerText = `🎨 ${prep.stain}`;
+                
+                imageArea.appendChild(img);
+                imageArea.appendChild(badgeNumber);
+                imageArea.appendChild(badgeStain);
+                
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'card-info';
+                infoDiv.innerHTML = `
+                    <div class="prep-title">${prep.name}</div>
+                    <div class="prep-desc">${prep.description}</div>
+                    <div class="action-buttons">
+                        <button class="toggle-labels" data-id="${prep.id}">${buttonText}</button>
+                        <button class="theory-mini-btn" data-id="${prep.id}" data-name="${prep.name.replace(/"/g, '&quot;')}" data-theory="${prep.theory.replace(/"/g, '&quot;')}">📖 Теория</button>
+                    </div>
+                    <div class="click-hint">🖱️ Нажмите на фото для увеличения</div>
+                `;
+                card.appendChild(imageArea);
+                card.appendChild(infoDiv);
+                gridContainer.appendChild(card);
+            });
+            
+            // Обработчики кнопок переключения подписей
+            document.querySelectorAll('.toggle-labels').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    showLabelsMode[id] = !showLabelsMode[id];
+                    renderHistology();  // Перерисовываем с новыми фото
+                });
+            });
+            
+            // Обработчики кнопок теории
+            document.querySelectorAll('.theory-mini-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const theoryText = btn.getAttribute('data-theory');
+                    const name = btn.getAttribute('data-name');
+                    const theoryContainer = document.getElementById('theoryContent');
+                    theoryContainer.innerHTML = `<strong>${name}</strong><br><br>${theoryText}`;
+                    document.getElementById('theoryModalWindow').classList.add('active');
+                });
+            });
+        }
+        
+        // Лайтбокс для увеличения фото
+        const lightboxEl = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImage');
+        const lightboxCaptionSpan = document.getElementById('lightboxCaptionText');
+        
+        function openLightbox(imgSrc, caption) {
+            lightboxImg.src = imgSrc;
+            lightboxCaptionSpan.innerText = caption;
+            lightboxEl.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            lightboxEl.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        document.getElementById('closeLightboxBtn').addEventListener('click', closeLightbox);
+        lightboxEl.addEventListener('click', (e) => { if(e.target === lightboxEl) closeLightbox(); });
+        
+        // Закрытие теории
+        document.getElementById('closeTheoryBtn').addEventListener('click', () => {
+            document.getElementById('theoryModalWindow').classList.remove('active');
+        });
+        
+        // Навигация между страницами
+        const homePage = document.getElementById('homePage');
+        const histPage = document.getElementById('histologyPage');
+        const navHome = document.getElementById('navHome');
+        const navHistology = document.getElementById('navHistology');
+        
+        function showPage(page) {
+            homePage.classList.remove('active');
+            histPage.classList.remove('active');
+            if (page === 'home') {
+                homePage.classList.add('active');
+                navHome.classList.add('active');
+                navHistology.classList.remove('active');
             } else {
-                document.getElementById('authError').innerText = 'Неверный логин или пароль';
+                histPage.classList.add('active');
+                navHistology.classList.add('active');
+                navHome.classList.remove('active');
+                if (gridContainer.children.length === 0) renderHistology();
             }
-        };
-        document.getElementById('addUserBtn').onclick = () => { if (currentUser?.role === "admin") registerModal.classList.add('active'); };
-        document.getElementById('confirmAddUser').onclick = () => {
-            if (currentUser?.role !== "admin") return;
-            const newLogin = document.getElementById('newLogin').value.trim();
-            const newPassword = document.getElementById('newPassword').value;
-            const newRole = document.getElementById('newRole').value;
-            if (!newLogin || !newPassword) { alert("Заполните логин и пароль"); return; }
-            if (addUser(newLogin, newPassword, newRole, newLogin)) {
-                registerModal.classList.remove('active');
-                document.getElementById('newLogin').value = '';
-                document.getElementById('newPassword').value = '';
-                renderUserList();
-            } else alert("Пользователь уже существует");
-        };
-        document.getElementById('logoutBtn').onclick = () => { if (currentUser) logout(); };
-        document.getElementById('navHome').onclick = () => showPage('homePage');
-        document.getElementById('navLibrary').onclick = () => showPage('libraryPage');
-        document.getElementById('goToLibraryBtn').onclick = () => showPage('libraryPage');
-        window.addEventListener('click', (e) => { if (e.target === authModal) authModal.classList.remove('active'); if (e.target === registerModal) registerModal.classList.remove('active'); });
+        }
         
-        // ========== ЗАПУСК ==========
+        navHome.addEventListener('click', () => showPage('home'));
+        navHistology.addEventListener('click', () => showPage('hist'));
+        
+        // Запуск
         window.addEventListener('DOMContentLoaded', () => {
-            loadStoredUser();
             setTimeout(typeEffect, 500);
-            renderPDFList();
+            renderHistology();
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (lightboxEl.classList.contains('active')) closeLightbox();
+                    if (document.getElementById('theoryModalWindow').classList.contains('active')) 
+                        document.getElementById('theoryModalWindow').classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
