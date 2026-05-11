@@ -3,627 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>417 | Гистология — 6 коллоквиум (полный список)</title>
+    <title>417 | Гистология — 6 коллоквиум</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            position: relative;
-            overflow-x: hidden;
-            background: #000;
-        }
-
-        .nature-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .nature-image {
-            width: 110%;
-            height: 110%;
-            object-fit: cover;
-            position: absolute;
-            top: -5%;
-            left: -5%;
-            animation: slowDrift 24s infinite alternate ease-in-out;
-            filter: brightness(0.7) contrast(1.1) saturate(1.1);
-        }
-
-        @keyframes slowDrift {
-            0% { transform: scale(1) translate(0%, 0%); }
-            100% { transform: scale(1.08) translate(-3%, -2%); }
-        }
-
-        .music-player {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 200;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 50px;
-            padding: 8px 18px 8px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-
-        .track-info {
-            display: flex;
-            flex-direction: column;
-            color: white;
-        }
-
-        .track-name {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            white-space: nowrap;
-        }
-
-        .track-artist {
-            font-size: 10px;
-            opacity: 0.7;
-        }
-
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .control-btn {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .control-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.05);
-        }
-
-        .volume-slider {
-            width: 70px;
-            height: 3px;
-            -webkit-appearance: none;
-            background: rgba(255,255,255,0.3);
-            border-radius: 3px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #ffec80;
-            cursor: pointer;
-        }
-
-        .main-nav {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 200;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 50px;
-            padding: 8px 24px;
-            display: flex;
-            gap: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .main-nav button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            padding: 0;
-            transition: all 0.3s;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { min-height: 100vh; font-family: 'Inter', 'Segoe UI', sans-serif; position: relative; overflow-x: hidden; background: #000; }
+        .nature-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
+        .nature-image { width: 110%; height: 110%; object-fit: cover; position: absolute; top: -5%; left: -5%; animation: slowDrift 24s infinite alternate ease-in-out; filter: brightness(0.7) contrast(1.1) saturate(1.1); }
+        @keyframes slowDrift { 0% { transform: scale(1) translate(0%, 0%); } 100% { transform: scale(1.08) translate(-3%, -2%); } }
+        .music-player { position: fixed; top: 20px; left: 20px; z-index: 200; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(12px); border-radius: 50px; padding: 8px 18px 8px 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .track-info { display: flex; flex-direction: column; color: white; }
+        .track-name { font-size: 14px; font-weight: 600; white-space: nowrap; }
+        .track-artist { font-size: 10px; opacity: 0.7; }
+        .player-controls { display: flex; align-items: center; gap: 12px; }
+        .control-btn { background: rgba(255,255,255,0.15); border: none; color: white; font-size: 18px; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .control-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
+        .volume-slider { width: 70px; height: 3px; -webkit-appearance: none; background: rgba(255,255,255,0.3); border-radius: 3px; }
+        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; border-radius: 50%; background: #ffec80; cursor: pointer; }
+        .main-nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(12px); border-radius: 50px; padding: 8px 28px; display: flex; gap: 35px; border: 1px solid rgba(255,255,255,0.2); }
+        .main-nav button { background: none; border: none; color: white; font-size: 14px; font-weight: 500; cursor: pointer; padding: 0; transition: 0.3s; }
         .main-nav button.active { color: #ffec80; border-bottom: 2px solid #ffec80; }
-
-        .buy-ticket-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 200;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border: none;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            font-size: 15px;
-            color: #1a1a1a;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            letter-spacing: 0.5px;
-        }
-        .buy-ticket-btn:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #FFEA00, #FFB347);
-        }
-
-        .page {
-            display: none;
-            position: relative;
-            z-index: 10;
-            min-height: 100vh;
-            padding: 100px 20px 80px;
-        }
+        .buy-ticket-btn { position: fixed; top: 20px; right: 20px; z-index: 200; background: linear-gradient(135deg, #FFD700, #FFA500); border: none; padding: 10px 24px; border-radius: 50px; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 15px; color: #1a1a1a; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s; text-decoration: none; display: inline-block; }
+        .buy-ticket-btn:hover { transform: scale(1.05); background: linear-gradient(135deg, #FFEA00, #FFB347); }
+        .page { display: none; position: relative; z-index: 10; min-height: 100vh; padding: 100px 20px 80px; }
         .page.active { display: block; }
+        .content { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .number-container { display: flex; justify-content: center; align-items: baseline; gap: 30px; flex-wrap: wrap; padding: 20px; margin-bottom: 60px; }
+        .digit { font-size: 250px; font-weight: 900; color: #FFF; text-shadow: 0 0 20px rgba(255,255,255,0.5); display: inline-block; animation: bounce 1.2s infinite; transform-origin: center bottom; }
+        .digit-4 { animation-delay: 0s; } .digit-1 { animation-delay: 0.2s; } .digit-7 { animation-delay: 0.4s; }
+        @keyframes bounce { 0%,100%{ transform: translateY(0); } 30%{ transform: translateY(-80px); text-shadow: 0 0 40px rgba(255,255,255,0.9); } 60%{ transform: translateY(-40px); } }
+        .typing-wrapper { text-align: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); padding: 30px 50px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.2); margin-top: 20px; min-width: 500px; }
+        .dynamic-text { font-size: 28px; font-weight: 600; color: #fff; }
+        .cursor { display: inline-block; width: 3px; height: 32px; background-color: #ffec80; margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
+        @keyframes blink { 0%,100%{ opacity: 1; } 50%{ opacity: 0; } }
 
-        .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .number-container {
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            gap: 30px;
-            perspective: 500px;
-            flex-wrap: wrap;
-            padding: 20px;
-            margin-bottom: 60px;
-        }
-        .digit {
-            font-size: 250px;
-            font-weight: 900;
-            color: #FFFFFF;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.3), 0 10px 30px rgba(0,0,0,0.5);
-            display: inline-block;
-            cursor: default;
-            animation: bounce 1.2s ease-in-out infinite;
-            transform-origin: center bottom;
-        }
-        .digit-4 { animation-delay: 0s; }
-        .digit-1 { animation-delay: 0.2s; }
-        .digit-7 { animation-delay: 0.4s; }
-        @keyframes bounce {
-            0%,100%{ transform: translateY(0) scale(1); }
-            30%{ transform: translateY(-80px) scale(1.1); text-shadow: 0 0 40px rgba(255,255,255,0.9); }
-            60%{ transform: translateY(-40px) scale(1.05); }
-        }
-
-        .typing-wrapper {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            padding: 30px 50px;
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: 20px;
-            min-width: 500px;
-        }
-        .dynamic-text {
-            font-size: 28px;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 32px;
-            background-color: #ffec80;
-            margin-left: 5px;
-            animation: blink 1s step-end infinite;
-            vertical-align: middle;
-        }
-        @keyframes blink {
-            0%,100%{ opacity: 1; }
-            50%{ opacity: 0; }
-        }
-
-        /* папка файлов */
-        .files-manager {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(14px);
-            border-radius: 48px;
-            border: 1px solid rgba(255, 236, 128, 0.4);
-            padding: 32px 30px;
-        }
-        .files-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 32px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,236,128,0.3);
-        }
-        .files-header h2 {
-            color: #ffec80;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .admin-panel {
-            display: none;
-            align-items: center;
-            gap: 15px;
-        }
+        /* Файлы */
+        .files-manager { max-width: 1100px; margin: 0 auto; background: rgba(0,0,0,0.55); backdrop-filter: blur(14px); border-radius: 48px; border: 1px solid rgba(255,236,128,0.4); padding: 32px 30px; }
+        .files-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,236,128,0.3); }
+        .files-header h2 { color: #ffec80; font-size: 1.8rem; display: flex; align-items: center; gap: 12px; }
+        .admin-panel { display: none; align-items: center; gap: 15px; }
         .admin-panel.visible { display: flex; }
-        .upload-btn-custom {
-            background: rgba(255,215,0,0.15);
-            border: 1px solid #ffec80;
-            padding: 10px 28px;
-            border-radius: 60px;
-            color: #ffec80;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .upload-btn-custom { background: rgba(255,215,0,0.15); border: 1px solid #ffec80; padding: 10px 28px; border-radius: 60px; color: #ffec80; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 14px; display: inline-flex; align-items: center; gap: 10px; }
         .upload-btn-custom:hover { background: #ffec80; color: #111; }
-        .admin-hint {
-            font-size: 12px;
-            color: #ffaa66;
-            background: rgba(0,0,0,0.6);
-            padding: 5px 14px;
-            border-radius: 50px;
-        }
+        .admin-hint { font-size: 12px; color: #ffaa66; background: rgba(0,0,0,0.6); padding: 5px 14px; border-radius: 50px; }
         #filesInput { display: none; }
-        .files-stats {
-            color: #cddbff;
-            font-size: 13px;
-            background: rgba(0,0,0,0.4);
-            padding: 5px 14px;
-            border-radius: 50px;
-        }
-        .files-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-height: 550px;
-            overflow-y: auto;
-            padding-right: 6px;
-        }
-        .file-item {
-            background: rgba(18, 22, 40, 0.8);
-            border-radius: 24px;
-            border: 1px solid rgba(255,215,0,0.3);
-            padding: 18px 22px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            transition: 0.2s;
-        }
+        .files-stats { color: #cddbff; font-size: 13px; background: rgba(0,0,0,0.4); padding: 5px 14px; border-radius: 50px; }
+        .files-list { display: flex; flex-direction: column; gap: 16px; max-height: 550px; overflow-y: auto; padding-right: 6px; }
+        .file-item { background: rgba(18,22,40,0.8); border-radius: 24px; border: 1px solid rgba(255,215,0,0.3); padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
         .file-item:hover { border-color: #ffec80; background: rgba(28,34,58,0.9); }
         .file-left { display: flex; align-items: center; gap: 18px; flex: 2; min-width: 200px; }
         .file-icon { font-size: 38px; }
-        .file-info-text { overflow: hidden; }
-        .file-name { font-weight: 800; color: white; word-break: break-word; font-size: 1rem; }
+        .file-name { font-weight: 800; color: white; font-size: 1rem; }
         .file-meta { font-size: 11px; color: #a8b4dc; margin-top: 5px; }
-        .direct-link {
-            font-size: 10px;
-            color: #88ccff;
-            margin-top: 4px;
-            word-break: break-all;
-            background: rgba(0,0,0,0.3);
-            padding: 3px 8px;
-            border-radius: 12px;
-            display: inline-block;
-        }
+        .direct-link { font-size: 10px; color: #88ccff; margin-top: 4px; word-break: break-all; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 12px; display: inline-block; }
         .file-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-        .file-btn {
-            background: rgba(255,255,240,0.08);
-            border: none;
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #ffec80;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .file-btn.download:hover { background: #ffec80; color: #111; }
+        .file-btn { background: rgba(255,255,240,0.08); border: none; padding: 8px 18px; border-radius: 40px; font-weight: 600; font-size: 12px; cursor: pointer; color: #ffec80; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .file-btn:hover { background: #ffec80; color: #111; }
         .file-btn.delete { display: none; }
         .file-btn.delete.visible { display: inline-flex; }
         .file-btn.delete:hover { background: #c44; color: white; }
-        .file-btn.view:hover, .file-btn.link-btn:hover { background: #2c5a6e; color: #ffec80; }
-        .empty-files {
-            text-align: center;
-            padding: 60px 20px;
-            color: #b7c2e6;
-            background: rgba(0,0,0,0.3);
-            border-radius: 44px;
-            font-size: 1rem;
-        }
-        .pdf-preview-area {
-            margin-top: 25px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 32px;
-            padding: 12px;
-            display: none;
-        }
-        .pdf-preview-area iframe {
-            width: 100%;
-            height: 460px;
-            border-radius: 24px;
-            border: 1px solid #ffec80;
-        }
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 0 8px;
-            color: #ffec80;
-            font-weight: 600;
-        }
-        .close-preview {
-            background: none;
-            border: none;
-            color: #ffec80;
-            font-size: 24px;
-            cursor: pointer;
-        }
+        .empty-files { text-align: center; padding: 60px 20px; color: #b7c2e6; background: rgba(0,0,0,0.3); border-radius: 44px; }
+        .pdf-preview-area { margin-top: 25px; background: rgba(0,0,0,0.6); border-radius: 32px; padding: 12px; display: none; }
+        .pdf-preview-area iframe { width: 100%; height: 460px; border-radius: 24px; border: 1px solid #ffec80; }
+        .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 8px; color: #ffec80; font-weight: 600; }
+        .close-preview { background: none; border: none; color: #ffec80; font-size: 24px; cursor: pointer; }
 
-        /* гистология — оригинальный дизайн, без наложений */
+        /* Гистология */
         .hist-header { text-align: center; margin-bottom: 40px; }
-        .hist-header h1 { font-size: 2.4rem; color: #ffec80; letter-spacing: -0.5px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-        .colloquium-badge { background: rgba(255,236,128,0.15); backdrop-filter: blur(8px); display: inline-block; padding: 8px 24px; border-radius: 100px; margin-top: 12px; font-weight: 500; border: 1px solid #ffec80; color: #ffec80; }
-        .specimen-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 28px;
-        }
-        .specimen-card {
-            background: rgba(18, 22, 40, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 215, 0, 0.4);
-            overflow: hidden;
-            transition: all 0.25s ease;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.4);
-        }
+        .hist-header h1 { font-size: 2.4rem; color: #ffec80; }
+        .colloquium-badge { background: rgba(255,236,128,0.15); backdrop-filter: blur(8px); display: inline-block; padding: 8px 24px; border-radius: 100px; margin-top: 12px; border: 1px solid #ffec80; color: #ffec80; }
+        .specimen-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 28px; }
+        .specimen-card { background: rgba(18,22,40,0.85); backdrop-filter: blur(10px); border-radius: 32px; border: 1px solid rgba(255,215,0,0.4); overflow: hidden; transition: 0.25s; }
         .specimen-card:hover { transform: translateY(-5px); border-color: #ffec80; }
-        .image-area {
-            position: relative;
-            background: #03050a;
-            min-height: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-bottom: 1px solid rgba(255,215,0,0.3);
-        }
-        .prep-img {
-            width: 100%;
-            height: auto;
-            max-height: 260px;
-            object-fit: cover;
-            display: block;
-        }
-        .badge-number {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(8px);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 700;
-            font-family: monospace;
-            color: #ffec80;
-            border: 1px solid rgba(255,215,0,0.6);
-            z-index: 5;
-        }
-        .badge-stain {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(6px);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 500;
-            font-family: monospace;
-            color: #ffdd99;
-            border: 1px solid rgba(255,215,0,0.6);
-            z-index: 5;
-        }
+        .image-area { position: relative; background: #03050a; min-height: 220px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-bottom: 1px solid rgba(255,215,0,0.3); }
+        .prep-img { width: 100%; height: auto; max-height: 260px; object-fit: cover; }
+        .badge-number { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 30px; font-size: 13px; font-weight: 700; color: #ffec80; border: 1px solid rgba(255,215,0,0.6); }
+        .badge-stain { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); padding: 4px 12px; border-radius: 30px; font-size: 12px; color: #ffdd99; border: 1px solid rgba(255,215,0,0.6); }
         .card-info { padding: 18px 16px 20px; }
-        .prep-title { font-weight: 800; font-size: 1.2rem; color: white; margin-bottom: 6px; }
-        .prep-desc { font-size: 0.75rem; color: #b4c0da; margin-bottom: 14px; }
-        .action-buttons { display: flex; gap: 14px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
-        .toggle-labels {
-            background: rgba(255,215,0,0.2);
-            border: 1px solid #ffec80;
-            color: #ffec80;
-            padding: 7px 16px;
-            border-radius: 40px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .prep-title { font-weight: 800; font-size: 1.2rem; color: white; }
+        .prep-desc { font-size: 0.75rem; color: #b4c0da; margin: 6px 0 14px; }
+        .action-buttons { display: flex; gap: 14px; flex-wrap: wrap; justify-content: space-between; }
+        .toggle-labels, .theory-mini-btn { border-radius: 40px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 7px 16px; transition: 0.2s; }
+        .toggle-labels { background: rgba(255,215,0,0.2); border: 1px solid #ffec80; color: #ffec80; }
         .toggle-labels:hover { background: #ffec80; color: #111; }
-        .theory-mini-btn {
-            background: #2c3a5e;
-            border: none;
-            color: white;
-            padding: 7px 18px;
-            border-radius: 40px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+        .theory-mini-btn { background: #2c3a5e; border: none; color: white; }
         .theory-mini-btn:hover { background: #1f2a46; }
         .click-hint { font-size: 10px; color: #9aa3bf; text-align: right; margin-top: 12px; }
-
-        .theory-modal {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 360px;
-            background: rgba(10, 12, 22, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 28px;
-            border: 1px solid #ffec80;
-            z-index: 300;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.6);
-        }
+        .theory-modal { position: fixed; bottom: 30px; right: 30px; width: 360px; background: rgba(10,12,22,0.98); backdrop-filter: blur(20px); border-radius: 28px; border: 1px solid #ffec80; z-index: 300; display: none; flex-direction: column; }
         .theory-modal.active { display: flex; }
-        .theory-header {
-            padding: 14px 18px;
-            background: rgba(0,0,0,0.6);
-            border-bottom: 1px solid #ffec80;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 28px 28px 0 0;
-            color: #ffec80;
-            font-weight: 700;
-        }
-        .theory-header button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-        }
+        .theory-header { padding: 14px 18px; background: rgba(0,0,0,0.6); border-bottom: 1px solid #ffec80; display: flex; justify-content: space-between; border-radius: 28px 28px 0 0; color: #ffec80; font-weight: 700; }
         .theory-body { padding: 20px; color: #eef2ff; font-size: 14px; line-height: 1.5; max-height: 320px; overflow-y: auto; }
-
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.94);
-            backdrop-filter: blur(16px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            cursor: pointer;
-        }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.94); backdrop-filter: blur(16px); z-index: 1000; display: none; justify-content: center; align-items: center; flex-direction: column; cursor: pointer; }
         .lightbox.active { display: flex; }
         .lightbox-img { max-width: 90vw; max-height: 75vh; object-fit: contain; border-radius: 24px; border: 2px solid rgba(255,215,0,0.6); }
-        .lightbox-caption { margin-top: 15px; background: rgba(0,0,0,0.7); padding: 10px 24px; border-radius: 40px; color: #ffec80; text-align: center; max-width: 90%; }
-        .lightbox-controls { margin-top: 15px; display: flex; gap: 15px; }
-        .lightbox-toggle {
-            background: rgba(255,215,0,0.2);
-            border: 1px solid #ffec80;
-            color: #ffec80;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .close-lightbox {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-            font-size: 40px;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.7);
-            font-family: 'Inter', monospace;
-            z-index: 30;
-            background: rgba(0,0,0,0.3);
-            padding: 8px;
-            backdrop-filter: blur(4px);
-        }
-        .footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
-        .footer a:hover { color: #ffec80; }
+        .lightbox-caption { margin-top: 15px; background: rgba(0,0,0,0.7); padding: 10px 24px; border-radius: 40px; color: #ffec80; }
+        .close-lightbox { position: absolute; top: 30px; right: 40px; font-size: 40px; background: none; border: none; color: white; cursor: pointer; }
+        .footer { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; font-size: 12px; color: rgba(255,255,255,0.7); background: rgba(0,0,0,0.3); padding: 8px; }
         .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 8px; }
-
+        .footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
         @media (max-width: 768px) {
             .digit { font-size: 100px; }
-            .number-container { gap: 15px; margin-bottom: 30px; }
             .typing-wrapper { min-width: 90%; padding: 20px; }
             .dynamic-text { font-size: 18px; }
-            .cursor { height: 24px; }
-            .buy-ticket-btn { top: 15px; right: 15px; padding: 6px 16px; font-size: 12px; }
-            .music-player { top: 15px; left: 15px; padding: 6px 14px; gap: 10px; }
-            .track-name { font-size: 11px; }
-            .control-btn { width: 26px; height: 26px; font-size: 14px; }
-            .volume-slider { width: 50px; }
-            .footer { font-size: 9px; }
-            .main-nav { top: 70px; gap: 15px; padding: 6px 16px; }
-            .main-nav button { font-size: 12px; }
             .specimen-grid { grid-template-columns: 1fr; padding: 0 12px; }
             .theory-modal { width: 90%; right: 5%; bottom: 20px; }
-            .lightbox-img { max-height: 60vh; }
             .files-manager { padding: 20px; }
-            .files-header h2 { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
 <div class="nature-background"><img class="nature-image" src="mount.png.jpg" alt="Фон"></div>
-<div class="music-player" id="musicPlayer">
+<div class="music-player">
     <div class="track-info"><span class="track-name">Pulsewidth</span><span class="track-artist">Aphex Twin</span></div>
     <div class="player-controls"><button class="control-btn" id="playPauseBtn">▶</button><input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.4"></div>
 </div>
@@ -651,92 +141,199 @@
         <div class="files-header">
             <h2><span>📂</span> Мои файлы (PDF)</h2>
             <div style="display: flex; gap: 15px; align-items: center;">
-                <span class="files-stats" id="filesStatsCount">0 файлов</span>
+                <span class="files-stats" id="filesStatsCount">1 файл</span>
                 <div id="adminPanel" class="admin-panel">
                     <label class="upload-btn-custom" id="uploadFileLabel">📤 Загрузить PDF<input type="file" id="filesInput" accept=".pdf" multiple style="display: none;"></label>
                     <span class="admin-hint">🔐 Админ (Ctrl+Shift+X)</span>
                 </div>
             </div>
         </div>
-        <div id="filesListContainer" class="files-list"><div class="empty-files">📁 .</div></div>
+        <div id="filesListContainer" class="files-list"></div>
         <div id="pdfPreviewBlock" class="pdf-preview-area"></div>
     </div>
 </div>
 
-<div id="theoryModalWindow" class="theory-modal"><div class="theory-header"><span>📖 Теория к препарату</span><button id="closeTheoryBtn">✕</button></div><div class="theory-body" id="theoryContent">Выберите препарат</div></div>
-<div id="lightboxModal" class="lightbox"><button class="close-lightbox" id="closeLightboxBtn">✕</button><img id="lightboxImage" class="lightbox-img" alt=""><div id="lightboxCaptionText" class="lightbox-caption"></div><div class="lightbox-controls"><button id="lightboxToggleLabels" class="lightbox-toggle">🏷️ Показать/убрать подписи</button></div></div>
-<div class="footer"><div class="footer-links"><a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a><span>|</span><a href="https://t.me/RSMU417_bot" target="_blank">📢 @RSMU417_bot</a></div><div>Все права защищены © 2026 — н.в.</div></div>
+<div id="theoryModalWindow" class="theory-modal"><div class="theory-header"><span>📖 Теория</span><button id="closeTheoryBtn">✕</button></div><div class="theory-body" id="theoryContent"></div></div>
+<div id="lightboxModal" class="lightbox"><button class="close-lightbox" id="closeLightboxBtn">✕</button><img id="lightboxImage" class="lightbox-img" alt=""><div id="lightboxCaptionText" class="lightbox-caption"></div><div class="lightbox-controls"><button id="lightboxToggleLabels" class="lightbox-toggle">🏷️ Подписи</button></div></div>
+<div class="footer"><div class="footer-links"><a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a><span>|</span><a href="https://t.me/RSMU417_bot" target="_blank">📢 @RSMU417_bot</a></div><div>© 2026 — 417</div></div>
 
 <script>
+    // ========== ВАШ PDF-ФАЙЛ ИЗ РЕПОЗИТОРИЯ ==========
+    // ⚠️ ИЗМЕНИТЕ ИМЯ ФАЙЛА НА ВАШЕ! ⚠️
+    const pdfFilePath = "GistaDykh.pdf";  // <-- сюда напишите имя вашего PDF-файла
+    
     // ========== АДМИН-РЕЖИМ (Ctrl+Shift+X) ==========
     let adminMode = false;
     const adminPanel = document.getElementById('adminPanel');
     function setAdminMode(enabled) {
         adminMode = enabled;
-        if(adminPanel) { if(enabled) adminPanel.classList.add('visible'); else adminPanel.classList.remove('visible'); }
-        document.querySelectorAll('.file-btn.delete').forEach(btn => { if(adminMode) btn.classList.add('visible'); else btn.classList.remove('visible'); });
-        const hint = document.querySelector('.admin-hint');
-        if(hint && adminMode) hint.innerHTML = '🔓 Админ режим активен';
-        else if(hint && !adminMode) hint.innerHTML = '🔐 Админ ()';
-    }
-    document.addEventListener('keydown', (e) => { if((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'KeyX') { e.preventDefault(); setAdminMode(!adminMode); } });
-
-    // ========== ФАЙЛЫ ==========
-    let userFiles = [];
-    const STORAGE_KEY = "admin_pdfs_417_full";
-    function loadUserFiles() { const raw = localStorage.getItem(STORAGE_KEY); if(raw) { try { userFiles = JSON.parse(raw); } catch(e) { userFiles = []; } } else { userFiles = []; } renderFilesList(); }
-    function saveUserFiles() { localStorage.setItem(STORAGE_KEY, JSON.stringify(userFiles)); renderFilesList(); }
-    function formatSize(b) { if(b<1024) return b+" Б"; if(b<1048576) return (b/1024).toFixed(1)+" КБ"; return (b/1048576).toFixed(1)+" МБ"; }
-    function escapeHtml(s) { return s.replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
-    function showPdfPreview(url, name) { const div = document.getElementById('pdfPreviewBlock'); if(div){ div.innerHTML = `<div class="preview-header"><span>📄 ${escapeHtml(name)}</span><button class="close-preview" id="closePreviewBtn">✕</button></div><iframe src="${url}" title="PDF"></iframe>`; div.style.display='block'; document.getElementById('closePreviewBtn')?.addEventListener('click',()=>{ div.style.display='none'; div.innerHTML=''; }); } }
-    function copyLink(url) { navigator.clipboard.writeText(url).then(()=>alert("🔗 Ссылка скопирована")).catch(()=>alert("Ошибка")); }
-    function renderFilesList() {
-        const container = document.getElementById('filesListContainer'); const stats = document.getElementById('filesStatsCount');
-        if(!container) return;
-        if(userFiles.length===0) { container.innerHTML = `<div class="empty-files">📁 Папка пуста. Админ: Ctrl+Shift+X для загрузки PDF.</div>`; if(stats) stats.innerText="0"; return; }
-        let html = '';
-        userFiles.forEach(f => { const dateStr = f.date ? new Date(f.date).toLocaleDateString() : '—'; const shortUrl = f.dataURL.length>70? f.dataURL.substring(0,70)+'…' : f.dataURL;
-            html += `<div class="file-item"><div class="file-left"><div class="file-icon">📘</div><div class="file-info-text"><div class="file-name">${escapeHtml(f.name)}</div><div class="file-meta">${formatSize(f.size)} • ${dateStr}</div><div class="direct-link" title="${f.dataURL}">🔗 ${shortUrl}</div></div></div><div class="file-actions"><button class="file-btn view" data-id="${f.id}">👁️ Просмотр</button><button class="file-btn download" data-id="${f.id}">⬇️ Скачать</button><button class="file-btn link-btn" data-url="${f.dataURL}">📋 Ссылка</button><button class="file-btn delete" data-id="${f.id}">🗑️ Удалить</button></div></div>`;
+        if(adminPanel) {
+            if(enabled) adminPanel.classList.add('visible');
+            else adminPanel.classList.remove('visible');
+        }
+        document.querySelectorAll('.file-btn.delete').forEach(btn => {
+            if(adminMode) btn.classList.add('visible');
+            else btn.classList.remove('visible');
         });
-        container.innerHTML = html; if(stats) stats.innerText = userFiles.length;
-        document.querySelectorAll('.file-btn.view').forEach(btn => { btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); const f=userFiles.find(x=>x.id===id); if(f) showPdfPreview(f.dataURL, f.name); }); });
-        document.querySelectorAll('.file-btn.download').forEach(btn => { btn.addEventListener('click',()=>{ const id=parseInt(btn.dataset.id); const f=userFiles.find(x=>x.id===id); if(f){ const a=document.createElement('a'); a.href=f.dataURL; a.download=f.name; a.click(); } }); });
-        document.querySelectorAll('.file-btn.link-btn').forEach(btn => { btn.addEventListener('click',()=>{ const url=btn.dataset.url; if(url) copyLink(url); }); });
-        document.querySelectorAll('.file-btn.delete').forEach(btn => { btn.addEventListener('click',()=>{ if(!adminMode){ alert("Доступ только админу. Ctrl+Shift+X"); return; } const id=parseInt(btn.dataset.id); userFiles=userFiles.filter(x=>x.id!==id); saveUserFiles(); document.getElementById('pdfPreviewBlock').style.display='none'; }); if(adminMode) btn.classList.add('visible'); else btn.classList.remove('visible'); });
     }
-    const fileInput = document.getElementById('filesInput');
-    if(fileInput){ fileInput.addEventListener('change', function(e){ if(!adminMode){ alert("Только администратор. Ctrl+Shift+X"); fileInput.value=''; return; } Array.from(e.target.files).forEach(file=>{ if(file.type!=='application/pdf'){ alert(`Файл ${file.name} не PDF`); return; } const reader=new FileReader(); reader.onload=function(ev){ userFiles.push({ id: Date.now()+Math.random()*100000, name: file.name, size: file.size, dataURL: ev.target.result, date: new Date().toISOString() }); saveUserFiles(); }; reader.readAsDataURL(file); }); fileInput.value=''; }); }
+    document.addEventListener('keydown', (e) => {
+        if((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'KeyX') {
+            e.preventDefault();
+            setAdminMode(!adminMode);
+        }
+    });
 
-    // ========== ПОЛНЫЙ СПИСОК ПРЕПАРАТОВ (23 шт) ==========
+    // ========== РАБОТА С ФАЙЛАМИ ==========
+    let userFiles = [];
+    const STORAGE_KEY = "admin_pdfs_417_gista";
+    
+    function loadUserFiles() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw) {
+            try { userFiles = JSON.parse(raw); } catch(e) { userFiles = []; }
+        } else {
+            userFiles = [];
+        }
+        // Проверяем, есть ли уже встроенный файл из репозитория
+        const hasBuiltIn = userFiles.some(f => f.id === 'repo_gista_dyh');
+        if(!hasBuiltIn) {
+            userFiles.unshift({
+                id: 'repo_gista_dyh',
+                name: 'ГистаДых_дыхательная_система.pdf',
+                size: 0, // размер определится при загрузке
+                dataURL: pdfFilePath, // ПРЯМАЯ ССЫЛКА НА ФАЙЛ В РЕПОЗИТОРИИ
+                date: new Date().toISOString(),
+                isBuiltIn: true
+            });
+        }
+        renderFilesList();
+    }
+    
+    function saveUserFiles() {
+        const toSave = userFiles.filter(f => f.id !== 'repo_gista_dyh');
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+        renderFilesList();
+    }
+    
+    function formatSize(b) { if(b<1024) return b+" Б"; return (b/1024).toFixed(1)+" КБ"; }
+    function escapeHtml(s) { return s.replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
+    
+    function showPdfPreview(url, name) {
+        const div = document.getElementById('pdfPreviewBlock');
+        if(div) {
+            div.innerHTML = `<div class="preview-header"><span>📄 ${escapeHtml(name)}</span><button class="close-preview" id="closePreviewBtn">✕</button></div><iframe src="${url}" title="PDF preview"></iframe>`;
+            div.style.display = 'block';
+            document.getElementById('closePreviewBtn')?.addEventListener('click', () => { div.style.display = 'none'; div.innerHTML = ''; });
+        }
+    }
+    
+    function copyLink(url) { navigator.clipboard.writeText(url).then(()=>alert("🔗 Прямая ссылка скопирована")).catch(()=>alert("Ошибка")); }
+    
+    function renderFilesList() {
+        const container = document.getElementById('filesListContainer');
+        const statsSpan = document.getElementById('filesStatsCount');
+        if(!container) return;
+        if(userFiles.length === 0) {
+            container.innerHTML = `<div class="empty-files">📁 Папка пуста. Админ: Ctrl+Shift+X для загрузки PDF.</div>`;
+            if(statsSpan) statsSpan.innerText = "0";
+            return;
+        }
+        let html = '';
+        userFiles.forEach(f => {
+            const dateStr = f.date ? new Date(f.date).toLocaleDateString() : '—';
+            const fileSize = f.size > 0 ? formatSize(f.size) : 'из репозитория';
+            const displayUrl = f.dataURL || '#';
+            const shortUrl = displayUrl.length > 70 ? displayUrl.substring(0,70)+'…' : displayUrl;
+            html += `<div class="file-item" data-id="${f.id}">
+                <div class="file-left">
+                    <div class="file-icon">📘</div>
+                    <div class="file-info-text">
+                        <div class="file-name">${escapeHtml(f.name)}</div>
+                        <div class="file-meta">${fileSize} • ${dateStr}</div>
+                        <div class="direct-link" title="${displayUrl}">🔗 ${shortUrl}</div>
+                    </div>
+                </div>
+                <div class="file-actions">
+                    <button class="file-btn view" data-id="${f.id}" data-url="${displayUrl}" data-name="${escapeHtml(f.name)}">👁️ Предпросмотр</button>
+                    <button class="file-btn download" data-id="${f.id}" data-url="${displayUrl}" data-name="${escapeHtml(f.name)}">⬇️ Скачать</button>
+                    <button class="file-btn link-btn" data-url="${displayUrl}">📋 Ссылка</button>
+                    <button class="file-btn delete" data-id="${f.id}">🗑️ Удалить</button>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        if(statsSpan) statsSpan.innerText = userFiles.length;
+        
+        document.querySelectorAll('.file-btn.view').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); const url = btn.dataset.url; const name = btn.dataset.name; if(url) showPdfPreview(url, name); });
+        });
+        document.querySelectorAll('.file-btn.download').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); const url = btn.dataset.url; const name = btn.dataset.name; if(url && url !== '#'){ const a=document.createElement('a'); a.href=url; a.download=name; a.click(); } else { alert("Файл из репозитория открывается в новой вкладке"); window.open(url, '_blank'); } });
+        });
+        document.querySelectorAll('.file-btn.link-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); const url = btn.dataset.url; if(url && url !== '#') copyLink(url); });
+        });
+        document.querySelectorAll('.file-btn.delete').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.stopPropagation(); if(!adminMode){ alert("Доступ только админу. Ctrl+Shift+X"); return; } const id = btn.dataset.id; if(id === 'repo_gista_dyh'){ alert("Файл из репозитория нельзя удалить"); return; } userFiles = userFiles.filter(x=>x.id != id); saveUserFiles(); document.getElementById('pdfPreviewBlock').style.display='none'; });
+            if(adminMode) btn.classList.add('visible');
+            else btn.classList.remove('visible');
+        });
+    }
+    
+    const fileInput = document.getElementById('filesInput');
+    if(fileInput) {
+        fileInput.addEventListener('change', function(e) {
+            if(!adminMode){ alert("Только администратор. Нажмите Ctrl+Shift+X"); fileInput.value=''; return; }
+            Array.from(e.target.files).forEach(file => {
+                if(file.type !== 'application/pdf'){ alert(`Файл ${file.name} не PDF`); return; }
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    userFiles.push({
+                        id: Date.now() + Math.random()*100000,
+                        name: file.name,
+                        size: file.size,
+                        dataURL: ev.target.result,
+                        date: new Date().toISOString()
+                    });
+                    saveUserFiles();
+                };
+                reader.readAsDataURL(file);
+            });
+            fileInput.value = '';
+        });
+    }
+
+    // ========== ГИСТОЛОГИЯ (23 препарата) ==========
     const specimens = [
-        { id:1, name:"Нитевидные сосочки языка", stain:"Г-Э", number:"120", description:"Кератинизированные нитевидные выросты.", theory:"Нитевидные сосочки языка покрывают всю переднюю часть его спинки, самые многочисленные. Имеют коническую форму, строма – выпячивание собственной пластинки. Эпителий ороговевает, вкусовых луковиц нет, функция тактильная.", imgClean:"120C.png", imgLabeled:"120.png" },
-        { id:2, name:"Листовидные сосочки", stain:"Г-Э", number:"121", description:"Содержат вкусовые луковицы.", theory:"Листовидные сосочки расположены по бокам языка, содержат вкусовые почки.", imgClean:"121C.png", imgLabeled:"121.png" },
-        { id:3, name:"Развитие зуба (эмалевый орган)", stain:"Г-Э", number:"122", description:"Эмалевый орган, звездчатый ретикулум.", theory:"Эмалевый орган — производное эктодермы, формирует эмаль.", imgClean:"122C.png", imgLabeled:"122.png" },
-        { id:4, name:"Развитие зуба (дентин и эмаль)", stain:"Г-Э", number:"123", description:"Одонтобласты, эмалевые призмы.", theory:"Дентин вырабатывается одонтобластами, эмаль — амелобластами.", imgClean:"123C.png", imgLabeled:"123.png" },
-        { id:5, name:"Поперечный разрез пищевода собаки", stain:"Г-Э", number:"126", description:"Многослойный плоский эпителий.", theory:"Пищевод выстлан многослойным плоским неороговевающим эпителием.", imgClean:"126C.png", imgLabeled:"126.png" },
-        { id:6, name:"Переход пищевода в желудок собаки", stain:"Г-Э", number:"127", description:"Зигзагообразная граница.", theory:"Резкая граница: эпителий пищевода сменяется желудочным.", imgClean:"127C.png", imgLabeled:"127.png" },
-        { id:7, name:"Дно желудка собаки", stain:"Конгорот - железный гематоксилин", number:"128", description:"Главные и париетальные клетки.", theory:"Фундальные железы содержат париетальные (HCl) и главные (пепсиноген) клетки.", imgClean:"128C.png", imgLabeled:"128.png" },
-        { id:8, name:"Пилорическая часть желудка собаки", stain:"Г-Э", number:"129", description:"Пилоровые железы.", theory:"Пилоровые железы секретируют слизь, клетки — мукоциты.", imgClean:"129C.png", imgLabeled:"129.png" },
-        { id:9, name:"Переход желудка в 12-ти перстную кишку", stain:"Г-Э", number:"129a", description:"Пилорический сфинктер.", theory:"Дуоденальные железы Бруннера в подслизистой основе.", imgClean:"129aC.png", imgLabeled:"129a.png" },
-        { id:10, name:"Двенадцатиперстная кишка", stain:"Г-Э", number:"130", description:"Ворсинки, крипты.", theory:"Высокие ворсинки, бокаловидные клетки, подслизистые железы.", imgClean:"130C.png", imgLabeled:"130.png" },
-        { id:11, name:"Тонкая кишка щенка", stain:"Г-Э", number:"131", description:"Ворсинки, лимфоидные фолликулы.", theory:"Хорошо развиты ворсинки и крипты, активное пищеварение.", imgClean:"131C.png", imgLabeled:"131.png" },
-        { id:12, name:"Толстая кишка собаки", stain:"Г-Э", number:"132", description:"Крипты, много бокаловидных клеток.", theory:"Отсутствуют ворсинки, много слизистых клеток.", imgClean:"132C.png", imgLabeled:"132.png" },
-        { id:13, name:"Аппендикс", stain:"Г-Э", number:"133", description:"Лимфоидная ткань.", theory:"Диффузная лимфоидная ткань и лимфоидные узелки.", imgClean:"133C.png", imgLabeled:"133.png" },
-        { id:14, name:"Околоушная железа собаки", stain:"Г-Э", number:"135", description:"Серозные ацинусы.", theory:"Серозный тип секреции, богата ферментами.", imgClean:"135C.png", imgLabeled:"135.png" },
-        { id:15, name:"Подчелюстная железа человека", stain:"Г-Э", number:"136", description:"Смешанные концевые отделы.", theory:"Серозно-слизистая железа.", imgClean:"136C.png", imgLabeled:"136.png" },
-        { id:16, name:"Поджелудочная железа собаки", stain:"Г-Э", number:"137", description:"Островки Лангерганса.", theory:"Экзокринная часть — ацинусы; эндокринная — островки.", imgClean:"137C.png", imgLabeled:"137.png" },
-        { id:17, name:"Печень свиньи", stain:"Пирофуксин-железный гематоксилин", number:"138", description:"Печеночные дольки.", theory:"Дольковое строение, центральная вена, балки гепатоцитов.", imgClean:"138C.png", imgLabeled:"138.png" },
-        { id:18, name:"Печень человека", stain:"Г-Э", number:"139", description:"Гепатоциты, портальные тракты.", theory:"Классическая долька, портальные тракты.", imgClean:"139C.png", imgLabeled:"139.png" },
-        { id:19, name:"Желчный пузырь", stain:"Г-Э", number:"140", description:"Складчатая слизистая.", theory:"Эпителий высокий призматический, всасывает воду.", imgClean:"140C.png", imgLabeled:"140.png" },
-        { id:20, name:"Трахея собаки", stain:"Г-Э", number:"141", description:"Реснитчатый эпителий, хрящ.", theory:"Мерцательный эпителий, подслизистые железы, гиалиновые кольца.", imgClean:"141C.png", imgLabeled:"141.png" },
+        { id:1, name:"Нитевидные сосочки языка", stain:"Г-Э", number:"120", description:"Кератинизированные нитевидные выросты.", theory:"Нитевидные сосочки самые многочисленные, эпителий ороговевает, тактильная функция.", imgClean:"120C.png", imgLabeled:"120.png" },
+        { id:2, name:"Листовидные сосочки", stain:"Г-Э", number:"121", description:"Содержат вкусовые луковицы.", theory:"Расположены по бокам языка, содержат вкусовые почки.", imgClean:"121C.png", imgLabeled:"121.png" },
+        { id:3, name:"Развитие зуба (эмалевый орган)", stain:"Г-Э", number:"122", description:"Эмалевый орган, звездчатый ретикулум.", theory:"Эмалевый орган — производное эктодермы.", imgClean:"122C.png", imgLabeled:"122.png" },
+        { id:4, name:"Развитие зуба (дентин и эмаль)", stain:"Г-Э", number:"123", description:"Одонтобласты, эмалевые призмы.", theory:"Дентин вырабатывают одонтобласты.", imgClean:"123C.png", imgLabeled:"123.png" },
+        { id:5, name:"Поперечный разрез пищевода", stain:"Г-Э", number:"126", description:"Многослойный плоский эпителий.", theory:"Пищевод выстлан многослойным плоским неороговевающим эпителием.", imgClean:"126C.png", imgLabeled:"126.png" },
+        { id:6, name:"Переход пищевода в желудок", stain:"Г-Э", number:"127", description:"Зигзагообразная граница.", theory:"Резкая смена эпителия пищевода на желудочный.", imgClean:"127C.png", imgLabeled:"127.png" },
+        { id:7, name:"Дно желудка собаки", stain:"Конгорот", number:"128", description:"Главные и париетальные клетки.", theory:"Фундальные железы: париетальные (HCl) и главные (пепсиноген).", imgClean:"128C.png", imgLabeled:"128.png" },
+        { id:8, name:"Пилорическая часть желудка", stain:"Г-Э", number:"129", description:"Пилоровые железы.", theory:"Пилоровые железы секретируют слизь.", imgClean:"129C.png", imgLabeled:"129.png" },
+        { id:9, name:"Переход желудка в 12-п. кишку", stain:"Г-Э", number:"129a", description:"Пилорический сфинктер.", theory:"Дуоденальные железы Бруннера.", imgClean:"129aC.png", imgLabeled:"129a.png" },
+        { id:10, name:"Двенадцатиперстная кишка", stain:"Г-Э", number:"130", description:"Ворсинки, крипты.", theory:"Высокие ворсинки, бокаловидные клетки.", imgClean:"130C.png", imgLabeled:"130.png" },
+        { id:11, name:"Тонкая кишка щенка", stain:"Г-Э", number:"131", description:"Ворсинки, лимфоидные фолликулы.", theory:"Активное пищеварение, развитые ворсинки.", imgClean:"131C.png", imgLabeled:"131.png" },
+        { id:12, name:"Толстая кишка собаки", stain:"Г-Э", number:"132", description:"Крипты, много бокаловидных клеток.", theory:"Ворсинки отсутствуют, много слизистых клеток.", imgClean:"132C.png", imgLabeled:"132.png" },
+        { id:13, name:"Аппендикс", stain:"Г-Э", number:"133", description:"Лимфоидная ткань.", theory:"Диффузная лимфоидная ткань и узелки.", imgClean:"133C.png", imgLabeled:"133.png" },
+        { id:14, name:"Околоушная железа", stain:"Г-Э", number:"135", description:"Серозные ацинусы.", theory:"Серозный тип секреции.", imgClean:"135C.png", imgLabeled:"135.png" },
+        { id:15, name:"Подчелюстная железа", stain:"Г-Э", number:"136", description:"Смешанные концевые отделы.", theory:"Серозно-слизистая железа.", imgClean:"136C.png", imgLabeled:"136.png" },
+        { id:16, name:"Поджелудочная железа", stain:"Г-Э", number:"137", description:"Островки Лангерганса.", theory:"Экзокринная часть — ацинусы, эндокринная — островки.", imgClean:"137C.png", imgLabeled:"137.png" },
+        { id:17, name:"Печень свиньи", stain:"Пирофуксин", number:"138", description:"Печеночные дольки.", theory:"Дольковое строение, центральная вена.", imgClean:"138C.png", imgLabeled:"138.png" },
+        { id:18, name:"Печень человека", stain:"Г-Э", number:"139", description:"Гепатоциты, портальные тракты.", theory:"Классическая долька.", imgClean:"139C.png", imgLabeled:"139.png" },
+        { id:19, name:"Желчный пузырь", stain:"Г-Э", number:"140", description:"Складчатая слизистая.", theory:"Эпителий всасывает воду.", imgClean:"140C.png", imgLabeled:"140.png" },
+        { id:20, name:"Трахея собаки", stain:"Г-Э", number:"141", description:"Реснитчатый эпителий, хрящ.", theory:"Мерцательный эпителий, гиалиновые кольца.", imgClean:"141C.png", imgLabeled:"141.png" },
         { id:21, name:"Легкое кошки", stain:"Г-Э", number:"142", description:"Альвеолы, пневмоциты.", theory:"Альвеолы с пневмоцитами I и II типов, сурфактант.", imgClean:"142C.png", imgLabeled:"142.png" },
-        { id:22, name:"Кожа пальца человека", stain:"Г-Э", number:"143", description:"Эпидермис, дерма.", theory:"Многослойный плоский ороговевающий эпителий, сосочковый слой.", imgClean:"143C.png", imgLabeled:"143.png" },
-        { id:23, name:"Кожа с волосом человека", stain:"Г-Э", number:"144", description:"Волосяной фолликул.", theory:"Волос: луковица, корень, сальные железы, мышца.", imgClean:"144C.png", imgLabeled:"144.png" }
+        { id:22, name:"Кожа пальца человека", stain:"Г-Э", number:"143", description:"Эпидермис, дерма.", theory:"Многослойный плоский ороговевающий эпителий.", imgClean:"143C.png", imgLabeled:"143.png" },
+        { id:23, name:"Кожа с волосом человека", stain:"Г-Э", number:"144", description:"Волосяной фолликул.", theory:"Волос: луковица, сальные железы, мышца.", imgClean:"144C.png", imgLabeled:"144.png" }
     ];
+    
     let showLabelsMode = {}; specimens.forEach(s => showLabelsMode[s.id] = false);
     let currentLightboxPrep = null;
     function getImagePath(p, use) { return use ? p.imgLabeled : p.imgClean; }
-    function updateLightboxImage() { if(!currentLightboxPrep) return; const use=showLabelsMode[currentLightboxPrep.id]; document.getElementById('lightboxImage').src=getImagePath(currentLightboxPrep, use); document.getElementById('lightboxCaptionText').innerHTML=`${currentLightboxPrep.name} | №${currentLightboxPrep.number} | ${currentLightboxPrep.stain}<br>🔬 ${use?'с подписями':'без подписей'}`; }
+    function updateLightboxImage() { if(!currentLightboxPrep) return; const use=showLabelsMode[currentLightboxPrep.id]; document.getElementById('lightboxImage').src=getImagePath(currentLightboxPrep, use); document.getElementById('lightboxCaptionText').innerHTML=`${currentLightboxPrep.name} | №${currentLightboxPrep.number} | ${currentLightboxPrep.stain}`; }
     function renderHistology() {
         const grid=document.getElementById('specimenGrid'); if(!grid) return; grid.innerHTML='';
         specimens.forEach(p=>{ const useLab=showLabelsMode[p.id]; const imgSrc=getImagePath(p,useLab); const card=document.createElement('div'); card.className='specimen-card';
@@ -746,28 +343,36 @@
             const badgeStain=document.createElement('div'); badgeStain.className='badge-stain'; badgeStain.innerText=`🎨 ${p.stain}`;
             imgArea.append(img,badgeNum,badgeStain);
             const info=document.createElement('div'); info.className='card-info';
-            info.innerHTML=`<div class="prep-title">${p.name}</div><div class="prep-desc">${p.description}</div><div class="action-buttons"><button class="toggle-labels" data-id="${p.id}">${useLab?'🔍 Убрать подписи':'🏷️ Показать подписи'}</button><button class="theory-mini-btn" data-id="${p.id}" data-name="${p.name.replace(/"/g,'&quot;')}" data-theory="${p.theory.replace(/"/g,'&quot;')}">📖 Теория</button></div><div class="click-hint">🖱️ Нажмите на фото для увеличения</div>`;
+            info.innerHTML=`<div class="prep-title">${p.name}</div><div class="prep-desc">${p.description}</div><div class="action-buttons"><button class="toggle-labels" data-id="${p.id}">${useLab?'🔍 Убрать подписи':'🏷️ Показать подписи'}</button><button class="theory-mini-btn" data-id="${p.id}" data-name="${p.name.replace(/"/g,'&quot;')}" data-theory="${p.theory.replace(/"/g,'&quot;')}">📖 Теория</button></div><div class="click-hint">🖱️ Нажмите на фото</div>`;
             card.append(imgArea,info); grid.appendChild(card);
         });
         document.querySelectorAll('.toggle-labels').forEach(btn=>{ btn.addEventListener('click',(e)=>{ e.stopPropagation(); const id=parseInt(btn.dataset.id); showLabelsMode[id]=!showLabelsMode[id]; renderHistology(); if(currentLightboxPrep && currentLightboxPrep.id===id) updateLightboxImage(); }); });
         document.querySelectorAll('.theory-mini-btn').forEach(btn=>{ btn.addEventListener('click',(e)=>{ e.stopPropagation(); const th=btn.dataset.theory, nm=btn.dataset.name; document.getElementById('theoryContent').innerHTML=`<strong>${nm}</strong><br><br>${th}`; document.getElementById('theoryModalWindow').classList.add('active'); }); });
     }
+    
     document.getElementById('lightboxToggleLabels')?.addEventListener('click',()=>{ if(currentLightboxPrep){ const id=currentLightboxPrep.id; showLabelsMode[id]=!showLabelsMode[id]; updateLightboxImage(); renderHistology(); } });
-    function closeLightbox(){ document.getElementById('lightboxModal').classList.remove('active'); document.body.style.overflow=''; currentLightboxPrep=null; }
+    function closeLightbox(){ document.getElementById('lightboxModal').classList.remove('active'); document.body.style.overflow=''; }
     document.getElementById('closeLightboxBtn')?.addEventListener('click',closeLightbox);
     document.getElementById('lightboxModal')?.addEventListener('click',(e)=>{ if(e.target===document.getElementById('lightboxModal')) closeLightbox(); });
-
-    // ========== МУЗЫКА, НАВИГАЦИЯ ==========
+    
+    // Музыка, навигация
     const audio = new Audio('music.mp3'); audio.loop=true; audio.volume=0.4;
     let isPlaying=false;
     document.getElementById('playPauseBtn').onclick=()=>{ if(isPlaying){ audio.pause(); document.getElementById('playPauseBtn').textContent='▶'; } else { audio.play(); document.getElementById('playPauseBtn').textContent='⏸'; } isPlaying=!isPlaying; };
     document.getElementById('volumeSlider').oninput=e=>audio.volume=e.target.value;
     document.body.addEventListener('click', function initA(){ if(!isPlaying && audio.paused){ audio.play().catch(()=>{}); document.getElementById('playPauseBtn').textContent='⏸'; isPlaying=true; } document.body.removeEventListener('click',initA); });
+    
     const homePage=document.getElementById('homePage'), histPage=document.getElementById('histologyPage'), filesPage=document.getElementById('filesPage');
     const navHome=document.getElementById('navHome'), navHist=document.getElementById('navHistology'), navFiles=document.getElementById('navFiles');
-    function showPage(p){ homePage.classList.remove('active'); histPage.classList.remove('active'); filesPage.classList.remove('active'); if(p==='home'){ homePage.classList.add('active'); navHome.classList.add('active'); navHist.classList.remove('active'); navFiles.classList.remove('active'); } else if(p==='hist'){ histPage.classList.add('active'); navHist.classList.add('active'); navHome.classList.remove('active'); navFiles.classList.remove('active'); if(document.getElementById('specimenGrid').children.length===0) renderHistology(); } else if(p==='files'){ filesPage.classList.add('active'); navFiles.classList.add('active'); navHome.classList.remove('active'); navHist.classList.remove('active'); loadUserFiles(); } }
+    function showPage(p){
+        homePage.classList.remove('active'); histPage.classList.remove('active'); filesPage.classList.remove('active');
+        if(p==='home'){ homePage.classList.add('active'); navHome.classList.add('active'); navHist.classList.remove('active'); navFiles.classList.remove('active'); }
+        else if(p==='hist'){ histPage.classList.add('active'); navHist.classList.add('active'); navHome.classList.remove('active'); navFiles.classList.remove('active'); if(document.getElementById('specimenGrid').children.length===0) renderHistology(); }
+        else if(p==='files'){ filesPage.classList.add('active'); navFiles.classList.add('active'); navHome.classList.remove('active'); navHist.classList.remove('active'); loadUserFiles(); }
+    }
     navHome.addEventListener('click',()=>showPage('home')); navHist.addEventListener('click',()=>showPage('hist')); navFiles.addEventListener('click',()=>showPage('files'));
     document.getElementById('closeTheoryBtn').addEventListener('click',()=>document.getElementById('theoryModalWindow').classList.remove('active'));
+    
     const phrases = ["C Днём Победы!", "67*6.2238=417", "from students to students", "powered by Papillon Systems"];
     let phIdx=0,chIdx=0,del=false,spd=100; const dynSpan=document.querySelector('.dynamic-text');
     function typeE(){ if(!dynSpan) return; const cur=phrases[phIdx]; if(!del){ dynSpan.textContent=cur.substring(0,chIdx+1); chIdx++; if(chIdx===cur.length){ del=true; spd=1800; } else spd=100; } else { dynSpan.textContent=cur.substring(0,chIdx-1); chIdx--; if(chIdx===0){ del=false; phIdx=(phIdx+1)%phrases.length; spd=300; } else spd=50; } setTimeout(typeE,spd); }
@@ -775,4 +380,3 @@
 </script>
 </body>
 </html>
-
