@@ -2,380 +2,700 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>417 | Гистология — 6 коллоквиум</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>417 Гистология</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { min-height: 100vh; font-family: 'Inter', 'Segoe UI', sans-serif; position: relative; overflow-x: hidden; background: #000; }
-        .nature-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
-        .nature-image { width: 110%; height: 110%; object-fit: cover; position: absolute; top: -5%; left: -5%; animation: slowDrift 24s infinite alternate ease-in-out; filter: brightness(0.7) contrast(1.1) saturate(1.1); }
-        @keyframes slowDrift { 0% { transform: scale(1) translate(0%, 0%); } 100% { transform: scale(1.08) translate(-3%, -2%); } }
-        .music-player { position: fixed; top: 20px; left: 20px; z-index: 200; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(12px); border-radius: 50px; padding: 8px 18px 8px 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .track-info { display: flex; flex-direction: column; color: white; }
-        .track-name { font-size: 14px; font-weight: 600; white-space: nowrap; }
-        .track-artist { font-size: 10px; opacity: 0.7; }
-        .player-controls { display: flex; align-items: center; gap: 12px; }
-        .control-btn { background: rgba(255,255,255,0.15); border: none; color: white; font-size: 18px; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .control-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
-        .volume-slider { width: 70px; height: 3px; -webkit-appearance: none; background: rgba(255,255,255,0.3); border-radius: 3px; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; border-radius: 50%; background: #ffec80; cursor: pointer; }
-        .main-nav { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(12px); border-radius: 50px; padding: 8px 28px; display: flex; gap: 35px; border: 1px solid rgba(255,255,255,0.2); }
-        .main-nav button { background: none; border: none; color: white; font-size: 14px; font-weight: 500; cursor: pointer; padding: 0; transition: 0.3s; }
-        .main-nav button.active { color: #ffec80; border-bottom: 2px solid #ffec80; }
-        .buy-ticket-btn { position: fixed; top: 20px; right: 20px; z-index: 200; background: linear-gradient(135deg, #FFD700, #FFA500); border: none; padding: 10px 24px; border-radius: 50px; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 15px; color: #1a1a1a; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s; text-decoration: none; display: inline-block; }
-        .buy-ticket-btn:hover { transform: scale(1.05); background: linear-gradient(135deg, #FFEA00, #FFB347); }
-        .page { display: none; position: relative; z-index: 10; min-height: 100vh; padding: 100px 20px 80px; }
-        .page.active { display: block; }
-        .content { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .number-container { display: flex; justify-content: center; align-items: baseline; gap: 30px; flex-wrap: wrap; padding: 20px; margin-bottom: 60px; }
-        .digit { font-size: 250px; font-weight: 900; color: #FFF; text-shadow: 0 0 20px rgba(255,255,255,0.5); display: inline-block; animation: bounce 1.2s infinite; transform-origin: center bottom; }
-        .digit-4 { animation-delay: 0s; } .digit-1 { animation-delay: 0.2s; } .digit-7 { animation-delay: 0.4s; }
-        @keyframes bounce { 0%,100%{ transform: translateY(0); } 30%{ transform: translateY(-80px); text-shadow: 0 0 40px rgba(255,255,255,0.9); } 60%{ transform: translateY(-40px); } }
-        .typing-wrapper { text-align: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); padding: 30px 50px; border-radius: 60px; border: 1px solid rgba(255,255,255,0.2); margin-top: 20px; min-width: 500px; }
-        .dynamic-text { font-size: 28px; font-weight: 600; color: #fff; }
-        .cursor { display: inline-block; width: 3px; height: 32px; background-color: #ffec80; margin-left: 5px; animation: blink 1s step-end infinite; vertical-align: middle; }
-        @keyframes blink { 0%,100%{ opacity: 1; } 50%{ opacity: 0; } }
 
-        /* Файлы */
-        .files-manager { max-width: 1100px; margin: 0 auto; background: rgba(0,0,0,0.55); backdrop-filter: blur(14px); border-radius: 48px; border: 1px solid rgba(255,236,128,0.4); padding: 32px 30px; }
-        .files-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,236,128,0.3); }
-        .files-header h2 { color: #ffec80; font-size: 1.8rem; display: flex; align-items: center; gap: 12px; }
-        .admin-panel { display: none; align-items: center; gap: 15px; }
-        .admin-panel.visible { display: flex; }
-        .upload-btn-custom { background: rgba(255,215,0,0.15); border: 1px solid #ffec80; padding: 10px 28px; border-radius: 60px; color: #ffec80; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 14px; display: inline-flex; align-items: center; gap: 10px; }
-        .upload-btn-custom:hover { background: #ffec80; color: #111; }
-        .admin-hint { font-size: 12px; color: #ffaa66; background: rgba(0,0,0,0.6); padding: 5px 14px; border-radius: 50px; }
-        #filesInput { display: none; }
-        .files-stats { color: #cddbff; font-size: 13px; background: rgba(0,0,0,0.4); padding: 5px 14px; border-radius: 50px; }
-        .files-list { display: flex; flex-direction: column; gap: 16px; max-height: 550px; overflow-y: auto; padding-right: 6px; }
-        .file-item { background: rgba(18,22,40,0.8); border-radius: 24px; border: 1px solid rgba(255,215,0,0.3); padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
-        .file-item:hover { border-color: #ffec80; background: rgba(28,34,58,0.9); }
-        .file-left { display: flex; align-items: center; gap: 18px; flex: 2; min-width: 200px; }
-        .file-icon { font-size: 38px; }
-        .file-name { font-weight: 800; color: white; font-size: 1rem; }
-        .file-meta { font-size: 11px; color: #a8b4dc; margin-top: 5px; }
-        .direct-link { font-size: 10px; color: #88ccff; margin-top: 4px; word-break: break-all; background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 12px; display: inline-block; }
-        .file-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-        .file-btn { background: rgba(255,255,240,0.08); border: none; padding: 8px 18px; border-radius: 40px; font-weight: 600; font-size: 12px; cursor: pointer; color: #ffec80; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .file-btn:hover { background: #ffec80; color: #111; }
-        .file-btn.delete { display: none; }
-        .file-btn.delete.visible { display: inline-flex; }
-        .file-btn.delete:hover { background: #c44; color: white; }
-        .empty-files { text-align: center; padding: 60px 20px; color: #b7c2e6; background: rgba(0,0,0,0.3); border-radius: 44px; }
-        .pdf-preview-area { margin-top: 25px; background: rgba(0,0,0,0.6); border-radius: 32px; padding: 12px; display: none; }
-        .pdf-preview-area iframe { width: 100%; height: 460px; border-radius: 24px; border: 1px solid #ffec80; }
-        .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 0 8px; color: #ffec80; font-weight: 600; }
-        .close-preview { background: none; border: none; color: #ffec80; font-size: 24px; cursor: pointer; }
+        html { scroll-behavior: smooth; }
 
-        /* Гистология */
-        .hist-header { text-align: center; margin-bottom: 40px; }
-        .hist-header h1 { font-size: 2.4rem; color: #ffec80; }
-        .colloquium-badge { background: rgba(255,236,128,0.15); backdrop-filter: blur(8px); display: inline-block; padding: 8px 24px; border-radius: 100px; margin-top: 12px; border: 1px solid #ffec80; color: #ffec80; }
-        .specimen-grid { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 28px; }
-        .specimen-card { background: rgba(18,22,40,0.85); backdrop-filter: blur(10px); border-radius: 32px; border: 1px solid rgba(255,215,0,0.4); overflow: hidden; transition: 0.25s; }
-        .specimen-card:hover { transform: translateY(-5px); border-color: #ffec80; }
-        .image-area { position: relative; background: #03050a; min-height: 220px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-bottom: 1px solid rgba(255,215,0,0.3); }
-        .prep-img { width: 100%; height: auto; max-height: 260px; object-fit: cover; }
-        .badge-number { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); padding: 4px 12px; border-radius: 30px; font-size: 13px; font-weight: 700; color: #ffec80; border: 1px solid rgba(255,215,0,0.6); }
-        .badge-stain { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); padding: 4px 12px; border-radius: 30px; font-size: 12px; color: #ffdd99; border: 1px solid rgba(255,215,0,0.6); }
-        .card-info { padding: 18px 16px 20px; }
-        .prep-title { font-weight: 800; font-size: 1.2rem; color: white; }
-        .prep-desc { font-size: 0.75rem; color: #b4c0da; margin: 6px 0 14px; }
-        .action-buttons { display: flex; gap: 14px; flex-wrap: wrap; justify-content: space-between; }
-        .toggle-labels, .theory-mini-btn { border-radius: 40px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 7px 16px; transition: 0.2s; }
-        .toggle-labels { background: rgba(255,215,0,0.2); border: 1px solid #ffec80; color: #ffec80; }
-        .toggle-labels:hover { background: #ffec80; color: #111; }
-        .theory-mini-btn { background: #2c3a5e; border: none; color: white; }
-        .theory-mini-btn:hover { background: #1f2a46; }
-        .click-hint { font-size: 10px; color: #9aa3bf; text-align: right; margin-top: 12px; }
-        .theory-modal { position: fixed; bottom: 30px; right: 30px; width: 360px; background: rgba(10,12,22,0.98); backdrop-filter: blur(20px); border-radius: 28px; border: 1px solid #ffec80; z-index: 300; display: none; flex-direction: column; }
-        .theory-modal.active { display: flex; }
-        .theory-header { padding: 14px 18px; background: rgba(0,0,0,0.6); border-bottom: 1px solid #ffec80; display: flex; justify-content: space-between; border-radius: 28px 28px 0 0; color: #ffec80; font-weight: 700; }
-        .theory-body { padding: 20px; color: #eef2ff; font-size: 14px; line-height: 1.5; max-height: 320px; overflow-y: auto; }
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.94); backdrop-filter: blur(16px); z-index: 1000; display: none; justify-content: center; align-items: center; flex-direction: column; cursor: pointer; }
-        .lightbox.active { display: flex; }
-        .lightbox-img { max-width: 90vw; max-height: 75vh; object-fit: contain; border-radius: 24px; border: 2px solid rgba(255,215,0,0.6); }
-        .lightbox-caption { margin-top: 15px; background: rgba(0,0,0,0.7); padding: 10px 24px; border-radius: 40px; color: #ffec80; }
-        .close-lightbox { position: absolute; top: 30px; right: 40px; font-size: 40px; background: none; border: none; color: white; cursor: pointer; }
-        .footer { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; font-size: 12px; color: rgba(255,255,255,0.7); background: rgba(0,0,0,0.3); padding: 8px; }
-        .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 8px; }
-        .footer a { color: rgba(255,255,255,0.9); text-decoration: none; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(40px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 1000px;
+            padding: 40px;
+        }
+
+        .hero-num {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(80px, 20vw, 280px);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: slideDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(32px, 6vw, 72px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out 0.2s backwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 3vw, 24px);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease-out 0.4s backwards;
+        }
+
+        .btn-scroll {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeIn 1s ease-out 0.6s backwards;
+            box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-scroll:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(255, 107, 107, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== GRID ===== */
+        .grid-section {
+            padding: 120px 60px;
+            background: #0a0a0a;
+        }
+
+        .grid-header {
+            max-width: 1400px;
+            margin: 0 auto 80px;
+        }
+
+        .colloquium-label {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ff6b6b;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .grid-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(36px, 7vw, 84px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease-out 0.1s backwards;
+        }
+
+        .grid-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        .specimens-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .specimen-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            animation: cardIn 0.6s ease-out backwards;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .specimen-card:nth-child(1) { animation-delay: 0.1s; }
+        .specimen-card:nth-child(2) { animation-delay: 0.15s; }
+        .specimen-card:nth-child(3) { animation-delay: 0.2s; }
+        .specimen-card:nth-child(4) { animation-delay: 0.25s; }
+        .specimen-card:nth-child(n+5) { animation-delay: 0.3s; }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .specimen-card:hover {
+            background: rgba(255, 107, 107, 0.08);
+            border-color: rgba(255, 107, 107, 0.5);
+            transform: translateY(-12px);
+            box-shadow: 0 40px 100px rgba(255, 107, 107, 0.15);
+        }
+
+        .specimen-emoji {
+            font-size: 48px;
+            line-height: 1;
+        }
+
+        .specimen-label {
+            display: inline-flex;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #ff6b6b;
+            letter-spacing: 1px;
+            width: fit-content;
+        }
+
+        .specimen-name {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .specimen-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        .specimen-btn {
+            align-self: flex-start;
+            padding: 12px 24px;
+            background: rgba(255, 107, 107, 0.15);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .specimen-btn:hover {
+            background: rgba(255, 107, 107, 0.3);
+            border-color: rgba(255, 107, 107, 0.6);
+            transform: translateX(4px);
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 24px;
+            padding: 60px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #ff6b6b;
+        }
+
+        .theory-section {
+            margin-bottom: 40px;
+        }
+
+        .theory-section h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .theory-section p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 60px;
+            border-top: 1px solid rgba(255, 107, 107, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        /* ===== SCROLL ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 107, 0.3);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 107, 0.5);
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .digit { font-size: 100px; }
-            .typing-wrapper { min-width: 90%; padding: 20px; }
-            .dynamic-text { font-size: 18px; }
-            .specimen-grid { grid-template-columns: 1fr; padding: 0 12px; }
-            .theory-modal { width: 90%; right: 5%; bottom: 20px; }
-            .files-manager { padding: 20px; }
+            .grid-section { padding: 60px 20px; }
+            .grid-header { margin-bottom: 50px; }
+            .specimens-grid { grid-template-columns: 1fr; gap: 24px; }
+            .modal-content { padding: 40px 20px; }
+            .specimen-card { padding: 24px; }
         }
     </style>
 </head>
 <body>
-<div class="nature-background"><img class="nature-image" src="mount.png.jpg" alt="Фон"></div>
-<div class="music-player">
-    <div class="track-info"><span class="track-name">Pulsewidth</span><span class="track-artist">Aphex Twin</span></div>
-    <div class="player-controls"><button class="control-btn" id="playPauseBtn">▶</button><input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.4"></div>
-</div>
-<div class="main-nav">
-    <button id="navHome" class="active">Главная</button>
-    <button id="navHistology">🔬 Гистология</button>
-    <button id="navFiles">📁 Файлы</button>
-</div>
 
-<div id="homePage" class="page active">
-    <div class="content">
-        <div class="number-container"><span class="digit digit-4">4</span><span class="digit digit-1">1</span><span class="digit digit-7">7</span></div>
-        <div class="typing-wrapper"><span class="dynamic-text"></span><span class="cursor"></span></div>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-num">417</div>
+        <h1 class="hero-title">Гистология</h1>
+        <p class="hero-subtitle">Коллоквиум 6. Пищеварительная, дыхательная система и кожа</p>
+        <button class="btn-scroll" onclick="document.querySelector('.grid-section').scrollIntoView({ behavior: 'smooth' })">
+            Начать изучение ↓
+        </button>
+    </div>
+</section>
+
+<!-- СЕТКА ПРЕПАРАТОВ -->
+<section class="grid-section">
+    <div class="grid-header">
+        <div class="colloquium-label">КОЛЛОКВИУМ VI</div>
+        <h2 class="grid-title">23 препарата</h2>
+        <p class="grid-desc">Исследуй структуру тканей пищеварительной, дыхательной систем и кожи</p>
+    </div>
+    <div class="specimens-grid" id="specimenGrid"></div>
+</section>
+
+<!-- ФУТЕР -->
+<footer class="footer">
+    <a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a> •
+    <a href="https://t.me/RSMU417_bot" target="_blank">📢 @RSMU417_bot</a>
+    <div style="margin-top: 20px;">© 2026 417. Все права защищены.</div>
+</footer>
+
+<!-- МОДАЛ -->
+<div class="modal" id="theoryModal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeTheory()">✕</button>
+        <h2 id="modalTitle"></h2>
+        <div id="modalBody"></div>
     </div>
 </div>
-
-<div id="histologyPage" class="page">
-    <div class="hist-header"><h1>🔬 Гистология. 6 коллоквиум</h1><div class="colloquium-badge">📌 Пищеварительная, дыхательная система, кожа</div></div>
-    <div class="specimen-grid" id="specimenGrid"></div>
-</div>
-
-<div id="filesPage" class="page">
-    <div class="files-manager">
-        <div class="files-header">
-            <h2><span>📂</span> Мои файлы (PDF)</h2>
-            <div style="display: flex; gap: 15px; align-items: center;">
-                <span class="files-stats" id="filesStatsCount">1 файл</span>
-                <div id="adminPanel" class="admin-panel">
-                    <label class="upload-btn-custom" id="uploadFileLabel">📤 Загрузить PDF<input type="file" id="filesInput" accept=".pdf" multiple style="display: none;"></label>
-                    <span class="admin-hint">🔐 Админ (Ctrl+Shift+X)</span>
-                </div>
-            </div>
-        </div>
-        <div id="filesListContainer" class="files-list"></div>
-        <div id="pdfPreviewBlock" class="pdf-preview-area"></div>
-    </div>
-</div>
-
-<div id="theoryModalWindow" class="theory-modal"><div class="theory-header"><span>📖 Теория</span><button id="closeTheoryBtn">✕</button></div><div class="theory-body" id="theoryContent"></div></div>
-<div id="lightboxModal" class="lightbox"><button class="close-lightbox" id="closeLightboxBtn">✕</button><img id="lightboxImage" class="lightbox-img" alt=""><div id="lightboxCaptionText" class="lightbox-caption"></div><div class="lightbox-controls"><button id="lightboxToggleLabels" class="lightbox-toggle">🏷️ Подписи</button></div></div>
-<div class="footer"><div class="footer-links"><a href="mailto:real417@protonmail.com">📧 real417@protonmail.com</a><span>|</span><a href="https://t.me/RSMU417_bot" target="_blank">📢 @RSMU417_bot</a></div><div>© 2026 — 417</div></div>
 
 <script>
-    // ========== ВАШ PDF-ФАЙЛ ИЗ РЕПОЗИТОРИЯ ==========
-    // ⚠️ ИЗМЕНИТЕ ИМЯ ФАЙЛА НА ВАШЕ! ⚠️
-    const pdfFilePath = "GistaDykh.pdf";  // <-- сюда напишите имя вашего PDF-файла
-    
-    // ========== АДМИН-РЕЖИМ (Ctrl+Shift+X) ==========
-    let adminMode = false;
-    const adminPanel = document.getElementById('adminPanel');
-    function setAdminMode(enabled) {
-        adminMode = enabled;
-        if(adminPanel) {
-            if(enabled) adminPanel.classList.add('visible');
-            else adminPanel.classList.remove('visible');
+    const specimens = [
+        {
+            num: 120, name: "Нитевидные сосочки языка", stain: "Г-Э", emoji: "👅",
+            desc: "Кератинизированные выросты эпителия",
+            theory: {
+                general: "Нитевидные сосочки — самые многочисленные сосочки языка. Они образованы выростами собственного слоя слизистой оболочки, покрытыми многослойным плоским ороговевающим эпителием. На препарате видны характерные конические выросты высотой 2-3 мм.",
+                microscopy: "При микроскопии видны: многослойный плоский ороговевающий эпителий толщиной 300-400 мкм, хорошо развитый базальный слой, промежуточные слои, заканчивающиеся слоем ороговевших чешуек кератина. Собственная пластинка состоит из рыхлой соединительной ткани с сосудами и нервными окончаниями.",
+                function: "Эти сосочки выполняют механорецепторную (тактильную) функцию благодаря рецепторам (рецепторы Мейснера) в собственной пластинке. Они облегчают перемещение пищи при жевании и глотании.",
+                clinical: "При воспалительных процессах (глоссит) нитевидные сосочки отекают. При гиповитаминозе (В12) сосочки атрофируются."
+            }
+        },
+        {
+            num: 121, name: "Листовидные сосочки", stain: "Г-Э", emoji: "🍃",
+            desc: "Складки слизистой с вкусовыми луковицами",
+            theory: {
+                general: "Листовидные сосочки расположены на боковых поверхностях языка. Это параллельные складки слизистой, разделенные бороздками, содержащие вкусовые луковицы.",
+                microscopy: "На препарате видны слои листовидных складок с многослойным плоским неороговевающим эпителием. В стенках сосочков расположены вкусовые луковицы размером 50-100 мкм. Собственная пластинка содержит серозные железы (железы фон Эбнера), выделяющие серозный секрет.",
+                function: "Листовидные сосочки выполняют вкусовую функцию благодаря вкусовым луковицам. Серозный секрет желез постоянно омывает рецепторные клетки.",
+                clinical: "При инфекциях листовидные сосочки отекают. Опухоли этой области часто дают метастазы в лимфоузлы шеи."
+            }
+        },
+        {
+            num: 122, name: "Развитие зуба (эмалевый орган)", stain: "Г-Э", emoji: "🦷",
+            desc: "Амелобласты и звездчатый ретикулум",
+            theory: {
+                general: "Препарат зачатка зуба на стадии развития эмали. Эмалевый орган является производным эктодермы и состоит из наружного эмалевого эпителия, промежуточного слоя и внутреннего эмалевого эпителия с амелобластами.",
+                microscopy: "На препарате видны: слой амелобластов на границе с развивающейся эмалью, звездчатый ретикулум с отростчатыми клетками, наружный эмалевый эпителий. Между амелобластами видны первые кристаллы гидроксиапатита эмали.",
+                function: "Амелобласты выделяют матрицу органических веществ, затем происходит минерализация с образованием эмалевых призм. Звездчатый ретикулум выполняет трофическую функцию.",
+                clinical: "Нарушения развития эмали приводят к гипоплазии или гипокальцификации. Инфекции во время беременности нарушают развитие эмали постоянных зубов."
+            }
+        },
+        {
+            num: 123, name: "Развитие зуба (дентин и эмаль)", stain: "Г-Э", emoji: "⚙️",
+            desc: "Одонтобласты и эмалевые призмы",
+            theory: {
+                general: "Стадия развития зуба с дифференцировкой дентина и эмали. Видны слой одонтобластов у края дентина и характерная структура эмалевых призм.",
+                microscopy: "Видны одонтобласты — специализированные клетки, выстилающие предентин. В дентине видны туннелы (дентинные канальцы) шириной 0.5-1 мкм с цитоплазматическими отростками одонтобластов. Эмаль имеет приззматическую структуру.",
+                function: "Одонтобласты выделяют органический матрикс, который затем минерализуется. Дентинные канальцы обеспечивают чувствительность зуба благодаря жидкости в них.",
+                clinical: "Кариес развивается путем деминерализации эмали и дентина микробными кислотами. Дентинная гиперчувствительность связана с открытием дентинных канальцев."
+            }
+        },
+        {
+            num: 126, name: "Поперечный разрез пищевода", stain: "Г-Э", emoji: "🔄",
+            desc: "Многослойный плоский неороговевающий эпителий",
+            theory: {
+                general: "Пищевод — мышечная трубка длиной 25-30 см, соединяющая ротовую полость с желудком. На препарате видна типичная структура органа с выраженной мышечной оболочкой.",
+                microscopy: "Эпителий представлен многослойным плоским неороговевающим эпителием толщиной 200-300 мкм. Собственная пластинка содержит сосуды и нервы. Подслизистая содержит эзофагальные железы. В мышечной оболочке чередуются циркулярный и продольный слои.",
+                function: "Пищевод является проводником пищи благодаря перистальтическим движениям. Слизь облегчает скольжение пищи.",
+                clinical: "Рефлюкс-эзофагит развивается при забросе желудочного содержимого. Частые ожоги приводят к стриктурам. Рак пищевода часто развивается из-за повреждающих факторов."
+            }
+        },
+        {
+            num: 127, name: "Переход пищевода в желудок", stain: "Г-Э", emoji: "↔️",
+            desc: "Граница между эпителиями",
+            theory: {
+                general: "Кардиальное отверстие — граница между пищеводом и желудком. На препарате видна граница между многослойным плоским и однослойным цилиндрическим эпителиями.",
+                microscopy: "Видна четкая граница между двумя типами эпителия. Эпителий пищевода переходит в кубические клетки слизистой желудка. У кардии расположены кардиальные железы, выделяющие слизь.",
+                function: "Кардиальная область защищает пищевод от кислого содержимого благодаря слизи. Здесь начинается химическое переваривание пищи.",
+                clinical: "Грыжа пищевода часто возникает в этой области. Кардиальное отверстие может сужаться, вызывая дисфагию."
+            }
+        },
+        {
+            num: 128, name: "Дно желудка собаки", stain: "Конгорот", emoji: "🍖",
+            desc: "Главные и паириетальные клетки",
+            theory: {
+                general: "Фундальные железы желудка — наиболее важные, выделяющие большинство пищеварительных веществ. На препарате видна четкая структура простых трубчатых желез.",
+                microscopy: "Видны: однослойный цилиндрический эпителий; главные клетки в основании с базофильной цитоплазмой; паириетальные клетки с ацидофильной цитоплазмой. Окраска конгоротом выявляет HCl в паириетальных клетках.",
+                function: "Главные клетки выделяют пепсиноген и липазу. Паириетальные клетки выделяют соляную кислоту и внутренний фактор. Покровные клетки выделяют слизь для защиты.",
+                clinical: "При атрофическом гастрите клетки атрофируются. Недостаток внутреннего фактора приводит к пернициозной анемии. Гиперсекреция вызывает язвы желудка."
+            }
+        },
+        {
+            num: 129, name: "Пилорическая часть желудка", stain: "Г-Э", emoji: "🚪",
+            desc: "Пилоровые железы, выделяющие слизь",
+            theory: {
+                general: "Пилорическая часть содержит пилоровые железы, выделяющие в основном слизь. Эта область выполняет переходную функцию.",
+                microscopy: "Видны простые разветвленные трубчатые железы с светлыми выглядывающими клетками. Собственная пластинка содержит много гладкомышечных клеток. Эпителий ямок с видимыми слизистыми клетками.",
+                function: "Пилоровые железы выделяют слизь, защищающую эту область. Они выделяют гастрин и гастроингибирующий пептид.",
+                clinical: "Гастрит пилорической части часто связан с H. pylori. Стеноз привратника развивается при рубцевании язв."
+            }
+        },
+        {
+            num: "129a", name: "Переход желудка в 12-п. кишку", stain: "Г-Э", emoji: "🔄",
+            desc: "Пилорический сфинктер и дуоденальные железы",
+            theory: {
+                general: "Граница между желудком и двенадцатиперстной кишкой отмечена пилорическим сфинктером. На препарате видны дуоденальные железы Бруннера.",
+                microscopy: "Видна граница между желудочным эпителием и дуоденальным с щеточной каймой. Дуоденальные железы видны в подслизистой как сложные трубчато-альвеолярные железы со светлыми слизистыми клетками.",
+                function: "Дуоденальные железы выделяют бикарбонат натрия, нейтрализующий кислый химус, и слизь для защиты.",
+                clinical: "Недостаточная секреция приводит к эрозиям и язвам. Гиперсекреция может быть связана с синдромом Золлингера-Эллисона."
+            }
+        },
+        {
+            num: 130, name: "Двенадцатиперстная кишка", stain: "Г-Э", emoji: "🌊",
+            desc: "Высокие ворсинки и дуоденальные железы",
+            theory: {
+                general: "Двенадцатиперстная кишка — первый отдел тонкой кишки. На препарате видны высокие кишечные ворсинки и подслизистые дуоденальные железы.",
+                microscopy: "Эпителий высокий цилиндрический со щеточной каймой. Видны длинные ворсинки высотой 0.5-0.8 мм с развитым капиллярным ложем. В криптах видны клетки Панета с ацидофильными зернами. Подслизистая содержит дуоденальные железы.",
+                function: "Высокие ворсинки обеспечивают максимальную поверхность для абсорбции. Дуоденальные железы выделяют защитную слизь. Клетки Панета выделяют лизоцим.",
+                clinical: "Целиакия вызывает уплощение ворсинок. При гастроэнтеритах происходит отек и укорочение ворсинок. Дефицит витамина А снижает число бокаловидных клеток."
+            }
+        },
+        {
+            num: 131, name: "Тонкая кишка щенка", stain: "Г-Э", emoji: "🐕",
+            desc: "Развитые ворсинки и лимфоидные фолликулы",
+            theory: {
+                general: "Тонкая кишка молодого животного показывает особенно хорошо развитые ворсинки и активную лимфоидную ткань.",
+                microscopy: "Видны очень высокие ворсинки с выраженными капиллярными сетями. В собственной пластинке видны лимфоидные фолликулы (пейеровы бляшки) с множеством лимфоцитов. Эпителий содержит много бокаловидных клеток.",
+                function: "Хорошо развитые ворсинки обеспечивают активное всасывание питательных веществ. Лимфоидная ткань выполняет защитную функцию, вырабатывая антитела IgA.",
+                clinical: "Парвовирус щенков вызывает разрушение крипт. При лямблиозе ворсинки укорачиваются. Недостаток питания влияет на развитие кишечника."
+            }
+        },
+        {
+            num: 132, name: "Толстая кишка собаки", stain: "Г-Э", emoji: "🌹",
+            desc: "Отсутствие ворсинок, много слизистых клеток",
+            theory: {
+                general: "Толстая кишка предназначена для всасывания воды и электролитов. На препарате видна структура без ворсинок, но с глубокими криптами.",
+                microscopy: "Эпителий однослойный цилиндрический без ворсинок. Видны глубокие крипты Либеркюна с многочисленными бокаловидными клетками. Между криптами рыхлая соединительная ткань. Мышечная оболочка состоит из продольного слоя и циркулярного.",
+                function: "Толстая кишка поглощает 90% воды и электролитов. Бокаловидные клетки выделяют слизь для защиты и облегчения скольжения фекалий.",
+                clinical: "Язвенный колит характеризуется острым воспалением. Болезнь Крона вызывает трансмуральное воспаление. При запоре происходит избыточное всасывание воды."
+            }
+        },
+        {
+            num: 133, name: "Аппендикс", stain: "Г-Э", emoji: "🛡️",
+            desc: "Лимфоидная ткань и пейеровы бляшки",
+            theory: {
+                general: "Аппендикс — слепой вырост толстой кишки, состоящий в основном из лимфоидной ткани. Это важный орган иммунной системы кишечника.",
+                microscopy: "На препарате видны многочисленные лимфоидные фолликулы и пейеровы бляшки. Эпителий цилиндрический с бокаловидными клетками. Лимфоциты проникают в эпителий. Мышечная оболочка слаборазвита.",
+                function: "Аппендикс играет важную роль в местном иммунитете, вырабатывая IgA. Он служит резервуаром полезных бактерий.",
+                clinical: "При аппендиците происходит острое воспаление с отеком и гноем. Разрыв аппендикса приводит к перитониту. После аппендэктомии могут развиться спайки."
+            }
+        },
+        {
+            num: 135, name: "Околоушная железа", stain: "Г-Э", emoji: "💧",
+            desc: "Серозные ацинусы и выводные протоки",
+            theory: {
+                general: "Околоушная железа — крупнейшая слюнная железа, выделяющая серозный водянистый секрет. На препарате видна типичная структура серозной железы.",
+                microscopy: "Видны серозные ацинусы с пирамидальными клетками и базофильной цитоплазмой. Выраженные гранулы секрета. Видны миоэпителиальные клетки вокруг ацинусов. Протоки различного диаметра.",
+                function: "Серозный секрет содержит амилазу, лизоцим и IgA. За день выделяется около 1.5 л слюны, участвующей в смачивании и частичном пищеварении.",
+                clinical: "Сиалолит приводит к застою слюны. Сиаладенит часто вызывается инфекцией. Синдром Шегрена приводит к атрофии и ксеростомии."
+            }
+        },
+        {
+            num: 136, name: "Подчелюстная железа", stain: "Г-Э", emoji: "👄",
+            desc: "Серозно-слизистая железа, смешанные ацинусы",
+            theory: {
+                general: "Подчелюстная железа — смешанная железа с серозным и слизистым секретом. На препарате видны оба типа ацинусов.",
+                microscopy: "Видны серозные ацинусы (ацидофильные) и слизистые ацинусы (светлые). Часто видны полулуния Жинна. Миоэпителиальные клетки хорошо развиты. Протоки выстланы кубическим эпителием.",
+                function: "Сбалансированный секрет содержит амилазу, слизь и другие факторы защиты. Выделяет около 1.5 л слюны в день.",
+                clinical: "Синдром Шегрена часто начинается с поражения подчелюстной железы. Сиалолиты чаще образуются здесь. Опухоли часто являются плеоморфными аденомами."
+            }
+        },
+        {
+            num: 137, name: "Поджелудочная железа", stain: "Г-Э", emoji: "🩸",
+            desc: "Ацинусы, островки Лангерганса, эндокринная часть",
+            theory: {
+                general: "Поджелудочная — смешанная экзокринно-эндокринная железа. На препарате видна экзокринная часть (ацинусы) и эндокринная (островки Лангерганса).",
+                microscopy: "Экзокринная часть: серозные ацинусы с оксифильной цитоплазмой. Эндокринная: розовые одиночные или сгруппированные клетки (островки) размером 50-300 мкм, содержащие α, β и δ-клетки.",
+                function: "Экзокринная: выделяет ферменты (трипсин, амилазу, липазу). Эндокринная: β-клетки выделяют инсулин, α-клетки — глюкагон, δ-клетки — соматостатин.",
+                clinical: "Панкреатит — острое воспаление с отеком. Сахарный диабет типа 1 развивается при разрушении β-клеток. Рак часто метастазирует в печень."
+            }
+        },
+        {
+            num: 138, name: "Печень свиньи", stain: "Пирофуксин", emoji: "🐖",
+            desc: "Печеночная долька, центральная вена",
+            theory: {
+                general: "Печень свиньи имеет ярко выраженную дольковую структуру. На препарате видна классическая печеночная долька с центральной веной и портальными трактами.",
+                microscopy: "Видны печеночные дольки с центральной веной в центре. Гепатоциты в радиальных тяжах. По углам портальные тракты с артерией, веной и желчным протоком. Синусоидные капилляры очень узкие.",
+                function: "Печень выполняет 500+ функций: синтез белков, углеводный обмен, липидный обмен, обезвреживание токсинов, выработка желчи.",
+                clinical: "Гепатит вирусный приводит к воспалению. Цирроз развивается при хроническом повреждении. Жировая дистрофия при алкоголизме."
+            }
+        },
+        {
+            num: 139, name: "Печень человека", stain: "Г-Э", emoji: "👤",
+            desc: "Гепатоциты, портальные тракты, синусоиды",
+            theory: {
+                general: "Печень человека функционально организована в портальные дольки и ацинусы. На препарате видна микроциркуляция крови через паренхиму.",
+                microscopy: "Видны портальные тракты с триадой (артерия, вена, проток). Синусоидные капилляры между тяжами гепатоцитов. Гепатоциты одно- или двухядерные, размером 20-30 мкм. Синусоидный эндотелий fenestrated.",
+                function: "Печень: метаболизм, синтез белков, обезвреживание, выработка желчи, обмен билирубина.",
+                clinical: "Желтуха развивается при гипербилирубинемии. Цирроз приводит к портальной гипертензии."
+            }
+        },
+        {
+            num: 140, name: "Желчный пузырь", stain: "Г-Э", emoji: "🌿",
+            desc: "Складчатая слизистая, всасывание воды",
+            theory: {
+                general: "Желчный пузырь — резервуар желчи объемом 30-50 мл. На препарате видна характерная складчатая слизистая.",
+                microscopy: "Слизистая выстлана однослойным цилиндрическим эпителием. Образует выраженные складки. Эпителий содержит бокаловидные клетки. Собственная пластинка с мало сосудов. Мышечная оболочка слаборазвита.",
+                function: "Желчный пузырь концентрирует желчь в 20 раз путем всасывания воды и электролитов. При сокращении желчь выбрасывается для эмульгирования жиров.",
+                clinical: "Желчные камни образуются при изменении состава желчи. Холецистит часто вызывается инфекцией. Рак часто развивается на фоне воспаления."
+            }
+        },
+        {
+            num: 141, name: "Трахея собаки", stain: "Г-Э", emoji: "💨",
+            desc: "Реснитчатый эпителий, хрящевые кольца",
+            theory: {
+                general: "Трахея — воздухопровод, выполняющий функцию проведения воздуха к легким. На препарате видна структура с хрящевыми кольцами и реснитчатым эпителием.",
+                microscopy: "Эпителий псевдомногослойный цилиндрический мерцательный. Видны реснички длиной 5-10 мкм и базальные тельца. Кубические клетки содержат слизь. В собственной пластинке серозные и смешанные железы. Полукольца гиалинового хряща.",
+                function: "Реснички трахеи удаляют слизь с частицами вверх в глотку. Железы выделяют слизь для увлажнения. Полукольца хряща предотвращают коллапс.",
+                clinical: "Трахеит вирусный вызывает повреждение ресничного эпителия. При хроническом дыме реснички теряют функцию. Стеноз трахеи развивается при рубцевании."
+            }
+        },
+        {
+            num: 142, name: "Легкое кошки", stain: "Г-Э", emoji: "🫁",
+            desc: "Альвеолы, пневмоциты I и II типов",
+            theory: {
+                general: "Легкое — орган дыхания, где происходит газообмен. На препарате видны альвеолы и альвеолярные стенки с капиллярной сетью.",
+                microscopy: "Видны альвеолы диаметром 100-300 мкм с очень тонкими стенками толщиной 0.5-1 мкм. Пневмоциты I типа (тонкие, плоские) и II типа (кубические, производят сурфактант). Между альвеолами межальвеолярные перегородки с капилляром. Альвеолярные макрофаги.",
+                function: "Газообмен путем диффузии: O2 из воздуха в кровь, CO2 обратно. Пневмоциты II типа производят сурфактант. Макрофаги удаляют частицы.",
+                clinical: "ARDS развивается при повреждении мембраны. Эмфизема вызывает разрушение перегородок. Идиопатический фиброз приводит к утолщению. Дефицит сурфактанта у недоношенных."
+            }
+        },
+        {
+            num: 143, name: "Кожа пальца человека", stain: "Г-Э", emoji: "👈",
+            desc: "Эпидермис, дерма, все слои кожи",
+            theory: {
+                general: "Кожа — самый большой орган человека. На препарате видны все слои: эпидермис и дерма.",
+                microscopy: "Эпидермис толщиной 0.05-1.5 мм: базальный (камбиальный), шиповатый, зернистый, блестящий, роговой слои. Видны меланоциты. Дерма: папиллярный слой (рыхлая ткань) и ретикулярный (плотная ткань). Потовые железы, волосяные фолликулы, сосуды, нервы.",
+                function: "Защитная (барьер, УФ защита), терморегуляция, сенсорная, синтез витамина D. Постоянное обновление за 2-4 недели.",
+                clinical: "Акне при гиперкератинизации фолликулов. Псориаз при акантозе. Меланома из меланоцитов при УФ экспозиции. Ожоги III степени разрушают оба слоя."
+            }
+        },
+        {
+            num: 144, name: "Кожа с волосом человека", stain: "Г-Э", emoji: "💇",
+            desc: "Волосяной фолликул, сальные и потовые железы",
+            theory: {
+                general: "На этом препарате видна волосяная единица с фолликулом и связанные железы. Интегрированная функция кожи как органа.",
+                microscopy: "Волосяной фолликул с луковицей в подкожной клетчатке. Дермальный сосочек в луковице. Соединительнотканная капсула. Сальная железа на внутренней корневой оболочке. Мышца, поднимающая волос. Потовые железы спиралью.",
+                function: "Волос растет из луковицы в темпе 0.3-0.4 мм/день. Цикл: анаген (2-7 лет), катаген (2-3 недели), телоген (3-4 месяца). Сальные железы защищают. Потовые охлаждают.",
+                clinical: "Алопеция андрогенетическая, очаговая или рубцовая. Гипергидроз при гиперактивности. Акне розацеа от расширения сосудов."
+            }
         }
-        document.querySelectorAll('.file-btn.delete').forEach(btn => {
-            if(adminMode) btn.classList.add('visible');
-            else btn.classList.remove('visible');
+    ];
+
+    function renderSpecimens() {
+        const grid = document.getElementById('specimenGrid');
+        specimens.forEach((spec, idx) => {
+            const card = document.createElement('div');
+            card.className = 'specimen-card';
+            card.innerHTML = `
+                <div class="specimen-emoji">${spec.emoji}</div>
+                <div class="specimen-label">№ ${spec.num} • ${spec.stain}</div>
+                <h3 class="specimen-name">${spec.name}</h3>
+                <p class="specimen-desc">${spec.desc}</p>
+                <button class="specimen-btn" onclick="openTheory('${spec.name}', ${JSON.stringify(spec.theory).replace(/'/g, "&apos;")})">
+                    Теория →
+                </button>
+            `;
+            grid.appendChild(card);
         });
     }
-    document.addEventListener('keydown', (e) => {
-        if((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'KeyX') {
-            e.preventDefault();
-            setAdminMode(!adminMode);
-        }
+
+    function openTheory(title, theory) {
+        const modal = document.getElementById('theoryModal');
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = `
+            <div class="theory-section">
+                <h3>Общие сведения</h3>
+                <p>${theory.general}</p>
+            </div>
+            <div class="theory-section">
+                <h3>Микроскопическая картина</h3>
+                <p>${theory.microscopy}</p>
+            </div>
+            <div class="theory-section">
+                <h3>Функция</h3>
+                <p>${theory.function}</p>
+            </div>
+            <div class="theory-section">
+                <h3>Клинико-патологические аспекты</h3>
+                <p>${theory.clinical}</p>
+            </div>
+        `;
+        modal.classList.add('active');
+    }
+
+    function closeTheory() {
+        document.getElementById('theoryModal').classList.remove('active');
+    }
+
+    document.getElementById('theoryModal').addEventListener('click', (e) => {
+        if (e.target.id === 'theoryModal') closeTheory();
     });
 
-    // ========== РАБОТА С ФАЙЛАМИ ==========
-    let userFiles = [];
-    const STORAGE_KEY = "admin_pdfs_417_gista";
-    
-    function loadUserFiles() {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if(raw) {
-            try { userFiles = JSON.parse(raw); } catch(e) { userFiles = []; }
-        } else {
-            userFiles = [];
-        }
-        // Проверяем, есть ли уже встроенный файл из репозитория
-        const hasBuiltIn = userFiles.some(f => f.id === 'repo_gista_dyh');
-        if(!hasBuiltIn) {
-            userFiles.unshift({
-                id: 'repo_gista_dyh',
-                name: 'ГистаДых_дыхательная_система.pdf',
-                size: 0, // размер определится при загрузке
-                dataURL: pdfFilePath, // ПРЯМАЯ ССЫЛКА НА ФАЙЛ В РЕПОЗИТОРИИ
-                date: new Date().toISOString(),
-                isBuiltIn: true
-            });
-        }
-        renderFilesList();
-    }
-    
-    function saveUserFiles() {
-        const toSave = userFiles.filter(f => f.id !== 'repo_gista_dyh');
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
-        renderFilesList();
-    }
-    
-    function formatSize(b) { if(b<1024) return b+" Б"; return (b/1024).toFixed(1)+" КБ"; }
-    function escapeHtml(s) { return s.replace(/[&<>]/g, function(m){ return m==='&'?'&amp;':m==='<'?'&lt;':'&gt;';}); }
-    
-    function showPdfPreview(url, name) {
-        const div = document.getElementById('pdfPreviewBlock');
-        if(div) {
-            div.innerHTML = `<div class="preview-header"><span>📄 ${escapeHtml(name)}</span><button class="close-preview" id="closePreviewBtn">✕</button></div><iframe src="${url}" title="PDF preview"></iframe>`;
-            div.style.display = 'block';
-            document.getElementById('closePreviewBtn')?.addEventListener('click', () => { div.style.display = 'none'; div.innerHTML = ''; });
-        }
-    }
-    
-    function copyLink(url) { navigator.clipboard.writeText(url).then(()=>alert("🔗 Прямая ссылка скопирована")).catch(()=>alert("Ошибка")); }
-    
-    function renderFilesList() {
-        const container = document.getElementById('filesListContainer');
-        const statsSpan = document.getElementById('filesStatsCount');
-        if(!container) return;
-        if(userFiles.length === 0) {
-            container.innerHTML = `<div class="empty-files">📁 Папка пуста. Админ: Ctrl+Shift+X для загрузки PDF.</div>`;
-            if(statsSpan) statsSpan.innerText = "0";
-            return;
-        }
-        let html = '';
-        userFiles.forEach(f => {
-            const dateStr = f.date ? new Date(f.date).toLocaleDateString() : '—';
-            const fileSize = f.size > 0 ? formatSize(f.size) : 'из репозитория';
-            const displayUrl = f.dataURL || '#';
-            const shortUrl = displayUrl.length > 70 ? displayUrl.substring(0,70)+'…' : displayUrl;
-            html += `<div class="file-item" data-id="${f.id}">
-                <div class="file-left">
-                    <div class="file-icon">📘</div>
-                    <div class="file-info-text">
-                        <div class="file-name">${escapeHtml(f.name)}</div>
-                        <div class="file-meta">${fileSize} • ${dateStr}</div>
-                        <div class="direct-link" title="${displayUrl}">🔗 ${shortUrl}</div>
-                    </div>
-                </div>
-                <div class="file-actions">
-                    <button class="file-btn view" data-id="${f.id}" data-url="${displayUrl}" data-name="${escapeHtml(f.name)}">👁️ Предпросмотр</button>
-                    <button class="file-btn download" data-id="${f.id}" data-url="${displayUrl}" data-name="${escapeHtml(f.name)}">⬇️ Скачать</button>
-                    <button class="file-btn link-btn" data-url="${displayUrl}">📋 Ссылка</button>
-                    <button class="file-btn delete" data-id="${f.id}">🗑️ Удалить</button>
-                </div>
-            </div>`;
-        });
-        container.innerHTML = html;
-        if(statsSpan) statsSpan.innerText = userFiles.length;
-        
-        document.querySelectorAll('.file-btn.view').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.stopPropagation(); const url = btn.dataset.url; const name = btn.dataset.name; if(url) showPdfPreview(url, name); });
-        });
-        document.querySelectorAll('.file-btn.download').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.stopPropagation(); const url = btn.dataset.url; const name = btn.dataset.name; if(url && url !== '#'){ const a=document.createElement('a'); a.href=url; a.download=name; a.click(); } else { alert("Файл из репозитория открывается в новой вкладке"); window.open(url, '_blank'); } });
-        });
-        document.querySelectorAll('.file-btn.link-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.stopPropagation(); const url = btn.dataset.url; if(url && url !== '#') copyLink(url); });
-        });
-        document.querySelectorAll('.file-btn.delete').forEach(btn => {
-            btn.addEventListener('click', (e) => { e.stopPropagation(); if(!adminMode){ alert("Доступ только админу. Ctrl+Shift+X"); return; } const id = btn.dataset.id; if(id === 'repo_gista_dyh'){ alert("Файл из репозитория нельзя удалить"); return; } userFiles = userFiles.filter(x=>x.id != id); saveUserFiles(); document.getElementById('pdfPreviewBlock').style.display='none'; });
-            if(adminMode) btn.classList.add('visible');
-            else btn.classList.remove('visible');
-        });
-    }
-    
-    const fileInput = document.getElementById('filesInput');
-    if(fileInput) {
-        fileInput.addEventListener('change', function(e) {
-            if(!adminMode){ alert("Только администратор. Нажмите Ctrl+Shift+X"); fileInput.value=''; return; }
-            Array.from(e.target.files).forEach(file => {
-                if(file.type !== 'application/pdf'){ alert(`Файл ${file.name} не PDF`); return; }
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    userFiles.push({
-                        id: Date.now() + Math.random()*100000,
-                        name: file.name,
-                        size: file.size,
-                        dataURL: ev.target.result,
-                        date: new Date().toISOString()
-                    });
-                    saveUserFiles();
-                };
-                reader.readAsDataURL(file);
-            });
-            fileInput.value = '';
-        });
-    }
-
-    // ========== ГИСТОЛОГИЯ (23 препарата) ==========
-    const specimens = [
-        { id:1, name:"Нитевидные сосочки языка", stain:"Г-Э", number:"120", description:"Кератинизированные нитевидные выросты.", theory:"Нитевидные сосочки самые многочисленные, эпителий ороговевает, тактильная функция.", imgClean:"120C.png", imgLabeled:"120.png" },
-        { id:2, name:"Листовидные сосочки", stain:"Г-Э", number:"121", description:"Содержат вкусовые луковицы.", theory:"Расположены по бокам языка, содержат вкусовые почки.", imgClean:"121C.png", imgLabeled:"121.png" },
-        { id:3, name:"Развитие зуба (эмалевый орган)", stain:"Г-Э", number:"122", description:"Эмалевый орган, звездчатый ретикулум.", theory:"Эмалевый орган — производное эктодермы.", imgClean:"122C.png", imgLabeled:"122.png" },
-        { id:4, name:"Развитие зуба (дентин и эмаль)", stain:"Г-Э", number:"123", description:"Одонтобласты, эмалевые призмы.", theory:"Дентин вырабатывают одонтобласты.", imgClean:"123C.png", imgLabeled:"123.png" },
-        { id:5, name:"Поперечный разрез пищевода", stain:"Г-Э", number:"126", description:"Многослойный плоский эпителий.", theory:"Пищевод выстлан многослойным плоским неороговевающим эпителием.", imgClean:"126C.png", imgLabeled:"126.png" },
-        { id:6, name:"Переход пищевода в желудок", stain:"Г-Э", number:"127", description:"Зигзагообразная граница.", theory:"Резкая смена эпителия пищевода на желудочный.", imgClean:"127C.png", imgLabeled:"127.png" },
-        { id:7, name:"Дно желудка собаки", stain:"Конгорот", number:"128", description:"Главные и париетальные клетки.", theory:"Фундальные железы: париетальные (HCl) и главные (пепсиноген).", imgClean:"128C.png", imgLabeled:"128.png" },
-        { id:8, name:"Пилорическая часть желудка", stain:"Г-Э", number:"129", description:"Пилоровые железы.", theory:"Пилоровые железы секретируют слизь.", imgClean:"129C.png", imgLabeled:"129.png" },
-        { id:9, name:"Переход желудка в 12-п. кишку", stain:"Г-Э", number:"129a", description:"Пилорический сфинктер.", theory:"Дуоденальные железы Бруннера.", imgClean:"129aC.png", imgLabeled:"129a.png" },
-        { id:10, name:"Двенадцатиперстная кишка", stain:"Г-Э", number:"130", description:"Ворсинки, крипты.", theory:"Высокие ворсинки, бокаловидные клетки.", imgClean:"130C.png", imgLabeled:"130.png" },
-        { id:11, name:"Тонкая кишка щенка", stain:"Г-Э", number:"131", description:"Ворсинки, лимфоидные фолликулы.", theory:"Активное пищеварение, развитые ворсинки.", imgClean:"131C.png", imgLabeled:"131.png" },
-        { id:12, name:"Толстая кишка собаки", stain:"Г-Э", number:"132", description:"Крипты, много бокаловидных клеток.", theory:"Ворсинки отсутствуют, много слизистых клеток.", imgClean:"132C.png", imgLabeled:"132.png" },
-        { id:13, name:"Аппендикс", stain:"Г-Э", number:"133", description:"Лимфоидная ткань.", theory:"Диффузная лимфоидная ткань и узелки.", imgClean:"133C.png", imgLabeled:"133.png" },
-        { id:14, name:"Околоушная железа", stain:"Г-Э", number:"135", description:"Серозные ацинусы.", theory:"Серозный тип секреции.", imgClean:"135C.png", imgLabeled:"135.png" },
-        { id:15, name:"Подчелюстная железа", stain:"Г-Э", number:"136", description:"Смешанные концевые отделы.", theory:"Серозно-слизистая железа.", imgClean:"136C.png", imgLabeled:"136.png" },
-        { id:16, name:"Поджелудочная железа", stain:"Г-Э", number:"137", description:"Островки Лангерганса.", theory:"Экзокринная часть — ацинусы, эндокринная — островки.", imgClean:"137C.png", imgLabeled:"137.png" },
-        { id:17, name:"Печень свиньи", stain:"Пирофуксин", number:"138", description:"Печеночные дольки.", theory:"Дольковое строение, центральная вена.", imgClean:"138C.png", imgLabeled:"138.png" },
-        { id:18, name:"Печень человека", stain:"Г-Э", number:"139", description:"Гепатоциты, портальные тракты.", theory:"Классическая долька.", imgClean:"139C.png", imgLabeled:"139.png" },
-        { id:19, name:"Желчный пузырь", stain:"Г-Э", number:"140", description:"Складчатая слизистая.", theory:"Эпителий всасывает воду.", imgClean:"140C.png", imgLabeled:"140.png" },
-        { id:20, name:"Трахея собаки", stain:"Г-Э", number:"141", description:"Реснитчатый эпителий, хрящ.", theory:"Мерцательный эпителий, гиалиновые кольца.", imgClean:"141C.png", imgLabeled:"141.png" },
-        { id:21, name:"Легкое кошки", stain:"Г-Э", number:"142", description:"Альвеолы, пневмоциты.", theory:"Альвеолы с пневмоцитами I и II типов, сурфактант.", imgClean:"142C.png", imgLabeled:"142.png" },
-        { id:22, name:"Кожа пальца человека", stain:"Г-Э", number:"143", description:"Эпидермис, дерма.", theory:"Многослойный плоский ороговевающий эпителий.", imgClean:"143C.png", imgLabeled:"143.png" },
-        { id:23, name:"Кожа с волосом человека", stain:"Г-Э", number:"144", description:"Волосяной фолликул.", theory:"Волос: луковица, сальные железы, мышца.", imgClean:"144C.png", imgLabeled:"144.png" }
-    ];
-    
-    let showLabelsMode = {}; specimens.forEach(s => showLabelsMode[s.id] = false);
-    let currentLightboxPrep = null;
-    function getImagePath(p, use) { return use ? p.imgLabeled : p.imgClean; }
-    function updateLightboxImage() { if(!currentLightboxPrep) return; const use=showLabelsMode[currentLightboxPrep.id]; document.getElementById('lightboxImage').src=getImagePath(currentLightboxPrep, use); document.getElementById('lightboxCaptionText').innerHTML=`${currentLightboxPrep.name} | №${currentLightboxPrep.number} | ${currentLightboxPrep.stain}`; }
-    function renderHistology() {
-        const grid=document.getElementById('specimenGrid'); if(!grid) return; grid.innerHTML='';
-        specimens.forEach(p=>{ const useLab=showLabelsMode[p.id]; const imgSrc=getImagePath(p,useLab); const card=document.createElement('div'); card.className='specimen-card';
-            const imgArea=document.createElement('div'); imgArea.className='image-area'; imgArea.style.cursor='pointer'; imgArea.addEventListener('click',()=>{ currentLightboxPrep=p; updateLightboxImage(); document.getElementById('lightboxModal').classList.add('active'); document.body.style.overflow='hidden'; });
-            const img=document.createElement('img'); img.src=imgSrc; img.className='prep-img'; img.onerror=()=>{ img.src='https://placehold.co/600x400/1a1f2e/ffec80?text=Фото+'+p.number; };
-            const badgeNum=document.createElement('div'); badgeNum.className='badge-number'; badgeNum.innerText=`№ ${p.number}`;
-            const badgeStain=document.createElement('div'); badgeStain.className='badge-stain'; badgeStain.innerText=`🎨 ${p.stain}`;
-            imgArea.append(img,badgeNum,badgeStain);
-            const info=document.createElement('div'); info.className='card-info';
-            info.innerHTML=`<div class="prep-title">${p.name}</div><div class="prep-desc">${p.description}</div><div class="action-buttons"><button class="toggle-labels" data-id="${p.id}">${useLab?'🔍 Убрать подписи':'🏷️ Показать подписи'}</button><button class="theory-mini-btn" data-id="${p.id}" data-name="${p.name.replace(/"/g,'&quot;')}" data-theory="${p.theory.replace(/"/g,'&quot;')}">📖 Теория</button></div><div class="click-hint">🖱️ Нажмите на фото</div>`;
-            card.append(imgArea,info); grid.appendChild(card);
-        });
-        document.querySelectorAll('.toggle-labels').forEach(btn=>{ btn.addEventListener('click',(e)=>{ e.stopPropagation(); const id=parseInt(btn.dataset.id); showLabelsMode[id]=!showLabelsMode[id]; renderHistology(); if(currentLightboxPrep && currentLightboxPrep.id===id) updateLightboxImage(); }); });
-        document.querySelectorAll('.theory-mini-btn').forEach(btn=>{ btn.addEventListener('click',(e)=>{ e.stopPropagation(); const th=btn.dataset.theory, nm=btn.dataset.name; document.getElementById('theoryContent').innerHTML=`<strong>${nm}</strong><br><br>${th}`; document.getElementById('theoryModalWindow').classList.add('active'); }); });
-    }
-    
-    document.getElementById('lightboxToggleLabels')?.addEventListener('click',()=>{ if(currentLightboxPrep){ const id=currentLightboxPrep.id; showLabelsMode[id]=!showLabelsMode[id]; updateLightboxImage(); renderHistology(); } });
-    function closeLightbox(){ document.getElementById('lightboxModal').classList.remove('active'); document.body.style.overflow=''; }
-    document.getElementById('closeLightboxBtn')?.addEventListener('click',closeLightbox);
-    document.getElementById('lightboxModal')?.addEventListener('click',(e)=>{ if(e.target===document.getElementById('lightboxModal')) closeLightbox(); });
-    
-    // Музыка, навигация
-    const audio = new Audio('music.mp3'); audio.loop=true; audio.volume=0.4;
-    let isPlaying=false;
-    document.getElementById('playPauseBtn').onclick=()=>{ if(isPlaying){ audio.pause(); document.getElementById('playPauseBtn').textContent='▶'; } else { audio.play(); document.getElementById('playPauseBtn').textContent='⏸'; } isPlaying=!isPlaying; };
-    document.getElementById('volumeSlider').oninput=e=>audio.volume=e.target.value;
-    document.body.addEventListener('click', function initA(){ if(!isPlaying && audio.paused){ audio.play().catch(()=>{}); document.getElementById('playPauseBtn').textContent='⏸'; isPlaying=true; } document.body.removeEventListener('click',initA); });
-    
-    const homePage=document.getElementById('homePage'), histPage=document.getElementById('histologyPage'), filesPage=document.getElementById('filesPage');
-    const navHome=document.getElementById('navHome'), navHist=document.getElementById('navHistology'), navFiles=document.getElementById('navFiles');
-    function showPage(p){
-        homePage.classList.remove('active'); histPage.classList.remove('active'); filesPage.classList.remove('active');
-        if(p==='home'){ homePage.classList.add('active'); navHome.classList.add('active'); navHist.classList.remove('active'); navFiles.classList.remove('active'); }
-        else if(p==='hist'){ histPage.classList.add('active'); navHist.classList.add('active'); navHome.classList.remove('active'); navFiles.classList.remove('active'); if(document.getElementById('specimenGrid').children.length===0) renderHistology(); }
-        else if(p==='files'){ filesPage.classList.add('active'); navFiles.classList.add('active'); navHome.classList.remove('active'); navHist.classList.remove('active'); loadUserFiles(); }
-    }
-    navHome.addEventListener('click',()=>showPage('home')); navHist.addEventListener('click',()=>showPage('hist')); navFiles.addEventListener('click',()=>showPage('files'));
-    document.getElementById('closeTheoryBtn').addEventListener('click',()=>document.getElementById('theoryModalWindow').classList.remove('active'));
-    
-    const phrases = ["C Днём Победы!", "67*6.2238=417", "from students to students", "powered by Papillon Systems"];
-    let phIdx=0,chIdx=0,del=false,spd=100; const dynSpan=document.querySelector('.dynamic-text');
-    function typeE(){ if(!dynSpan) return; const cur=phrases[phIdx]; if(!del){ dynSpan.textContent=cur.substring(0,chIdx+1); chIdx++; if(chIdx===cur.length){ del=true; spd=1800; } else spd=100; } else { dynSpan.textContent=cur.substring(0,chIdx-1); chIdx--; if(chIdx===0){ del=false; phIdx=(phIdx+1)%phrases.length; spd=300; } else spd=50; } setTimeout(typeE,spd); }
-    window.addEventListener('DOMContentLoaded',()=>{ typeE(); renderHistology(); loadUserFiles(); setAdminMode(false); });
+    window.addEventListener('DOMContentLoaded', renderSpecimens);
 </script>
 </body>
 </html>
